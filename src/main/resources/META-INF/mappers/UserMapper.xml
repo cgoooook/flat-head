@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="cn.com.flat.head.dal.mappers.UserMapper">
+
+    <resultMap id="UserMap" type="cn.com.flat.head.pojo.User">
+        <id column="user_id" property="userId" />
+        <result column="nick_name" property="nickName" />
+        <result column="username" property="username" />
+        <result column="password" property="password" />
+        <result column="pub_key" property="pubKey" />
+        <result column="account_type" property="accountType" />
+    </resultMap>
+    
+    <select id="getUserByUsername" resultMap="UserMap">
+        select * from sys_acl_user where username=#{username}
+    </select>
+    
+</mapper>

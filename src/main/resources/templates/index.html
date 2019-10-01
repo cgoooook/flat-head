@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>index</title>
+    <th:block th:include="includes/header :: styles"/>
+</head>
+<body class="page-header-fixed page-sidebar-closed-hide-logo page-content-white">
+<th:block th:include="includes/top :: top" />
+<!-- END HEADER & CONTENT DIVIDER -->
+<div class="page-container">
+    <th:block th:include="includes/menu :: menus" />
+    <div class="page-content-wrapper">
+        <div class="page-content">
+            <th:block th:include="includes/slider :: slider" />
+        </div>
+    </div>
+</div>
+<th:block th:include="includes/footer :: footer"/>
+<th:block th:include="includes/scripts :: scripts" />
+</body>
+</html>
