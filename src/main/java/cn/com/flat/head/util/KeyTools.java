@@ -1,10 +1,12 @@
 package cn.com.flat.head.util;
 
 import cn.com.flat.head.pojo.X509Cert;
+import sun.security.x509.X509CertImpl;
 
 import java.io.File;
 import java.io.FileInputStream;
 import java.security.KeyStore;
+import java.security.PrivateKey;
 import java.security.cert.Certificate;
 import java.security.cert.X509Certificate;
 import java.util.ArrayList;
@@ -32,6 +34,7 @@ public class KeyTools {
                 X509Cert x509Cert = parserCert(certificate);
                 x509Cert.setAlias(alias);
                 x509Cert.setCertContent(certificate.getEncoded());
+                x509Cert.setPrivateKey((PrivateKey) keyStore.getKey(alias, DEFAULT_PASS.toCharArray()));
                 certList.add(x509Cert);
             }
         } catch (Exception ignore) {
@@ -40,9 +43,10 @@ public class KeyTools {
         return certList;
     }
 
+
     private static X509Cert parserCert(Certificate certificate) throws Exception {
         X509Cert x509Cert = new X509Cert();
-        X509Certificate cert = (X509Certificate) certificate;
+        X509CertImpl cert = (X509CertImpl) certificate;
         x509Cert.setCertSN(cert.getSerialNumber().toString());
         x509Cert.setSubject(cert.getSubjectDN().toString());
         x509Cert.setIssuer(cert.getIssuerDN().toString());

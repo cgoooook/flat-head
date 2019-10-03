@@ -16,4 +16,6 @@ public interface CACertService {
 
     X509Cert getCACert();
 
+    String generateTlsCert(CertRequest request);
+
 }

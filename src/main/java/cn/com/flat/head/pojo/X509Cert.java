@@ -2,6 +2,7 @@ package cn.com.flat.head.pojo;
 
 import lombok.Data;
 
+import java.security.PrivateKey;
 import java.util.Date;
 
 /**
@@ -27,5 +28,7 @@ public class X509Cert {
     private String pubKey;
 
     private byte[] certContent;
+
+    private PrivateKey privateKey;
 
 }

@@ -16,4 +16,6 @@ public class CertRequest {
 
     private String signAlg;
 
+    private String pass;
+
 }

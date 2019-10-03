@@ -1,15 +1,21 @@
 package cn.com.flat.head.util;
 
 
-import org.bouncycastle.asn1.ASN1Boolean;
-import org.bouncycastle.asn1.DEROctetString;
+import cn.com.flat.head.pojo.X509Cert;
+import com.sun.xml.internal.messaging.saaj.util.ByteOutputStream;
+import org.bouncycastle.asn1.ASN1EncodableVector;
+import org.bouncycastle.asn1.ASN1ObjectIdentifier;
+import org.bouncycastle.asn1.DERSequence;
+import org.bouncycastle.asn1.oiw.OIWObjectIdentifiers;
 import org.bouncycastle.asn1.x500.X500Name;
-import org.bouncycastle.asn1.x509.Extension;
-import org.bouncycastle.asn1.x509.KeyUsage;
-import org.bouncycastle.asn1.x509.SubjectPublicKeyInfo;
+import org.bouncycastle.asn1.x509.*;
 import org.bouncycastle.cert.X509CertificateHolder;
+import org.bouncycastle.cert.X509ExtensionUtils;
 import org.bouncycastle.cert.X509v3CertificateBuilder;
+import org.bouncycastle.operator.DigestCalculator;
+import org.bouncycastle.operator.bc.BcDigestCalculatorProvider;
 import org.bouncycastle.operator.jcajce.JcaContentSignerBuilder;
+import sun.security.x509.X509CertImpl;
 
 import java.io.ByteArrayInputStream;
 import java.io.File;
@@ -22,6 +28,7 @@ import java.security.SecureRandom;
 import java.security.cert.Certificate;
 import java.security.cert.CertificateFactory;
 import java.util.Date;
+import java.util.List;
 import java.util.Random;
 import java.util.UUID;
 
@@ -39,9 +46,9 @@ public class X509CACertGenerate {
                 new X500Name(dn),
                 SubjectPublicKeyInfo.getInstance(publicKey.getEncoded())
         );
-        KeyUsage ku = new KeyUsage(KeyUsage.keyCertSign | KeyUsage.cRLSign);
-        certBuilder.addExtension(Extension.keyUsage, false, new DEROctetString(ku));
-        certBuilder.addExtension(Extension.basicConstraints, false, ASN1Boolean.TRUE.getEncoded());
+        BasicConstraints basicConstraints = new BasicConstraints(true);
+        certBuilder.addExtension(Extension.keyUsage, false, new KeyUsage(KeyUsage.keyCertSign | KeyUsage.cRLSign));
+        certBuilder.addExtension(Extension.basicConstraints, false, basicConstraints);
         X509CertificateHolder build = certBuilder.build(new JcaContentSignerBuilder(signAlg).build(privateKey));
         KeyStore keyStore = KeyStore.getInstance("JKS");
         keyStore.load(null, null);
@@ -51,6 +58,43 @@ public class X509CACertGenerate {
         keyStore.store(new FileOutputStream(new File(KeyTools.CA_CERT_PATH)), KeyTools.DEFAULT_PASS.toCharArray());
         return true;
     }
+
+    public static ByteOutputStream generateTlsCert(String dn, PrivateKey privateKey, PublicKey publicKey, String signAlg, String pass) throws Exception {
+        List<X509Cert> caCertList = KeyTools.getCACertList();
+        if (caCertList.isEmpty()) {
+            return null;
+        }
+        X509Cert x509Cert = caCertList.get(0);
+        CertificateFactory certificateFactory = CertificateFactory.getInstance("X.509");
+        Certificate rootCert = certificateFactory.generateCertificate(new ByteArrayInputStream(x509Cert.getCertContent()));
+        X509v3CertificateBuilder certBuilder = new X509v3CertificateBuilder(
+                new X500Name(x509Cert.getSubject()),
+                new BigInteger(1, genCertSN()),
+                new Date(),
+                x509Cert.getAfter(),
+                new X500Name(dn),
+                SubjectPublicKeyInfo.getInstance(publicKey.getEncoded())
+        );
+        BasicConstraints basicConstraints = new BasicConstraints(false);
+        certBuilder.addExtension(Extension.keyUsage, false, new KeyUsage(KeyUsage.digitalSignature));
+        certBuilder.addExtension(Extension.basicConstraints, false, basicConstraints);
+        ASN1EncodableVector vector = new ASN1EncodableVector();
+        vector.add(KeyPurposeId.id_kp_clientAuth);
+        vector.add(KeyPurposeId.id_kp_serverAuth);
+        certBuilder.addExtension(new ASN1ObjectIdentifier("2.5.29.37"), false, new DERSequence(vector));
+        DigestCalculator calculator = new BcDigestCalculatorProvider().get(new AlgorithmIdentifier(OIWObjectIdentifiers.idSHA1));
+        X509ExtensionUtils extensionUtils = new X509ExtensionUtils(calculator);
+        certBuilder.addExtension(Extension.subjectKeyIdentifier, false, extensionUtils.createAuthorityKeyIdentifier(SubjectPublicKeyInfo.getInstance(publicKey.getEncoded())));
+        X509CertificateHolder build = certBuilder.build(new JcaContentSignerBuilder(signAlg).build(x509Cert.getPrivateKey()));
+        KeyStore keyStore = KeyStore.getInstance("PKCS12");
+        keyStore.load(null, null);
+        Certificate certificate = certificateFactory.generateCertificate(new ByteArrayInputStream(build.getEncoded()));
+        keyStore.setKeyEntry(UUID.randomUUID().toString(), privateKey, pass.toCharArray(), new Certificate[]{certificate});
+        ByteOutputStream byteOutputStream = new ByteOutputStream();
+        keyStore.store(byteOutputStream, pass.toCharArray());
+        return byteOutputStream;
+    }
+
 
     private static byte[] genCertSN() {
         byte[] sn = new byte[16];

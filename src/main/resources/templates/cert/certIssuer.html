@@ -2,7 +2,7 @@
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
-    <title>CA证书</title>
+    <title>证书签发</title>
     <th:block th:include="includes/header :: styles"/>
     <link th:href="@{/plugins/select2/css/select2.min.css}" type="text/css" rel="stylesheet"/>
     <link th:href="@{/plugins/select2/css/select2-bootstrap.min.css}" type="text/css" rel="stylesheet"/>
@@ -84,38 +84,59 @@
                             </div>
                         </div>
                         <div class="portlet-body form">
-                            <form role="form">
+                            <div class="form-body">
+                            <form role="form" id="signForm">
                                 <div class="form-body">
-                                    <div class="form-group form-md-line-input">
-                                        <input type="text" class="form-control has-info" id="subject" placeholder="请输入主题">
-                                        <label for="subject">主题</label>
+                                    <div class="row form-group">
+                                        <label class="control-label col-md-3" for="subject">主题</label>
+                                        <div class="col-md-4">
+
+                                        <input type="text" required class="form-control has-info" name="subject" id="subject" placeholder="请输入主题">
+                                        </div>
                                     </div>
-                                    <div class="form-group form-md-line-input has-info">
-                                        <select class="form-control" id="alg">
-                                            <option value="RSA">RSA</option>
-                                        </select>
-                                        <label for="alg">算法</label>
+                                    <div class="row form-group">
+                                        <label  class="control-label col-md-3" for="alg">算法</label>
+                                        <div class="col-md-4">
+                                            <select class="form-control" id="alg">
+                                                <option value="RSA">RSA</option>
+                                            </select>
+                                        </div>
+
                                     </div>
-                                    <div class="form-group form-md-line-input has-info">
-                                        <select class="form-control" id="algLength">
-                                            <option value="2048">2048</option>
-                                            <option value="4096">4096</option>
-                                        </select>
-                                        <label for="algLength">长度</label>
+                                    <div class="row form-group">
+
+                                        <label class="control-label col-md-3" for="algLength">长度</label>
+                                        <div class="col-md-4">
+                                            <select class="form-control" id="algLength">
+                                                <option value="2048">2048</option>
+                                                <option value="4096">4096</option>
+                                            </select>
+                                        </div>
                                     </div>
-                                    <div class="form-group form-md-line-input has-info">
-                                        <select class="form-control" id="signAlg">
-                                            <option value="SHA224WITHRSA">SHA224WITHRSA</option>
-                                            <option value="SHA256WITHRSA">SHA256WITHRSA</option>
-                                            <option value="SHA384WITHRSA">SHA384WITHRSA</option>
-                                        </select>
-                                        <label for="signAlg">签名算法</label>
+                                    <div class="row form-group">
+
+                                        <label class="control-label col-md-3" for="signAlg">签名算法</label>
+                                        <div class="col-md-4">
+                                            <select class="form-control" id="signAlg">
+                                                <option value="SHA224WITHRSA">SHA224WITHRSA</option>
+                                                <option value="SHA256WITHRSA">SHA256WITHRSA</option>
+                                                <option value="SHA384WITHRSA">SHA384WITHRSA</option>
+                                            </select>
+                                        </div>
+                                    </div>
+                                    <div class="row form-group">
+
+                                        <label class="control-label col-md-3" for="pass">p12口令</label>
+                                        <div class="col-md-4">
+                                            <input type="text" class="form-control" id="pass" name="pass" placeholder="请输入p12口令" required>
+                                        </div>
                                     </div>
                                 </div>
                                 <div class="form-actions noborder center-block">
-                                    <button type="button" class="btn blue">签发</button>
+                                    <button type="button" class="btn blue" id="sign">签发</button>
                                 </div>
                             </form>
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -125,11 +146,13 @@
 </div>
 <th:block th:include="includes/footer :: footer"/>
 <th:block th:include="includes/scripts :: scripts" />
+<script type="text/javascript" th:src="@{/plugins/jquery-validation/js/jquery.validate.min.js}"></script>
+<script type="text/javascript" th:src="@{/plugins/jquery-validation/js/additional-methods.min.js}"></script>
 <script type="text/javascript" th:src="@{/plugins/select2/js/select2.full.min.js}"></script>
-<script type="text/javascript" th:src="@{/pages/scripts/caCert.js}"></script>
+<script type="text/javascript" th:src="@{/pages/scripts/tlsCert.js}"></script>
 <script type="text/javascript">
     $(function () {
-        caCert.init();
+        tlsCert.init();
     })
 </script>
 </body>
