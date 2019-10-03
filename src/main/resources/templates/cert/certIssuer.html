@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>CA证书</title>
+    <th:block th:include="includes/header :: styles"/>
+    <link th:href="@{/plugins/select2/css/select2.min.css}" type="text/css" rel="stylesheet"/>
+    <link th:href="@{/plugins/select2/css/select2-bootstrap.min.css}" type="text/css" rel="stylesheet"/>
+    <style type="text/css">
+        .select2-container--open{
+            z-index:9999999
+        }
+    </style>
+</head>
+<body class="page-header-fixed page-sidebar-closed-hide-logo page-content-white">
+<th:block th:include="includes/top :: top" />
+<!-- END HEADER & CONTENT DIVIDER -->
+<div class="page-container">
+    <div class="page-sidebar-wrapper">
+        <!-- BEGIN SIDEBAR -->
+        <div class="page-sidebar navbar-collapse collapse">
+            <!-- BEGIN SIDEBAR MENU -->
+            <ul class="page-sidebar-menu  page-header-fixed " data-keep-expanded="false" data-auto-scroll="true" data-slide-speed="200" style="padding-top: 20px">
+                <li class="sidebar-toggler-wrapper hide">
+                    <!-- BEGIN SIDEBAR TOGGLER BUTTON -->
+                    <div class="sidebar-toggler"> </div>
+                    <!-- END SIDEBAR TOGGLER BUTTON -->
+                </li>
+                <li class="nav-item start active open">
+                    <a href="javascript:;" class="nav-link nav-toggle">
+                        <i class="icon-home"></i>
+                        <span class="title">证书管理</span>
+                        <span class="selected"></span>
+                        <span class="arrow open"></span>
+                    </a>
+                    <ul class="sub-menu">
+                        <li class="nav-item ">
+                            <a th:href="@{/cacert/calist}" class="nav-link ">
+                                <i class="icon-bar-chart"></i>
+                                <span class="title">CA管理</span>
+                                <span class="selected"></span>
+                            </a>
+                        </li>
+                        <li class="nav-item start active open">
+                            <a th:href="@{/certsign/certIussuer}" class="nav-link ">
+                                <i class="icon-bar-chart"></i>
+                                <span class="title">证书签发</span>
+                                <span class="selected"></span>
+                            </a>
+                        </li>
+                    </ul>
+                </li>
+            </ul>
+            <!-- END SIDEBAR MENU -->
+            <!-- END SIDEBAR MENU -->
+        </div>
+        <!-- END SIDEBAR -->
+    </div>
+    <div class="page-content-wrapper">
+        <div class="page-content">
+            <div class="page-bar">
+                <ul class="page-breadcrumb">
+                    <li>
+                        <a th:href="@{/}">主页</a>
+                        <i class="fa fa-circle"></i>
+                    </li>
+                    <li>
+                        证书签发
+                    </li>
+                </ul>
+            </div>
+            <h3 class="page-title"> 证书签发
+                <small>签发通信证书</small>
+            </h3>
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="portlet light bordered">
+                        <div class="portlet-title">
+                            <div class="caption font-dark">
+                                <i class="icon-settings font-dark"></i>
+                                <span class="caption-subject bold uppercase">证书签发</span>
+                            </div>
+                            <div class="tools">
+                            </div>
+                        </div>
+                        <div class="portlet-body form">
+                            <form role="form">
+                                <div class="form-body">
+                                    <div class="form-group form-md-line-input">
+                                        <input type="text" class="form-control has-info" id="subject" placeholder="请输入主题">
+                                        <label for="subject">主题</label>
+                                    </div>
+                                    <div class="form-group form-md-line-input has-info">
+                                        <select class="form-control" id="alg">
+                                            <option value="RSA">RSA</option>
+                                        </select>
+                                        <label for="alg">算法</label>
+                                    </div>
+                                    <div class="form-group form-md-line-input has-info">
+                                        <select class="form-control" id="algLength">
+                                            <option value="2048">2048</option>
+                                            <option value="4096">4096</option>
+                                        </select>
+                                        <label for="algLength">长度</label>
+                                    </div>
+                                    <div class="form-group form-md-line-input has-info">
+                                        <select class="form-control" id="signAlg">
+                                            <option value="SHA224WITHRSA">SHA224WITHRSA</option>
+                                            <option value="SHA256WITHRSA">SHA256WITHRSA</option>
+                                            <option value="SHA384WITHRSA">SHA384WITHRSA</option>
+                                        </select>
+                                        <label for="signAlg">签名算法</label>
+                                    </div>
+                                </div>
+                                <div class="form-actions noborder center-block">
+                                    <button type="button" class="btn blue">签发</button>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<th:block th:include="includes/footer :: footer"/>
+<th:block th:include="includes/scripts :: scripts" />
+<script type="text/javascript" th:src="@{/plugins/select2/js/select2.full.min.js}"></script>
+<script type="text/javascript" th:src="@{/pages/scripts/caCert.js}"></script>
+<script type="text/javascript">
+    $(function () {
+        caCert.init();
+    })
+</script>
+</body>
+</html>

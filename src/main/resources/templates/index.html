@@ -9,10 +9,56 @@
 <th:block th:include="includes/top :: top" />
 <!-- END HEADER & CONTENT DIVIDER -->
 <div class="page-container">
-    <th:block th:include="includes/menu :: menus" />
+    <div class="page-sidebar-wrapper">
+        <!-- BEGIN SIDEBAR -->
+        <div class="page-sidebar navbar-collapse collapse">
+            <!-- BEGIN SIDEBAR MENU -->
+            <ul class="page-sidebar-menu  page-header-fixed " data-keep-expanded="false" data-auto-scroll="true" data-slide-speed="200" style="padding-top: 20px">
+                <li class="sidebar-toggler-wrapper hide">
+                    <!-- BEGIN SIDEBAR TOGGLER BUTTON -->
+                    <div class="sidebar-toggler"> </div>
+                    <!-- END SIDEBAR TOGGLER BUTTON -->
+                </li>
+                <li class="nav-item">
+                    <a href="javascript:;" class="nav-link nav-toggle">
+                        <i class="icon-home"></i>
+                        <span class="title">证书管理</span>
+                        <span class="selected"></span>
+                        <span class="arrow open"></span>
+                    </a>
+                    <ul class="sub-menu">
+                        <li class="nav-item">
+                            <a th:href="@{/cacert/calist}" class="nav-link ">
+                                <i class="icon-bar-chart"></i>
+                                <span class="title">CA管理</span>
+                                <span class="selected"></span>
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a th:href="@{/certsign/certIussuer}" class="nav-link ">
+                                <i class="icon-bar-chart"></i>
+                                <span class="title">证书签发</span>
+                                <span class="selected"></span>
+                            </a>
+                        </li>
+                    </ul>
+                </li>
+            </ul>
+            <!-- END SIDEBAR MENU -->
+            <!-- END SIDEBAR MENU -->
+        </div>
+        <!-- END SIDEBAR -->
+    </div>
     <div class="page-content-wrapper">
         <div class="page-content">
-            <th:block th:include="includes/slider :: slider" />
+            <div class="page-bar">
+                <ul class="page-breadcrumb">
+                    <li>
+                        <a href="index.html">主页</a>
+                        <i class="fa fa-circle"></i>
+                    </li>
+                </ul>
+            </div>
         </div>
     </div>
 </div>
