@@ -4,11 +4,11 @@ import cn.com.flat.head.pojo.CertRequest;
 import cn.com.flat.head.pojo.X509Cert;
 import cn.com.flat.head.service.CACertService;
 import cn.com.flat.head.util.X509CACertGenerate;
-import com.sun.xml.internal.messaging.saaj.util.ByteOutputStream;
 import org.apache.commons.io.FileUtils;
 import org.apache.shiro.util.StringUtils;
 import org.springframework.stereotype.Service;
 
+import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.security.KeyPair;
 import java.security.KeyPairGenerator;
@@ -49,13 +49,13 @@ public class CACertServiceImpl implements CACertService {
             KeyPairGenerator keyPairGenerator = KeyPairGenerator.getInstance(request.getAlg());
             keyPairGenerator.initialize(Integer.parseInt(request.getAlgLength()));
             KeyPair keyPair = keyPairGenerator.generateKeyPair();
-            ByteOutputStream byteOutputStream = X509CACertGenerate.generateTlsCert(request.getSubject(), keyPair.getPrivate(), keyPair.getPublic(), request.getSignAlg(),
+            ByteArrayOutputStream byteOutputStream = X509CACertGenerate.generateTlsCert(request.getSubject(), keyPair.getPrivate(), keyPair.getPublic(), request.getSignAlg(),
                     request.getPass());
             String filePath = UUID.randomUUID().toString();
             if (byteOutputStream == null) {
                 return "generateError";
             }
-            FileUtils.writeByteArrayToFile(new File("./" + filePath), byteOutputStream.getBytes());
+            FileUtils.writeByteArrayToFile(new File("./" + filePath), byteOutputStream.toByteArray());
             return filePath;
         } catch (Exception e) {
             e.printStackTrace();

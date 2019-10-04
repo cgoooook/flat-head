@@ -2,7 +2,6 @@ package cn.com.flat.head.util;
 
 
 import cn.com.flat.head.pojo.X509Cert;
-import com.sun.xml.internal.messaging.saaj.util.ByteOutputStream;
 import org.bouncycastle.asn1.ASN1EncodableVector;
 import org.bouncycastle.asn1.ASN1ObjectIdentifier;
 import org.bouncycastle.asn1.DERSequence;
@@ -15,9 +14,9 @@ import org.bouncycastle.cert.X509v3CertificateBuilder;
 import org.bouncycastle.operator.DigestCalculator;
 import org.bouncycastle.operator.bc.BcDigestCalculatorProvider;
 import org.bouncycastle.operator.jcajce.JcaContentSignerBuilder;
-import sun.security.x509.X509CertImpl;
 
 import java.io.ByteArrayInputStream;
+import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.FileOutputStream;
 import java.math.BigInteger;
@@ -59,7 +58,7 @@ public class X509CACertGenerate {
         return true;
     }
 
-    public static ByteOutputStream generateTlsCert(String dn, PrivateKey privateKey, PublicKey publicKey, String signAlg, String pass) throws Exception {
+    public static ByteArrayOutputStream generateTlsCert(String dn, PrivateKey privateKey, PublicKey publicKey, String signAlg, String pass) throws Exception {
         List<X509Cert> caCertList = KeyTools.getCACertList();
         if (caCertList.isEmpty()) {
             return null;
@@ -90,7 +89,7 @@ public class X509CACertGenerate {
         keyStore.load(null, null);
         Certificate certificate = certificateFactory.generateCertificate(new ByteArrayInputStream(build.getEncoded()));
         keyStore.setKeyEntry(UUID.randomUUID().toString(), privateKey, pass.toCharArray(), new Certificate[]{certificate});
-        ByteOutputStream byteOutputStream = new ByteOutputStream();
+        ByteArrayOutputStream byteOutputStream = new ByteArrayOutputStream();
         keyStore.store(byteOutputStream, pass.toCharArray());
         return byteOutputStream;
     }
