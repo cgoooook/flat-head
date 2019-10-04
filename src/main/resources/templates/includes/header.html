@@ -10,4 +10,7 @@
     <link rel="stylesheet" th:href="@{/layouts/css/layout.min.css}">
     <link rel="stylesheet" th:href="@{/layouts/css/themes/darkblue.min.css}">
     <link rel="stylesheet" th:href="@{/layouts/css/custom.min.css}">
+    <script th:inline="javascript">
+        var LANG_COUNTRY = [[${#locale.language+'_'+#locale.country}]];
+    </script>
 </th:block>

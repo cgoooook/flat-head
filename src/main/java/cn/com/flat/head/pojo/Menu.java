@@ -26,4 +26,8 @@ public class Menu {
 
     private String local;
 
+    private boolean leaf;
+
+    private String permToken;
+
 }

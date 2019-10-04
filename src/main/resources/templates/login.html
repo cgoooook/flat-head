@@ -2,7 +2,7 @@
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
-    <title>Login</title>
+    <title th:text="#{login.title}"></title>
     <th:block th:include="includes/header :: styles"/>
     <link th:href="@{/plugins/uniform/css/uniform.default.css}" rel="stylesheet" type="text/css" />
     <link type="text/css" rel="stylesheet" th:href="@{/pages/css/login.min.css}">

@@ -2,6 +2,31 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
 <mapper namespace="cn.com.flat.head.dal.mappers.MenuMapper">
 
+    <resultMap id="MenuMap" type="cn.com.flat.head.pojo.Menu">
+        <id column="menu_id" property="menuId" />
+        <result column="menu_name" property="menuName" />
+        <result column="menu_icon" property="menuIcon" />
+        <result column="patent_id" property="parentId" />
+        <result column="menu_url" property="menuUrl" />
+        <result column="level" property="level" />
+        <result column="weight" property="weight" />
+        <result column="disable" property="disabled" />
+        <result column="local" property="local" />
+        <result column="leaf" property="leaf" />
+        <result column="perm_token" property="permToken" />
+    </resultMap>
+
+    <select id="getEnableMenuList" resultMap="MenuMap">
+        select * from sys_acl_menu where disabled=0
+    </select>
+
+    <select id="getMenuListByLevel" resultMap="MenuMap">
+        select * from sys_acl_menu where level=#{level} and disabled=0 order by weight
+    </select>
+
+    <select id="getMenuList" resultMap="MenuMap">
+        select * from sys_acl_menu
+    </select>
 
 
 </mapper>

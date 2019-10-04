@@ -8,7 +8,7 @@
 
     <description>Spring common description.</description>
 
-    <context:property-placeholder ignore-resource-not-found="true" location="file:/config/application.properties"/>
+    <context:property-placeholder ignore-resource-not-found="true" location="file://config/application.properties"/>
 
     <task:annotation-driven/>
 
@@ -40,7 +40,7 @@
         </property>
     </bean>
     <bean class="org.mybatis.spring.mapper.MapperScannerConfigurer">
-        <property name="basePackage" value="cn.com.kms"/>
+        <property name="basePackage" value="cn.com.flat.head"/>
         <property name="sqlSessionFactoryBeanName" value="sqlSessionFactory"/>
         <property name="annotationClass" value="cn.com.flat.head.mybatis.RepositoryImpl"/>
     </bean>
