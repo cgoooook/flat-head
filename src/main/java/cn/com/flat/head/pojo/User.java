@@ -16,7 +16,7 @@ public class User {
 
     private String password;
 
-    private String phbKey;
+    private String pubKey;
 
     private int accountType;
 
