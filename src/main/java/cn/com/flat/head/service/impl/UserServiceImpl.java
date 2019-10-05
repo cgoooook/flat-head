@@ -6,7 +6,7 @@ import org.springframework.stereotype.Service;
 /**
  * Created by poney on 2019-09-30.
  */
-@Service
+@Service("userService")
 public class UserServiceImpl implements UserService {
 
 

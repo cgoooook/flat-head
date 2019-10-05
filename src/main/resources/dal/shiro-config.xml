@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd">
+
+    <description>Shiro安全配置</description>
+
+    <!-- Shiro's main business-tier object for web-enabled applications -->
+    <bean id="securityManager" class="org.apache.shiro.web.mgt.DefaultWebSecurityManager">
+        <property name="realm" ref="shiroDbRealm"/>
+        <property name="cacheManager" ref="shiroEhcacheManager"/>
+    </bean>
+
+    <!-- 項目自定义的Realm -->
+    <bean id="shiroDbRealm" class="cn.com.flat.head.security.ShiroDbRealm">
+        <property name="userService" ref="userService"/>
+    </bean>
+
+    <!-- Shiro Filter -->
+    <bean id="shiroFilter" class="org.apache.shiro.spring.web.ShiroFilterFactoryBean">
+        <property name="securityManager" ref="securityManager"/>
+        <property name="loginUrl" value="/login"/>
+        <property name="filterChainDefinitions">
+            <value>
+                /global/** = anon
+                /i18n/** = anon
+                /pages/** = anon
+                /layouts/** = anon
+                /plugins/** = anon
+                /template/** = anon
+                /login = anon
+                /logout = logout
+                /** = user
+            </value>
+        </property>
+    </bean>
+
+    <bean id="shiroEhcacheManager" class="org.apache.shiro.cache.ehcache.EhCacheManager">
+        <property name="cacheManagerConfigFile" value="classpath:dal/ehcache-shiro.xml"/>
+    </bean>
+
+    <bean id="lifecycleBeanPostProcessor" class="org.apache.shiro.spring.LifecycleBeanPostProcessor"/>
+
+</beans>

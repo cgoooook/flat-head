@@ -9,7 +9,7 @@ import org.springframework.context.annotation.ImportResource;
 
 @SpringBootApplication
 @ImportAutoConfiguration(MessageSourceAutoConfiguration.class)
-@ImportResource(value = {"classpath:dal/flat-application-dal.xml"})
+@ImportResource(value = {"classpath:dal/flat-application-dal.xml", "classpath:dal/shiro-config.xml"})
 public class FlatHeadServerApplication {
 
     public static void main(String[] args) {
