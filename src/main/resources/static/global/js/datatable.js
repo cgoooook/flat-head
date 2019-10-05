@@ -39,28 +39,28 @@ var Datatable = function() {
                 filterApplyAction: "filter",
                 filterCancelAction: "filter_cancel",
                 resetGroupActionInputOnSuccess: true,
-                loadingMessage: 'Loading...',
+                loadingMessage: flat.i18n("datatables.loading"),
                 dataTable: {
                     "dom": "<'row'<'col-md-8 col-sm-12'pli><'col-md-4 col-sm-12'<'table-group-actions pull-right'>>r><'table-responsive't><'row'<'col-md-8 col-sm-12'pli><'col-md-4 col-sm-12'>>", // datatable layout
                     "pageLength": 10, // default records per page
                     "language": { // language settings
                         // metronic spesific
-                        "metronicGroupActions": "_TOTAL_ records selected:  ",
-                        "metronicAjaxRequestGeneralError": "Could not complete request. Please check your internet connection",
+                        "metronicGroupActions": "_TOTAL_ " + flat.i18n("datatables.recordSelect"),
+                        "metronicAjaxRequestGeneralError": flat.i18n("datatables.connectedFail"),
 
                         // data tables spesific
-                        "lengthMenu": "<span class='seperator'>|</span>View _MENU_ records",
-                        "info": "<span class='seperator'>|</span>Found total _TOTAL_ records",
-                        "infoEmpty": "No records found to show",
-                        "emptyTable": "No data available in table",
-                        "zeroRecords": "No matching records found",
+                        "lengthMenu": "<span class='seperator'>|</span>" + flat.i18n("datatables.page") + " _MENU_ " + flat.i18n("datatables.records"),
+                        "info": "<span class='seperator'>|</span>" + flat.i18n("datatables.foundTotal") + " _TOTAL_ "  + flat.i18n("datatables.records"),
+                        "infoEmpty": flat.i18n("datatables.infoEmpty"),
+                        "emptyTable": flat.i18n("datatables.emptyTable"),
+                        "zeroRecords": flat.i18n("datatables.zeroRecords"),
                         "paginate": {
-                            "previous": "Prev",
-                            "next": "Next",
-                            "last": "Last",
-                            "first": "First",
-                            "page": "Page",
-                            "pageOf": "of"
+                            "previous": flat.i18n("datatables.prev"),
+                            "next": flat.i18n("datatables.next"),
+                            "last": flat.i18n("datatables.last"),
+                            "first": flat.i18n("datatables.first"),
+                            "page": flat.i18n("datatables.pageOf"),
+                            "pageOf": flat.i18n("datatables.of")
                         }
                     },
 
@@ -78,7 +78,7 @@ var Datatable = function() {
                     "ajax": { // define ajax settings
                         "url": "", // ajax URL
                         "type": "POST", // request type
-                        "timeout": 20000,
+                        "timeout": 5000,
                         "data": function(data) { // add request parameters before submit
                             $.each(ajaxParams, function(key, value) {
                                 data[key] = value;
