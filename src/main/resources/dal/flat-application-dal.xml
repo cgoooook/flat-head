@@ -8,7 +8,7 @@
 
     <description>Spring common description.</description>
 
-    <context:property-placeholder ignore-resource-not-found="true" location="file://config/application.properties"/>
+    <context:property-placeholder ignore-resource-not-found="true" location="file://config/application.properties,classpath*:conf/application.properties"/>
 
     <task:annotation-driven/>
 
