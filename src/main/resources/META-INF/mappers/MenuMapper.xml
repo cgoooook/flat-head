@@ -6,7 +6,7 @@
         <id column="menu_id" property="menuId" />
         <result column="menu_name" property="menuName" />
         <result column="menu_icon" property="menuIcon" />
-        <result column="patent_id" property="parentId" />
+        <result column="parent_id" property="parentId" />
         <result column="menu_url" property="menuUrl" />
         <result column="level" property="level" />
         <result column="weight" property="weight" />

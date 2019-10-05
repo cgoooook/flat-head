@@ -60,7 +60,7 @@ public class MenuServiceImpl implements MenuService {
             if (!map.containsKey(menu.getParentId())) {
                 map.put(menu.getParentId(), new ArrayList<>());
             }
-            if ("".equals(menu.getPermToken())) {
+            if (!"".equals(menu.getPermToken())) {
                 map.get(menu.getParentId()).add(menuUrlHandle(menu));
             }
         }

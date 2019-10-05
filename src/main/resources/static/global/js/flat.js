@@ -10,22 +10,22 @@ var flat = function () {
     };
 
     var _initMenu = function () {
-            var dtd = $.Deferred();
-            var $sidebarWrapper = $(".page-sidebar-wrapper");
-            if ($sidebarWrapper.size() === 1) {
-                $.ajax({
-                    url: "/menu/sidebar"+"?random="+Math.random(),
-                    dataType: "json",
-                    type: "get"
-                }).done(function (data) {
-                    var sidebarData = data.data;
-                    var sidebarHtml = flat.remoteTemplate("/template/includes/menu.tpl", sidebarData);
-                    localStorage["SidebarHtml"] = sidebarHtml;
-                    $sidebarWrapper.html(sidebarHtml);
-                    dtd.resolve();
-                });
-            }
-            return dtd.promise();
+        var dtd = $.Deferred();
+        var $sidebarWrapper = $(".page-sidebar-menu");
+        if ($sidebarWrapper.size() === 1) {
+            $.ajax({
+                url: "/menu/sidebar" + "?random=" + Math.random(),
+                dataType: "json",
+                type: "get"
+            }).done(function (data) {
+                var sidebarData = data.data;
+                var sidebarHtml = flat.remoteTemplate("/template/menu.html", sidebarData);
+                localStorage["SidebarHtml"] = sidebarHtml;
+                $sidebarWrapper.html(sidebarHtml);
+                dtd.resolve();
+            });
+        }
+        return dtd.promise();
     };
 
 
