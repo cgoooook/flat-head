@@ -1,6 +1,7 @@
 <!DOCTYPE html>
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
 <th:block th:fragment="menus">
+    <input type="hidden" id="menuId" th:if="${menu != null}" th:value="${menu.menuId}">
     <div class="page-sidebar-wrapper">
         <!-- BEGIN SIDEBAR -->
         <div class="page-sidebar navbar-collapse collapse">
