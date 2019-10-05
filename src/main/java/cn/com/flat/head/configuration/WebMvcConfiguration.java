@@ -27,7 +27,6 @@ public class WebMvcConfiguration implements WebMvcConfigurer {
     @Bean
     public LocaleResolver localeResolver() {
         SessionLocaleResolver slr = new SessionLocaleResolver();
-        // 默认语言
         slr.setDefaultLocale(Locale.SIMPLIFIED_CHINESE);
         return slr;
     }
@@ -35,7 +34,6 @@ public class WebMvcConfiguration implements WebMvcConfigurer {
     @Bean
     public LocaleChangeInterceptor localeChangeInterceptor() {
         LocaleChangeInterceptor lci = new LocaleChangeInterceptor();
-        // 参数名
         lci.setParamName("lang");
         return lci;
     }
