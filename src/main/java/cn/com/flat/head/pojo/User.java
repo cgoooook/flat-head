@@ -20,6 +20,10 @@ public class User {
 
     private int accountType;
 
+    private String lang;
+
+    private String remember;
+
 
 
 }

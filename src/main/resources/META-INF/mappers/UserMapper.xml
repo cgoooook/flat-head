@@ -14,5 +14,13 @@
     <select id="getUserByUsername" resultMap="UserMap">
         select * from sys_acl_user where username=#{username}
     </select>
-    
+
+    <select id="getUserRolesByUsername" resultType="java.lang.String">
+        select * from sys_acl_role acr, sys_acl_user acu , sys_acl_user_role aur where acr.role_id=aur.role_id and aur.user_id=acu.user_id and acu.username=#{username}
+    </select>
+    <select id="getUserTokensByUserId" resultType="java.lang.String">
+        select distinct ap.perm_token from sys_acl_user_role acr, sys_acl_role_permission acp, sys_acl_permission ap where acr.user_id=#{userId}
+                and acr.role_id=acp.role_id and acp.perm_id=ap.permission_id
+    </select>
+
 </mapper>
