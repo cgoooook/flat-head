@@ -12,4 +12,10 @@
         <setting name="callSettersOnNulls" value="true"/>
     </settings>
 
+    <plugins>
+        <plugin interceptor="cn.com.flat.head.mybatis.interceptor.PageableInterceptor">
+            <property name="dialect" value="mysql"/>
+        </plugin>
+    </plugins>
+
 </configuration>
