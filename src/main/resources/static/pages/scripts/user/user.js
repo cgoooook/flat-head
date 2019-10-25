@@ -10,15 +10,16 @@ var User = function () {
             src: $table,
             dataTable: {
                 "ajax": {
-                    "url": "admin/user/findAllUser"
+                    "url": "/sys/user/list"
                 },
                 "columns": [
-                    {data: 'loginName', orderable: true},
+                    {data: 'nickName', orderable: true},
                     {data: 'username', orderable: true},
                     {
                         data: 'operate', orderable: false,
                         render: function (data, type, full) {
-                            return template("actionBtn", {data: data, type: type, full: full});
+                            // return template("actionBtn", {data: data, type: type, full: full});
+                            return "";
                         }
                     }
                 ]

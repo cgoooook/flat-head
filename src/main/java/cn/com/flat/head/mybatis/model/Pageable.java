@@ -20,6 +20,7 @@ public class Pageable {
     private String sortOrder;
     private String sortFieldType;
     private String[] sumColumns;
+    private int draw;
     private Map<String, String> sumResult;
 
     public Pageable() {
@@ -104,5 +105,11 @@ public class Pageable {
         this.sumResult = sumResult;
     }
 
+    public int getDraw() {
+        return draw;
+    }
 
+    public void setDraw(int draw) {
+        this.draw = draw;
+    }
 }

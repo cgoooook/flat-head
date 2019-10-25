@@ -14,4 +14,6 @@ public interface UserDao {
     List<String> getUserRoleByUsername(String username);
 
     List<String> getUserTokensByUsername(String username);
+
+    List<User> getUserListPage(User user);
 }

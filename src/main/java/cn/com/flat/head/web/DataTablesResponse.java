@@ -9,28 +9,28 @@ import java.util.List;
  */
 public class DataTablesResponse<T> {
 
-    private Pageable pageable;
+    private Pageable page;
 
-    private List<T> resultList;
+    private List<T> data;
 
     public DataTablesResponse(Pageable pageable, List<T> resultList) {
-        this.pageable = pageable;
-        this.resultList = resultList;
+        this.page = pageable;
+        this.data = resultList;
     }
 
-    public Pageable getPageable() {
-        return pageable;
+    public Pageable getPage() {
+        return page;
     }
 
-    public void setPageable(Pageable pageable) {
-        this.pageable = pageable;
+    public void setPage(Pageable page) {
+        this.page = page;
     }
 
-    public List<T> getResultList() {
-        return resultList;
+    public List<T> getData() {
+        return data;
     }
 
-    public void setResultList(List<T> resultList) {
-        this.resultList = resultList;
+    public void setData(List<T> data) {
+        this.data = data;
     }
 }

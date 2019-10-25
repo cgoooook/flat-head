@@ -32,4 +32,9 @@ public class UserDaoImpl implements UserDao {
         User user = userMapper.getUserByUsername(username);
         return userMapper.getUserTokensByUserId(user.getUserId());
     }
+
+    @Override
+    public List<User> getUserListPage(User user) {
+        return userMapper.getUserListPage(user);
+    }
 }

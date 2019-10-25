@@ -22,5 +22,8 @@
         select distinct ap.perm_token from sys_acl_user_role acr, sys_acl_role_permission acp, sys_acl_permission ap where acr.user_id=#{userId}
                 and acr.role_id=acp.role_id and acp.perm_id=ap.permission_id
     </select>
+    <select id="getUserListPage" resultMap="UserMap">
+        select * from sys_acl_user
+    </select>
 
 </mapper>

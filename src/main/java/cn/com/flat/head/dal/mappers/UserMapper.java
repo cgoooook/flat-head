@@ -16,4 +16,6 @@ public interface UserMapper {
     List<String> getUserRolesByUsername(String username);
 
     List<String> getUserTokensByUserId(int userId);
+
+    List<User> getUserListPage(User user);
 }

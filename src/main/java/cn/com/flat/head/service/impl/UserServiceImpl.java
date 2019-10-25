@@ -1,6 +1,8 @@
 package cn.com.flat.head.service.impl;
 
 import cn.com.flat.head.dal.UserDao;
+import cn.com.flat.head.mybatis.interceptor.PageableInterceptor;
+import cn.com.flat.head.mybatis.model.Pageable;
 import cn.com.flat.head.pojo.User;
 import cn.com.flat.head.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -31,5 +33,11 @@ public class UserServiceImpl implements UserService {
     @Override
     public List<String> getUserTokensByUsername(String username) {
         return userDao.getUserTokensByUsername(username);
+    }
+
+    @Override
+    public List<User> getUserListPage(User user, Pageable pageable) {
+        PageableInterceptor.startPage(pageable);
+        return userDao.getUserListPage(user);
     }
 }
