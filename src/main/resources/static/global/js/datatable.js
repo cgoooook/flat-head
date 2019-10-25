@@ -15,11 +15,11 @@ var Datatable = function() {
     var countSelectedRecords = function() {
         var selected = $('tbody > tr > td:nth-child(1) input[type="checkbox"]:checked', table).size();
         var text = tableOptions.dataTable.language.metronicGroupActions;
-        if (selected > 0) {
-            $('.table-group-actions > span', tableWrapper).text(text.replace("_TOTAL_", selected));
-        } else {
-            $('.table-group-actions > span', tableWrapper).text("");
-        }
+        // if (selected > 0) {
+        //     $('.table-group-actions > span', tableWrapper).text(text.replace("_TOTAL_", selected));
+        // } else {
+        //     $('.table-group-actions > span', tableWrapper).text("");
+        // }
     };
 
     var reloadTable = function (flag) {

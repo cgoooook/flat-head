@@ -9,21 +9,43 @@ import java.util.List;
  */
 public class DataTablesResponse<T> {
 
-    private Pageable page;
+    private int recordsTotal;
+    private int recordsFiltered;
+    private int draw;
 
     private List<T> data;
 
     public DataTablesResponse(Pageable pageable, List<T> resultList) {
-        this.page = pageable;
+        if (pageable != null) {
+            this.recordsTotal = pageable.getTotalResult();
+            this.recordsFiltered = pageable.getTotalResult();
+            this.draw = pageable.getDraw();
+        }
         this.data = resultList;
     }
 
-    public Pageable getPage() {
-        return page;
+    public int getRecordsTotal() {
+        return recordsTotal;
     }
 
-    public void setPage(Pageable page) {
-        this.page = page;
+    public void setRecordsTotal(int recordsTotal) {
+        this.recordsTotal = recordsTotal;
+    }
+
+    public int getRecordsFiltered() {
+        return recordsFiltered;
+    }
+
+    public void setRecordsFiltered(int recordsFiltered) {
+        this.recordsFiltered = recordsFiltered;
+    }
+
+    public int getDraw() {
+        return draw;
+    }
+
+    public void setDraw(int draw) {
+        this.draw = draw;
     }
 
     public List<T> getData() {
