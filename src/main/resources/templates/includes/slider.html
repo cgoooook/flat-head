@@ -2,15 +2,23 @@
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
 <th:block th:fragment="slider">
     <div class="page-bar">
-        <ul class="page-breadcrumb">
-            <li>
-                <a href="index.html">Home</a>
+        <ul th:if="${menu == null}"class="page-breadcrumb">
+            <li >
+                <a th:href="@{/}">Home</a>
                 <i class="fa fa-circle"></i>
             </li>
             <li>
                 <span>Dashboard</span>
             </li>
         </ul>
-    </div>
+        <ul th:if="${menu != null}"class="page-breadcrumb">
+            <li >
+                <a th:href="@{/}" th:text="${menu.menuName}"></a>
+                <i class="fa fa-circle"></i>
+            </li>
+            <li>
+                <span>Dashboard</span>
+            </li>
+        </ul></div>
     <!-- END PAGE BAR -->
 </th:block>

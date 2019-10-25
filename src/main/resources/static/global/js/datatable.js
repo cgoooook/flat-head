@@ -22,6 +22,10 @@ var Datatable = function() {
         }
     };
 
+    var reloadTable = function (flag) {
+        dataTable.draw(flag)
+    };
+
     return {
 
         //main function to initiate the module
@@ -30,7 +34,14 @@ var Datatable = function() {
             if (!$().dataTable) {
                 return;
             }
-
+            var fixedHeaderOffset = 0;
+            if (App.getViewPort().width < App.getResponsiveBreakpoint('md')) {
+                if ($('.page-header').hasClass('page-header-fixed-mobile')) {
+                    fixedHeaderOffset = $('.page-header').outerHeight(true);
+                }
+            } else if ($('.page-header').hasClass('navbar-fixed-top')) {
+                fixedHeaderOffset = $('.page-header').outerHeight(true);
+            }
             the = this;
 
             // default settings
@@ -80,9 +91,33 @@ var Datatable = function() {
                         "type": "POST", // request type
                         "timeout": 5000,
                         "data": function(data) { // add request parameters before submit
-                            $.each(ajaxParams, function(key, value) {
-                                data[key] = value;
-                            });
+                            if(options.onQuery){
+                                options.onQuery(data);
+                            }
+                            if (data.order[0]) {
+                                var sortColumn = options.dataTable.columns[data.order[0].column];
+                                data.sortField = (sortColumn.sortField === undefined || sortColumn.sortField === '') ?
+                                    sortColumn.data.replace(/([A-Z])/g, "_$1").toLowerCase() : sortColumn.sortField;
+                                if (sortColumn.sortOrder === undefined) {
+                                    data.sortOrder = data.order[0].dir
+                                }else{
+                                    data.sortOrder = (typeof sortColumn.sortOrder == "function") ?
+                                        sortColumn.sortOrder(data.order[0].dir) : sortColumn.sortOrder;
+                                }
+                                data.sortFieldType = (sortColumn.sortFieldType === undefined || sortColumn.sortFieldType === '') ?
+                                    "" : sortColumn.sortFieldType
+                            } else {
+                                data.sortField = "";
+                                data.sortOrder = "";
+                                data.sortFieldType = "";
+                            }
+                            data.pageNo=parseInt(data.start/data.length,10)+1;
+                            data.pageSize=data.length;
+                            delete data.columns;
+                            delete data.order;
+                            delete data.search;
+                            delete data.length;
+                            delete data.start;
                             App.blockUI({
                                 message: tableOptions.loadingMessage,
                                 target: tableContainer,
@@ -92,21 +127,6 @@ var Datatable = function() {
                             });
                         },
                         "dataSrc": function(res) { // Manipulate the data returned from the server
-                            if (res.customActionMessage) {
-                                App.alert({
-                                    type: (res.customActionStatus == 'OK' ? 'success' : 'danger'),
-                                    icon: (res.customActionStatus == 'OK' ? 'check' : 'warning'),
-                                    message: res.customActionMessage,
-                                    container: tableWrapper,
-                                    place: 'prepend'
-                                });
-                            }
-
-                            if (res.customActionStatus) {
-                                if (tableOptions.resetGroupActionInputOnSuccess) {
-                                    $('.table-group-action-input', tableWrapper).val("");
-                                }
-                            }
 
                             if ($('.group-checkable', table).size() === 1) {
                                 $('.group-checkable', table).attr("checked", false);
@@ -297,6 +317,10 @@ var Datatable = function() {
 
         getTable: function() {
             return table;
+        },
+
+        reload: function (flag) {
+            reloadTable(flag)
         }
 
     };
