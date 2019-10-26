@@ -1,0 +1,101 @@
+<div class="modal-dialog modal-lg">
+    <div class="modal-content" id="modalContent">
+        <div class="modal-header">
+            <button type="button" class="close" data-dismiss="modal" aria-hidden="true"></button>
+            <h4 class="modal-title font-green bold" id="modalTitle">{{i18n('user.addUser')}}</h4>
+        </div>
+        <div class="modal-body form">
+            <form class="form-horizontal" id="dialogForm">
+                <div class="form-body">
+                    <div class="row">
+                        <input type="hidden" id="userId" value="{{user.userId}}">
+                        <div class="col-md-12">
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label class="control-label col-md-4">{{i18n('user.nickname')}}
+                                        <span class="required" aria-required="true">* </span>
+                                    </label>
+
+
+                                    <div class="col-md-8">
+                                        <input type="text" class="form-control input-medium" id="nickName"
+                                               name="nickName" placeholder="请输入账号" required
+                                               value="{{user.nickName}}"/>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label class="control-label col-md-4">{{i18n('user.username')}}
+                                        <span class="required" aria-required="true">* </span>
+                                    </label>
+
+                                    <div class="col-md-8">
+                                        <input type="text" class="form-control input-medium" id="username"
+                                               name="username" placeholder="请输入用户名" disabled
+                                               value="{{user.username}}"/>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-12">
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label class="control-label col-md-4">{{i18n('user.password')}}
+                                    </label>
+
+                                    <div class="col-sm-6">
+                                        <input type="password" class="form-control input-medium"
+                                               id="password" name="password"
+                                               maxlength="16" placeholder="请输入密码"
+                                               value=""/>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label class="control-label col-md-4">{{i18n('user.rePassword')}}
+                                    </label>
+
+                                    <div class="col-sm-6">
+                                        <input type="password" class="form-control input-medium"
+                                               id="repassword" name="repassword"
+                                               maxlength="16" placeholder="请确认密码"
+                                               value=""/>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-12">
+                            <div class="form-group">
+                                <label class="col-md-2 control-label">{{i18n('user.role')}}</label>
+
+                                <div class="col-md-10">
+                                    <select id="roleId" class="select2 form-control" style="width:695px"
+                                            placeholder="{{i18n('user.role')}}">
+                                        {{each roleList as role}}
+                                        {{if role.roleId == user.roleId}}
+                                        <option value="{{role.roleId}}" selected>{{role.roleName}}</option>
+                                        {{else}}
+                                        <option value="{{role.roleId}}" >{{role.roleName}}</option>
+                                        {{/if}}
+                                        {{/each}}
+                                    </select>
+                                    <span class="help-block"></span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </form>
+        </div>
+        <div class="modal-footer">
+            <button type="button" class="btn btn-outline blue" id="addBtn">{{i18n('common.save')}}</button>
+            <button type="button" class="btn btn-outline grey-gallery" data-dismiss="modal">{{i18n('common.cancelBtn')}}</button>
+        </div>
+    </div>
+</div>

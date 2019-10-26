@@ -42,4 +42,14 @@ public class UserDaoImpl implements UserDao {
     public boolean deleteUserById(int userId) {
         return false;
     }
+
+    @Override
+    public User addUser(User user) {
+        return null;
+    }
+
+    @Override
+    public User getUserById(String userId) {
+        return userMapper.getUserById(userId);
+    }
 }

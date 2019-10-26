@@ -42,8 +42,18 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public boolean deleteUserById(int userId) {
+    public boolean deleteUserById(String userId) {
 
         return true;
+    }
+
+    @Override
+    public boolean addUser(User user) {
+        return true;
+    }
+
+    @Override
+    public User getUserById(String id) {
+        return userDao.getUserById(id);
     }
 }

@@ -18,6 +18,10 @@ public interface UserService {
 
     List<User> getUserListPage(User user, Pageable pageable);
 
-    boolean deleteUserById(int userId);
+    boolean deleteUserById(String userId);
+
+    boolean addUser(User user);
+
+    User getUserById(String id);
 
 }

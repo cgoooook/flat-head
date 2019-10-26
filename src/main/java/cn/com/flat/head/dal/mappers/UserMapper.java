@@ -15,11 +15,15 @@ public interface UserMapper {
 
     List<String> getUserRolesByUsername(String username);
 
-    List<String> getUserTokensByUserId(int userId);
+    List<String> getUserTokensByUserId(String userId);
 
     List<User> getUserListPage(User user);
 
     int deleteUserById(int userId);
 
     int deleteUserRole(int userId);
+
+    User addUser(User user);
+
+    User getUserById(String userId);
 }
