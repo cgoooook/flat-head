@@ -18,8 +18,7 @@ var User = function () {
                     {
                         data: 'operate', orderable: false,
                         render: function (data, type, full) {
-                            // return template("actionBtn", {data: data, type: type, full: full});
-                            return "";
+                            return template("actionBtn", {data: data, type: type, full: full});
                         }
                     }
                 ]

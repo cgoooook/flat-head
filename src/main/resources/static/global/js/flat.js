@@ -40,6 +40,9 @@ var flat = function () {
 
     return {
         init: function () {
+            template.defaults.imports.i18n = function(key) {
+                return flat.i18n(key);
+            };
             $.when(_initMenu())
                 .done(function () {
                     _initMenuStyle();
