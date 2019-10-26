@@ -10,7 +10,14 @@
         <result column="pub_key" property="pubKey" />
         <result column="account_type" property="accountType" />
     </resultMap>
-    
+
+    <delete id="deleteUserById">
+        delete from sys_acl_user where user_id = #{userId}
+    </delete>
+    <delete id="deleteUserRole">
+        delete from sys_acl_user_role where user_id = #{userId}
+    </delete>
+
     <select id="getUserByUsername" resultMap="UserMap">
         select * from sys_acl_user where username=#{username}
     </select>

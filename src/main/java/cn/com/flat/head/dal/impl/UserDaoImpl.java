@@ -37,4 +37,9 @@ public class UserDaoImpl implements UserDao {
     public List<User> getUserListPage(User user) {
         return userMapper.getUserListPage(user);
     }
+
+    @Override
+    public boolean deleteUserById(int userId) {
+        return false;
+    }
 }

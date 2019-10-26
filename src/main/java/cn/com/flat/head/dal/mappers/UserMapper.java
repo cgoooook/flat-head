@@ -18,4 +18,8 @@ public interface UserMapper {
     List<String> getUserTokensByUserId(int userId);
 
     List<User> getUserListPage(User user);
+
+    int deleteUserById(int userId);
+
+    int deleteUserRole(int userId);
 }

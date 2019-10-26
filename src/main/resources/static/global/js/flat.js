@@ -40,7 +40,7 @@ var flat = function () {
 
     return {
         init: function () {
-            template.defaults.imports.i18n = function(key) {
+            template.defaults.imports.i18n = function (key) {
                 return flat.i18n(key);
             };
             $.when(_initMenu())
@@ -74,6 +74,37 @@ var flat = function () {
                 });
             }
             return render(data);
+        },
+
+        showConfirm: function (param) {
+            var defaultData = {
+                confirmTitle: flat.i18n("common.confirmTitle"),
+                confirmContent: flat.i18n("common.confirmContent"),
+                confirmBtn: flat.i18n("common.confirmBtn"),
+                cancelBtn: flat.i18n("common.cancelBtn"),
+                confirmDialogId: "confirmDialog",
+                confirmBtnId: "confirmBtn",
+                confirmDialogWrapperId: "confirmDialogWrapper"
+            };
+            var data = $.extend(true, {}, defaultData, param);
+            if ($("#" + data.confirmDialogWrapperId).size() === 0) {
+                $("body").append("<div id='" + data.confirmDialogWrapperId + "'></div>")
+            }
+            $("#" + data.confirmDialogWrapperId).html(flat.remoteTemplate("/template/commons/confirm.html", data));
+            $("#" + data.confirmDialogId).modal("show")
+        },
+
+        ajaxCallback: function (data) {
+            if (data.ok) {
+                toast.success(data.returnMsg);
+                return true;
+            } else if (data.error) {
+                toast.error(data.returnMsg);
+                return false;
+            } else if (data.warn) {
+                toast.warn(data.returnMsg);
+                return true;
+            }
         }
     }
 

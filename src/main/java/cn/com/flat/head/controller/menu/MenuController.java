@@ -2,6 +2,7 @@ package cn.com.flat.head.controller.menu;
 
 import cn.com.flat.head.service.MenuService;
 import cn.com.flat.head.web.AjaxResponse;
+import cn.com.flat.head.web.ReturnState;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -22,7 +23,7 @@ public class MenuController {
     @ResponseBody
     public AjaxResponse sidebar() {
         AjaxResponse ajaxResponse = new AjaxResponse();
-        ajaxResponse.setOk(true);
+        ajaxResponse.setReturnState(ReturnState.OK);
         ajaxResponse.setData(menuService.initMenuData());
         return ajaxResponse;
     }

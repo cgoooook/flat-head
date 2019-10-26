@@ -40,4 +40,10 @@ public class UserServiceImpl implements UserService {
         PageableInterceptor.startPage(pageable);
         return userDao.getUserListPage(user);
     }
+
+    @Override
+    public boolean deleteUserById(int userId) {
+
+        return true;
+    }
 }

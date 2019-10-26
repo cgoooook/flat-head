@@ -17,4 +17,7 @@ public interface UserService {
     List<String> getUserTokensByUsername(String username);
 
     List<User> getUserListPage(User user, Pageable pageable);
+
+    boolean deleteUserById(int userId);
+
 }

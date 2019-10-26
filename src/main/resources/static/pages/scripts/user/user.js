@@ -24,6 +24,25 @@ var User = function () {
                 ]
             }
         });
+
+        $table.on('click', 'a.delete', function () {
+            var $this = $(this);
+            flat.showConfirm();
+            $("#confirmBtn").off("click").on("click", function () {
+                var $row = $table.DataTable().row($this.parents('tr')[0]);
+                $.ajax({
+                    url: "/sys/user/" + $row.data().userId,
+                    dataType: "json",
+                    type: "DELETE"
+                }).done(function (data) {
+                    if (flat.ajaxCallback(data)) {
+                        grid.reload();
+                        $("#confirmDialog").modal("hide");
+                    }
+                })
+            })
+        });
+
     };
 
 

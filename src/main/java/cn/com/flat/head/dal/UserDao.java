@@ -16,4 +16,6 @@ public interface UserDao {
     List<String> getUserTokensByUsername(String username);
 
     List<User> getUserListPage(User user);
+
+    boolean deleteUserById(int userId);
 }
