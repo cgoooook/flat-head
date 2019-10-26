@@ -9,7 +9,12 @@
         <result column="password" property="password" />
         <result column="pub_key" property="pubKey" />
         <result column="account_type" property="accountType" />
+        <result column="role_id" property="roleId" />
     </resultMap>
+    <insert id="addUser">
+        insert into sys_acl_user(nick_name, username, password, pub_key, account_type) values
+            (#{nickName}, #{username}, #{password}, #{pub_key}, #{account_type})
+    </insert>
 
     <delete id="deleteUserById">
         delete from sys_acl_user where user_id = #{userId}
@@ -23,7 +28,7 @@
     </select>
 
     <select id="getUserRolesByUsername" resultType="java.lang.String">
-        select * from sys_acl_role acr, sys_acl_user acu , sys_acl_user_role aur where acr.role_id=aur.role_id and aur.user_id=acu.user_id and acu.username=#{username}
+        select acr.role_name from sys_acl_role acr, sys_acl_user acu , sys_acl_user_role aur where acr.role_id=aur.role_id and aur.user_id=acu.user_id and acu.username=#{username}
     </select>
     <select id="getUserTokensByUserId" resultType="java.lang.String">
         select distinct ap.perm_token from sys_acl_user_role acr, sys_acl_role_permission acp, sys_acl_permission ap where acr.user_id=#{userId}
@@ -31,6 +36,10 @@
     </select>
     <select id="getUserListPage" resultMap="UserMap">
         select * from sys_acl_user
+    </select>
+    <select id="getUserById" resultMap="UserMap">
+        select acr.role_id, acu.user_id, acu.nick_name, acu.username from sys_acl_role acr, sys_acl_user acu , sys_acl_user_role aur
+        where acr.role_id=aur.role_id and aur.user_id=acu.user_id and acu.user_id=#{userId}
     </select>
 
 </mapper>

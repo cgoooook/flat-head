@@ -37,6 +37,59 @@ var flat = function () {
         }
     }
 
+    function _initJqueryAjax() {
+        $.ajaxSetup({
+            cache: false,
+            error: function (XMLHttpRequest, textStatus, errorThrown) {
+                if (XMLHttpRequest.responseJSON) {
+                    toast.error(XMLHttpRequest.responseJSON.error);
+                } else if (XMLHttpRequest.status !== 0) {
+                    toast.error("state：" + XMLHttpRequest.status + ", error：" + XMLHttpRequest.statusText)
+                }
+                App.unblockUI();
+            }
+        });
+    }
+
+    function _initJqueryValidation() {
+        // $.validator.messages.equalTo = i18n.common.diffInput;
+        $.validator.setDefaults({
+            errorElement: 'span', //default input error message container
+            errorClass: 'help-block help-block-error', // default input error message class
+            focusInvalid: true,
+            ignore: "",  // validate all fields including form hidden input
+            highlight: function (element) { // hightlight error inputs
+                $(element).closest('.form-group').addClass('has-error'); // set error class to the control group
+            },
+            unhighlight: function (element) { // revert the change done by hightlight
+                $(element).closest('.form-group').removeClass('has-error'); // set error class to the control group
+            },
+            success: function (label) {
+                label.closest('.form-group').removeClass('has-error'); // set success class to the control group
+            },
+            invalidHandler: function (event, validator) { //display error alert on form submit
+                // toast.error(i18n.common.tableWrong);
+            },
+            errorPlacement: function (error, element) { // render error placement for each input type
+                if (element.parent(".input-group").size() > 0) {
+                    error.insertAfter(element.parent(".input-group"));
+                } else if (element.hasClass("select2-hidden-accessible")) {
+                    error.insertAfter(element.next());
+                } else if (element.attr("data-error-container")) {
+                    error.appendTo(element.attr("data-error-container"));
+                } else if (element.parents('.radio-list').size() > 0) {
+                    error.appendTo(element.parents('.radio-list').attr("data-error-container"));
+                } else if (element.parents('.checkbox-list').size() > 0) {
+                    error.appendTo(element.parents('.checkbox-list').attr("data-error-container"));
+                } else if (element.parents('.mt-checkbox-inline').size() > 0) {
+                    error.appendTo(element.parents('.mt-checkbox-inline'));
+                } else {
+                    error.insertAfter(element); // for other inputs, just perform default behavior
+                }
+            }
+        });
+    }
+
 
     return {
         init: function () {
@@ -47,7 +100,10 @@ var flat = function () {
                 .done(function () {
                     _initMenuStyle();
                 });
+            _initJqueryAjax();
+            _initJqueryValidation();
             _i18nInit();
+
         },
 
         i18n: function (key) {

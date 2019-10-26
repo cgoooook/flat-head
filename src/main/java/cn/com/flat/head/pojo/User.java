@@ -8,7 +8,7 @@ import lombok.Data;
 @Data
 public class User {
 
-    private int userId;
+    private String userId;
 
     private String nickName;
 
@@ -23,6 +23,8 @@ public class User {
     private String lang;
 
     private String remember;
+
+    private int roleId;
 
 
 

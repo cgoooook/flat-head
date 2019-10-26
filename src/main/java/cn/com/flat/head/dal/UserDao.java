@@ -18,4 +18,8 @@ public interface UserDao {
     List<User> getUserListPage(User user);
 
     boolean deleteUserById(int userId);
+
+    User addUser(User user);
+
+    User getUserById(String userId);
 }
