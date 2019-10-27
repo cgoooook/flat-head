@@ -11,7 +11,7 @@ public class Organization {
 
     private String orgCode;
 
-    private String parengId;
+    private String parentId;
 
     private String parentName;
 

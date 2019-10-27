@@ -6,14 +6,14 @@
         <id column="org_id" property="orgId" />
         <result column="org_name" property="orgName" />
         <result column="org_code" property="orgCode" />
-        <result column="parent_id" property="parengId" />
+        <result column="parent_id" property="parentId" />
         <result column="parent_name" property="parentName" />
         <result column="leaf" property="leaf" />
     </resultMap>
 
 
     <select id="getOrgListPage" resultMap="OrgMap">
-        SELECT z.org_id,z.org_name,z.org_code,f.org_name as parent_name,z.leaf FROM kms_org as z left JOIN kms_org as f
+        SELECT z.org_id,z.org_name,z.org_code,f.org_name as parent_name,z.leaf ,z.parent_id FROM kms_org as z left JOIN kms_org as f
                                                                                                        on z.parent_id = f.org_id
     </select>
 
