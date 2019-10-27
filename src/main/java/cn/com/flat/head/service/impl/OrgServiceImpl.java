@@ -37,10 +37,10 @@ public class OrgServiceImpl implements OrgService {
           b.setMessage("org.nameIsRepeat");
           return b;
         }
-        Organization org2 =  orgDao.getOrgByOrgOrgId(org.getOrgId());
+        Organization org2 =  orgDao.getOrgByOrgCode(org.getOrgCode());
         if(null != org2){
             b.setResult(false);
-            b.setMessage("org.idIsRepeat");
+            b.setMessage("org.codeIsRepeat");
             return b;
         }
         Organization orgCarrier =  orgDao.getOrgParentIdEqNegative1();
@@ -56,4 +56,51 @@ public class OrgServiceImpl implements OrgService {
 
         return b;
     }
+
+    @Override
+    public Organization getOrgByOrgCode(String orgCode) {
+        return orgDao.getOrgByOrgCode(orgCode);
+    }
+
+    @Override
+    public Organization getOrgByOrgName(String orgName) {
+        return orgDao.getOrgByOrgName(orgName);
+    }
+
+    @Override
+    public Organization getOrgByOrgId(String orgId) {
+        return orgDao.getOrgByOrgId(orgId);
+    }
+
+    @Override
+    public BooleanCarrier editOrg(Organization org) {
+        BooleanCarrier b = new BooleanCarrier();
+        b.setResult(true);
+        String orgId = org.getOrgId();
+        String orgName = org.getOrgName();
+        String orgCode = org.getOrgCode();
+        Organization orgByOrgId = orgDao.getOrgByOrgId(orgId);
+        String oldName = orgByOrgId.getOrgName();
+        String oldCode = orgByOrgId.getOrgCode();
+        if(!orgName.equals(oldName)){
+            Organization orgByOrgName = orgDao.getOrgByOrgName(orgName);
+            if(orgByOrgName!=null){
+                b.setResult(false);
+                b.setMessage("org.nameIsRepeat");
+                return b;
+            }
+        }
+        if(!orgCode.equals(oldCode)){
+            Organization orgByOrgCode = orgDao.getOrgByOrgCode(org.getOrgCode());
+            if(orgByOrgCode!=null){
+                b.setResult(false);
+                b.setMessage("org.codeIsRepeat");
+                return b;
+            }
+        }
+        orgDao.editOrg(org);
+        return b;
+    }
+
+
 }

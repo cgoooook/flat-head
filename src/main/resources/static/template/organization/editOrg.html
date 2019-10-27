@@ -2,7 +2,7 @@
     <div class="modal-content" id="modalContent">
         <div class="modal-header">
             <button type="button" class="close" data-dismiss="modal" aria-hidden="true"></button>
-            <h4 class="modal-title font-green bold" id="modalTitle">{{i18n('org.addOrg')}}</h4>
+            <h4 class="modal-title font-green bold" id="modalTitle">{{i18n('org.editOrg')}}</h4>
         </div>
         <div class="modal-body form">
             <form class="form-horizontal" id="dialogForm">
@@ -19,7 +19,7 @@
                                     <div class="col-md-8">
                                         <input type="text" class="form-control" id="orgName"
                                                name="orgName" placeholder="{{i18n('org.inputOrgName')}}" required
-                                               value=""/>
+                                               value="{{reqData.orgName}}"/>
                                     </div>
                                 </div>
                             </div>
@@ -38,7 +38,7 @@
                                         <input type="text" class="form-control"
                                                id="orgCode" name="orgCode" required
                                                maxlength="16" placeholder="{{i18n('org.inputOrgCode')}}"
-                                               value=""/>
+                                               value="{{reqData.orgCode}}"/>
                                     </div>
                                 </div>
                             </div>
@@ -47,8 +47,9 @@
                 </div>
             </form>
         </div>
+        <input  id ='orgId' hidden="hidden" text="{{reqData.orgId}}">
         <div class="modal-footer">
-            <button type="button" class="btn btn-outline blue" id="addBtn">{{i18n('common.save')}}</button>
+            <button type="button" class="btn btn-outline blue" id="editBtn">{{i18n('common.save')}}</button>
             <button type="button" class="btn btn-outline grey-gallery" data-dismiss="modal">{{i18n('common.cancelBtn')}}</button>
         </div>
     </div>
