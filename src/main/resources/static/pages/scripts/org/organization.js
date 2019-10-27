@@ -26,6 +26,9 @@ var Org = function () {
             }
         });
 
+
+
+
         $table.on('click', 'a.delete', function () {
             var $this = $(this);
             flat.showConfirm();
@@ -44,12 +47,51 @@ var Org = function () {
             })
         });
 
+
+
+
+
+
+
     };
 
+
+    var handleEvents = function () {
+        $("#addOrg").on('click', function () {
+            var htmlTemplate = flat.remoteTemplate("/template/organization/addOrg.html", "");
+            $("#modalDialog").html(htmlTemplate).modal('show');
+            initSaveBtn();
+        });
+
+        function initSaveBtn() {
+            $("#addBtn").on('click', function () {
+                if ($('#dialogForm').validate().form()) {
+                    $.ajax({
+                        url: "/sys/org",
+                        type: "PUT",
+                        dataType: "json",
+                        contentType: "application/json; charset=utf-8",
+                        data: JSON.stringify({
+                            orgCode: $("#orgCode").val(),
+                            orgName: $("#orgName").val(),
+
+                        })
+                    }).done(function (data) {
+                        if (flat.ajaxCallback(data)) {
+                            $("#modalDialog").modal('hide');
+                            grid.reload()
+                        }
+                    })
+                }
+
+            });
+        }
+    };
 
     return {
         init: function () {
             handleTables();
+            handleEvents();
         }
     }
 

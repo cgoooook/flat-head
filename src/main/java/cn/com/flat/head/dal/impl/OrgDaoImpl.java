@@ -15,4 +15,24 @@ public class OrgDaoImpl implements OrgDao {
     public List<Organization> getOrgListPage(Organization org) {
         return orgMapper.getOrgListPage(org);
     }
+
+    @Override
+    public Organization getOrgByOrgName(String orgName) {
+        return orgMapper.getOrgByOrgName(orgName);
+    }
+
+    @Override
+    public Organization getOrgByOrgOrgId(String orgId) {
+        return orgMapper.getOrgByOrgId(orgId);
+    }
+
+    @Override
+    public int addOrg(Organization org) {
+        return orgMapper.addOrg(org);
+    }
+
+    @Override
+    public Organization getOrgParentIdEqNegative1() {
+        return orgMapper.getOrgParentIdEqNegative1();
+    }
 }

@@ -23,7 +23,7 @@
                                 <span class="caption-subject font-dark sbold uppercase" th:text="${menu.menuName}"></span>
                             </div>
                             <div class="actions">
-                                <a href="javascript:;" class="btn btn-success btn-circle" id="addUser"><i class="fa fa-plus faa-shake animated-hover"></i>添加机构</a>
+                                <a href="javascript:;" class="btn btn-success btn-circle" id="addOrg"><i class="fa fa-plus faa-shake animated-hover"></i><span th:text="#{org.addOrg}"></span> </a>
                             </div>
                         </div>
                         <div class="portlet-body">
@@ -45,11 +45,14 @@
         </div>
     </div>
 </div>
+<div class="modal fade bs-modal-lg" id="modalDialog" tabindex="-1" data-keyboard="false" aria-hidden="true"
+     data-backdrop="static">
+</div>
 <th:block th:include="includes/footer :: footer"/>
 <th:block th:include="includes/scripts :: scripts"/>
 <script id="actionBtn" type="text/html">
     <a class="edit btn btn-outline default btn-xs purple" orgId="{{full.orgId}}"><i class="fa fa-edit"></i>{{i18n('common.edit')}}</a>
-    <a class="edit btn btn-outline default btn-xs purple" orgId="{{full.orgId}}"><i class="fa fa-expand"></i>{{i18n('common.export')}}</a>
+    <a class="edit btn btn-outline default btn-xs yellow" orgId="{{full.orgId}}"><i class="fa fa-expand"></i>{{i18n('common.export')}}</a>
     {{if full.parentId != -1}}
     <a class="delete btn btn-outline default btn-xs red"><i class="fa fa-times"></i>{{i18n('common.delete')}}</a>
     {{/if}}

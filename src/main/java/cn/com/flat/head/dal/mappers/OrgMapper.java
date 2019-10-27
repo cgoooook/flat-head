@@ -7,4 +7,12 @@ import java.util.List;
 @RepositoryImpl
 public interface OrgMapper {
     List<Organization> getOrgListPage(Organization org);
+
+    Organization getOrgByOrgName(String orgName);
+
+    Organization getOrgByOrgId(String orgId);
+
+    int addOrg(Organization org);
+
+    Organization getOrgParentIdEqNegative1();
 }
