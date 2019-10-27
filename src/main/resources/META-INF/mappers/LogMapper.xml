@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="cn.com.flat.head.dal.mappers.LogMapper">
+    <insert id="addLog" parameterType="cn.com.flat.head.log.Log">
+        insert into kms_operate_log (log_id, operate_type, operate_user, operate_time, operator_result, operate_content, content_hmac, audit_flag) values
+        (#{logId}, #{operate_type}, #{operateUser}, #{operate_time}, #{operate_result}, #{operate_content}, #{contentHmac}, ${auditFlag})
+    </insert>
+</mapper>
