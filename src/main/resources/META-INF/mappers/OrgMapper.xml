@@ -46,4 +46,9 @@
         ) value (#{orgId},#{orgName},#{orgCode},#{parentId},#{leaf})
     </insert>
 
+    <delete id="deleteOrgById">
+        delete from  kms_org where org_id =#{orgId}
+    </delete>
+
+
 </mapper>

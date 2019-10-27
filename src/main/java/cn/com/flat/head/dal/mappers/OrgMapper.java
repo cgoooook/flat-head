@@ -15,4 +15,6 @@ public interface OrgMapper {
     int addOrg(Organization org);
 
     Organization getOrgParentIdEqNegative1();
+
+    boolean deleteOrgById(String orgId);
 }

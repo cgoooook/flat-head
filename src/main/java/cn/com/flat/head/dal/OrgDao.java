@@ -14,4 +14,6 @@ public interface OrgDao {
     int addOrg(Organization org);
 
     Organization getOrgParentIdEqNegative1();
+
+    boolean deleteOrgById(String id);
 }

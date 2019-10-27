@@ -23,8 +23,9 @@ public class OrgServiceImpl implements OrgService {
     }
 
     @Override
-    public boolean deleteOrgById(int id) {
-        return false;
+    public boolean deleteOrgById(String id) {
+
+        return  orgDao.deleteOrgById(id);
     }
 
     @Override

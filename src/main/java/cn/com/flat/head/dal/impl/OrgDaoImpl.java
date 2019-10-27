@@ -35,4 +35,9 @@ public class OrgDaoImpl implements OrgDao {
     public Organization getOrgParentIdEqNegative1() {
         return orgMapper.getOrgParentIdEqNegative1();
     }
+
+    @Override
+    public boolean deleteOrgById(String orgId) {
+        return orgMapper.deleteOrgById(orgId);
+    }
 }

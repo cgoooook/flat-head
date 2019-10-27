@@ -48,7 +48,7 @@ public class OrgController {
 
     @DeleteMapping("/{id}")
     @ResponseBody
-    public AjaxResponse deleteOrg(@PathVariable("id") int id, HttpSession session) {
+    public AjaxResponse deleteOrg(@PathVariable("id") String id, HttpSession session) {
         boolean b = orgService.deleteOrgById(id);
         return AjaxResponse.getInstanceByResult(b, session);
     }
