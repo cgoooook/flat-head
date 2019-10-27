@@ -9,7 +9,7 @@
                 <div class="form-body">
                     <div class="row">
                         <div class="col-md-12">
-                            <div class="col-md-6">
+                            <div class="col-md-10">
                                 <div class="form-group">
                                     <label class="control-label col-md-4">{{i18n('org.orgName')}}
                                         <span class="required" aria-required="true">* </span>
@@ -17,8 +17,8 @@
 
 
                                     <div class="col-md-8">
-                                        <input type="text" class="form-control input-medium" id="orgName"
-                                               name="orgName" placeholder="请输入机构名称" required
+                                        <input type="text" class="form-control" id="orgName"
+                                               name="orgName" placeholder="{{i18n('org.inputOrgName')}}" required
                                                value=""/>
                                     </div>
                                 </div>
@@ -28,16 +28,16 @@
                     </div>
                     <div class="row">
                         <div class="col-md-12">
-                            <div class="col-md-6">
+                            <div class="col-md-10">
                                 <div class="form-group">
                                     <label class="control-label col-md-4">{{i18n('org.orgCode')}}
                                         <span class="required" aria-required="true">* </span>
                                     </label>
 
                                     <div class="col-sm-6">
-                                        <input type="text" class="form-control input-medium"
+                                        <input type="text" class="form-control"
                                                id="orgCode" name="orgCode" required
-                                               maxlength="16" placeholder="请输入机构编码"
+                                               maxlength="16" placeholder="{{i18n('org.inputOrgCode')}}"
                                                value=""/>
                                     </div>
                                 </div>
