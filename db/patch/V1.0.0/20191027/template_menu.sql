@@ -1,0 +1,1 @@
+INSERT INTO `kms`.`sys_acl_menu` (`menu_id`, `menu_name`, `menu_icon`, `parent_id`, `menu_url`, `level`, `weight`, `disabled`, `local`, `leaf`, `perm_token`) VALUES ('020101', '模版管理', NULL, '0201', '/key/template', '2', '1', '0', NULL, '1', '123');
