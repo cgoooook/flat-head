@@ -17,4 +17,38 @@
                                                                                                        on z.parent_id = f.org_id
     </select>
 
+    <select id="getOrgByOrgName" resultMap="OrgMap">
+
+        select * from kms_org where org_name=#{orgName}
+
+    </select>
+
+    <select id="getOrgByOrgId" resultMap="OrgMap">
+
+        select * from kms_org where org_code=#{orgId}
+
+    </select>
+
+    <select id="getOrgParentIdEqNegative1"  resultMap="OrgMap">
+
+      select * from kms_org where parent_id='-1';
+
+    </select>
+
+
+    <insert id="addOrg"  >
+        INSERT INTO kms_org (
+            org_id,
+            org_name,
+            org_code,
+            parent_id,
+            leaf
+        ) value (#{orgId},#{orgName},#{orgCode},#{parentId},#{leaf})
+    </insert>
+
+    <delete id="deleteOrgById">
+        delete from  kms_org where org_id =#{orgId}
+    </delete>
+
+
 </mapper>

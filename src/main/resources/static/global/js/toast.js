@@ -30,7 +30,7 @@ var toast = function(){
         error:function(msg){
             msg =  msg || "操作失败！";
             toastr.options=options;
-            toastr["error"](msg)
+            toastr["error"](flat.i18n(msg))
         }
     }
 }();

@@ -167,13 +167,13 @@ var flat = function () {
 
         ajaxCallback: function (data) {
             if (data.ok) {
-                toast.success(data.returnMsg);
+                toast.success(data.msg);
                 return true;
             } else if (data.error) {
-                toast.error(data.returnMsg);
+                toast.error(data.msg);
                 return false;
             } else if (data.warn) {
-                toast.warn(data.returnMsg);
+                toast.warn(data.msg);
                 return true;
             }
         },
