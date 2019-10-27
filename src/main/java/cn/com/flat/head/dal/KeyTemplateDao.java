@@ -13,4 +13,14 @@ public interface KeyTemplateDao {
 
     int updateTemplateStatus(String templateId, int status);
 
+    int addTemplate(KeyTemplate template);
+
+    int getTemplateCountByName(String name);
+
+    int deleteTemplate(String templateId);
+
+    KeyTemplate getTemplateById(String templateId);
+
+    int updateTemplate(KeyTemplate template);
+
 }

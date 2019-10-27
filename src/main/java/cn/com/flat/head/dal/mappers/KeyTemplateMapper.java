@@ -20,4 +20,10 @@ public interface KeyTemplateMapper {
 
     List<KeyTemplate> getTemplateListPage(KeyTemplate template);
 
+    int getTemplateCountByName(String name);
+
+    int deleteTemplate(String templateId);
+
+    KeyTemplate getTemplateById(String templateId);
+
 }

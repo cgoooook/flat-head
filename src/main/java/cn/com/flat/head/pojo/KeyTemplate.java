@@ -2,8 +2,6 @@ package cn.com.flat.head.pojo;
 
 import lombok.Data;
 
-import java.util.Date;
-
 /**
  * Created by panzhuowen on 2019/10/27.
  */
@@ -18,9 +16,9 @@ public class KeyTemplate {
 
     private int node;
 
-    private Date startDate;
+    private String startDate;
 
-    private Date endDate;
+    private String endDate;
 
     private String keyUsages;
 

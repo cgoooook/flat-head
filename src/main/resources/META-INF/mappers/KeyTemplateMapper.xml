@@ -28,9 +28,18 @@
     <update id="updateTemplateStatus">
         update kms_template set status = #{status} where template_id =#{templateId}
     </update>
+    <delete id="deleteTemplate">
+        delete from kms_template where template_id=#{templateId}
+    </delete>
 
     <select id="getTemplateListPage" resultMap="TemplateMap">
         select  * from kms_template
+    </select>
+    <select id="getTemplateCountByName" resultType="java.lang.Integer">
+        select count(*) from kms_template where template_name=#{name}
+    </select>
+    <select id="getTemplateById" resultMap="TemplateMap">
+        select * from kms_template where template_id=#{templateId}
     </select>
 
 

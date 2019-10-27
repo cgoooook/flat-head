@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
+import java.util.UUID;
 
 /**
  * Created by panzhuowen on 2019/10/27.
@@ -26,5 +27,33 @@ public class KeyTemplateDaoImpl implements KeyTemplateDao {
     @Override
     public int updateTemplateStatus(String templateId, int status) {
         return keyTemplateMapper.updateTemplateStatus(templateId, status);
+    }
+
+    @Override
+    public int addTemplate(KeyTemplate template) {
+        template.setTemplateId(UUID.randomUUID().toString());
+        return keyTemplateMapper.addTemplate(template);
+    }
+
+    @Override
+    public int getTemplateCountByName(String name) {
+        return keyTemplateMapper.getTemplateCountByName(name);
+    }
+
+    @Override
+    public int deleteTemplate(String templateId) {
+        //todo check usage
+
+        return keyTemplateMapper.deleteTemplate(templateId);
+    }
+
+    @Override
+    public KeyTemplate getTemplateById(String templateId) {
+        return keyTemplateMapper.getTemplateById(templateId);
+    }
+
+    @Override
+    public int updateTemplate(KeyTemplate template) {
+        return keyTemplateMapper.updateTemplate(template);
     }
 }

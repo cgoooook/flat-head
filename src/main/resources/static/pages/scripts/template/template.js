@@ -49,7 +49,7 @@ var Template = function () {
             $("#confirmBtn").off("click").on("click", function () {
                 var $row = $table.DataTable().row($this.parents('tr')[0]);
                 $.ajax({
-                    url: "/sys/user/" + $row.data().userId,
+                    url: "/key/template/" + $row.data().templateId,
                     dataType: "json",
                     type: "DELETE"
                 }).done(function (data) {
@@ -64,15 +64,15 @@ var Template = function () {
         $table.on('click', 'a.edit', function () {
             var $this = $(this);
             var $row = $table.DataTable().row($this.parents('tr')[0]);
-            $.get("/sys/user/" + $row.data().templateId, function (data) {
+            $.get("/key/template/" + $row.data().templateId, function (data) {
                 if (data.ok) {
-                    var user = data.data.user;
-                    var roleList = data.data.roleList;
-                    var htmlTemplate = flat.remoteTemplate("/template/security/editUser.html", {
-                        roleList: roleList,
-                        user: user
+                    var template = data.data;
+                    var htmlTemplate = flat.remoteTemplate("/template/template/updateTemplate.html", {
+                        template: template
                     });
                     $("#modalDialog").html(htmlTemplate).modal('show');
+                    initDatePicker();
+                    initUsagesChecker(template);
                     initUpdateBtn();
                 } else {
                     flat.ajaxCallback(data);
@@ -128,24 +128,38 @@ var Template = function () {
             })
         });
 
+        function initUsagesChecker(template) {
+            var usages = template.keyUsages;
+            var usagesArray = usages.split(",");
+            var usageChecker = $("input[name=keyUsages]");
+            $.each(usageChecker, function () {
+                if (usagesArray.indexOf($(this).val()) !== -1) {
+                    $(this).attr("checked", "checked")
+                }
+            });
+            flat.handleUniform();
+        }
+
         function initUpdateBtn() {
             $("#addBtn").on('click', function () {
-                if ($('#dialogForm').validate({
-                    rules: {
-                        repassword: {
-                            equalTo: "#password"
-                        }
+                if ($('#dialogForm').validate().form()) {
+                    var usages = getKeyUsages();
+                    if (usages.length === 0) {
+                        toast.error(flat.i18n("template.noUsageSelect"));
+                        return;
                     }
-                }).form()) {
                     $.ajax({
-                        url: "/sys/user",
+                        url: "/key/template",
                         type: "POST",
                         dataType: "json",
                         data: {
-                            nickName: $("#nickName").val(),
-                            username: $("#username").val(),
-                            password: $("#password").val(),
-                            roleId: $("#roleId").val()
+                            templateId: $("#templateId").val(),
+                            templateName: $("#templateName").val(),
+                            node: $("#node").val(),
+                            startDate: $("#startDate").val(),
+                            endDate: $("#endDate").val(),
+                            keyUsages: usages.join(","),
+                            extendUsages: $("#extendUsgages").val()
                         }
                     }).done(function (data) {
                         if (flat.ajaxCallback(data)) {
