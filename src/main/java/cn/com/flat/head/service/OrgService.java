@@ -12,4 +12,12 @@ public interface OrgService {
     boolean deleteOrgById(String id);
 
     BooleanCarrier addOrg(Organization org);
+
+    Organization getOrgByOrgCode(String orgCode);
+
+    Organization getOrgByOrgName(String orgName);
+
+    Organization getOrgByOrgId(String orgId);
+
+    BooleanCarrier editOrg(Organization org);
 }

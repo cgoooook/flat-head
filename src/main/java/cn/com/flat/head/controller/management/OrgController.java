@@ -12,7 +12,9 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpSession;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 @Controller
 @RequestMapping("/sys/org")
@@ -46,10 +48,39 @@ public class OrgController {
         return AjaxResponse.getInstanceByResult(booleanCarrier.getResult(), httpSession);
     }
 
+    @PutMapping("/edit")
+    @ResponseBody
+    public AjaxResponse editOrg(@RequestBody Organization org, HttpSession httpSession) {
+
+        BooleanCarrier booleanCarrier = orgService.editOrg(org);
+        if(booleanCarrier.getResult()==false){
+            AjaxResponse ajaxResponse = new AjaxResponse();
+            ajaxResponse.setReturnState(ReturnState.ERROR);
+            ajaxResponse.setMsg(booleanCarrier.getMessage());
+            return ajaxResponse;
+        }
+        return AjaxResponse.getInstanceByResult(booleanCarrier.getResult(), httpSession);
+    }
+
+
+
+
     @DeleteMapping("/{id}")
     @ResponseBody
     public AjaxResponse deleteOrg(@PathVariable("id") String id, HttpSession session) {
         boolean b = orgService.deleteOrgById(id);
         return AjaxResponse.getInstanceByResult(b, session);
     }
+
+    @GetMapping("/{id}")
+    @ResponseBody
+    public AjaxResponse getOrg(@PathVariable("id") String orgId, HttpSession session) {
+        Organization org = orgService.getOrgByOrgId(orgId);
+        AjaxResponse ajaxResponse = new AjaxResponse();
+        ajaxResponse.setReturnState(ReturnState.OK);
+        ajaxResponse.setData(org);
+        return ajaxResponse;
+    }
+
+
 }

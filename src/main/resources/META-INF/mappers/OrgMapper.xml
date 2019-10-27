@@ -23,7 +23,7 @@
 
     </select>
 
-    <select id="getOrgByOrgId" resultMap="OrgMap">
+    <select id="getOrgByOrcCode" resultMap="OrgMap">
 
         select * from kms_org where org_code=#{orgId}
 
@@ -46,9 +46,21 @@
         ) value (#{orgId},#{orgName},#{orgCode},#{parentId},#{leaf})
     </insert>
 
+    <update id="editOrg">
+        update kms_org set org_name =#{orgName},org_code=#{orgCode}
+        where org_id =#{orgId}
+    </update>
+
+
+
     <delete id="deleteOrgById">
         delete from  kms_org where org_id =#{orgId}
     </delete>
 
+    <select id="getOrgByOrgId"  resultMap="OrgMap">
+
+        select * from kms_org where org_id=#{orgId};
+
+    </select>
 
 </mapper>
