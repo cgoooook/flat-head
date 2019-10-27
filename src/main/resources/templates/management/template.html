@@ -4,6 +4,7 @@
     <meta charset="UTF-8">
     <title th:text="${menu.menuName}"></title>
     <th:block th:include="includes/header :: styles"/>
+    <link rel="stylesheet" th:href="@{/plugins/bootstrap-datetimepicker/css/bootstrap-datetimepicker.min.css}" type="text/css">
 </head>
 <body class="page-header-fixed page-sidebar-closed-hide-logo page-content-white">
 <th:block th:include="includes/top :: top"/>
@@ -46,8 +47,13 @@
         </div>
     </div>
 </div>
+<div class="modal fade bs-modal-lg" id="modalDialog" tabindex="-1" data-keyboard="false" aria-hidden="true"
+     data-backdrop="static">
+</div>
 <th:block th:include="includes/footer :: footer"/>
 <th:block th:include="includes/scripts :: scripts"/>
+<script type="text/javascript" th:src="@{/plugins/bootstrap-datetimepicker/js/bootstrap-datetimepicker.min.js}"></script>
+<script type="text/javascript" th:src="@{'/plugins/bootstrap-datetimepicker/js/locales/bootstrap-datetimepicker.' + ${#locale.language + '-' + #locale.country} + '.js'}"></script>
 <script id="actionBtn" type="text/html">
     <a class="edit btn btn-outline default btn-xs purple" templateId="{{full.templateId}}"><i class="fa fa-edit"></i>{{i18n('common.edit')}}</a>
     {{if full.isBuiltIn == 1}}

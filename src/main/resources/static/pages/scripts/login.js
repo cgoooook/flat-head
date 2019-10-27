@@ -81,8 +81,6 @@ var Login = function () {
                     duration: 8000
                 }
             );
-
-            console.log(flat.i18n("login.title"))
         }
     };
 

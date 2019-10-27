@@ -41,4 +41,11 @@ public class KeyTemplateController {
         return AjaxResponse.getInstanceByResult(b, session);
     }
 
+    @PutMapping
+    @ResponseBody
+    public AjaxResponse addTemplate(@RequestBody KeyTemplate template, HttpSession httpSession) {
+        AjaxResponse ajaxResponse = new AjaxResponse();
+        return ajaxResponse;
+    }
+
 }

@@ -159,10 +159,66 @@ var Template = function () {
 
     };
 
+    function initDatePicker() {
+        $("input.datepicker").datetimepicker({
+            isRTL: App.isRTL(),
+            language: DATETIME_PICKER,
+            format: "yyyy-mm-dd HH:mm:ss",
+            autoclose: true,
+            todayBtn: true,
+            pickerPosition: (App.isRTL() ? "bottom-right" : "bottom-left"),
+            minuteStep: 10
+        });
+    }
+
+    var getKeyUsages = function () {
+        var checkedUsages = $("input[name=keyUsages]:checked");
+        var usages = [];
+        $.each(checkedUsages, function () {
+            usages.push($(this).val())
+        });
+        return usages;
+    };
+
+    function initSaveBtn() {
+        $("#addBtn").on('click', function () {
+            if ($('#dialogForm').validate().form()) {
+                var usages = getKeyUsages();
+                if (usages.length === 0) {
+                    toast.error(flat.i18n("template.noUsageSelect"))
+                    return;
+                }
+                $.ajax({
+                    url: "/key/template",
+                    type: "PUT",
+                    dataType: "json",
+                    contentType: "application/json; charset=utf-8",
+                    data: JSON.stringify({
+                        templateName: $("#templateName").val(),
+                        node: $("#node").val(),
+                        startDate: $("#startDate").val(),
+                        endDate: $("#endDate").val(),
+                        keyUsages: usages.join(","),
+                        extendUsages: $("#extendUsgages").val()
+                    })
+                }).done(function (data) {
+                    if (flat.ajaxCallback(data)) {
+                        $("#modalDialog").modal("hide");
+                        grid.reload();
+                    }
+                })
+            }
+        })
+    }
+
 
     var handleEvents = function () {
         $("#addTemplate").on('click', function () {
-
+            var htmlTemplate = flat.remoteTemplate("/template/template/addTemplate.html", {});
+            $("#modalDialog").html(htmlTemplate).modal('show');
+            initDatePicker();
+            flat.handleUniform();
+            initSaveBtn();
         })
     };
 
