@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="cn.com.flat.head.dal.mappers.KeyMapper">
+
+    <resultMap id="KeyMap" type="cn.com.flat.head.pojo.Key">
+        <id column="key_id" property="keyId" />
+        <result column="key_name" property="keyName" />
+        <result column="key_alg" property="keyAlg" />
+        <result column="length" property="length" />
+        <result column="version" property="version" />
+        <result column="create_by" property="createBy" />
+        <result column="template_id" property="templateId" />
+        <result column="org_id" property="orgId" />
+        <result column="status" property="status" />
+    </resultMap>
+
+    <insert id="addKey">
+        insert into kms_a_key (key_id, key_name, key_alg, length, check_value, key_value, create_by, template_id,
+                               org_id, status)
+        values (#{keyId}, #{keyName}, #{keyAlg}, #{length}, #{chekcValue}, #{keyValue}, #{createBy}, #{templateId}, #{orgId}, #{status});
+    </insert>
+
+    <update id="updateKey">
+
+    </update>
+
+    <select id="getKeyListPage" resultMap="KeyMap">
+        select * from kms_a_key where 1=1
+        <if test="orgId != null and orgId != ''">
+            and org_id=#{orgId}
+        </if>
+    </select>
+
+
+</mapper>
