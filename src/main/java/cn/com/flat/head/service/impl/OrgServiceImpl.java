@@ -4,6 +4,7 @@ import cn.com.flat.head.dal.OrgDao;
 import cn.com.flat.head.mybatis.interceptor.PageableInterceptor;
 import cn.com.flat.head.mybatis.model.Pageable;
 import cn.com.flat.head.pojo.BooleanCarrier;
+import cn.com.flat.head.pojo.OrgTreeBo;
 import cn.com.flat.head.pojo.Organization;
 import cn.com.flat.head.service.OrgService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -100,6 +101,13 @@ public class OrgServiceImpl implements OrgService {
         }
         orgDao.editOrg(org);
         return b;
+    }
+
+    @Override
+    public List<OrgTreeBo> devTreeList(String parentId) {
+
+
+        return  orgDao.devTreeList(parentId);
     }
 
 

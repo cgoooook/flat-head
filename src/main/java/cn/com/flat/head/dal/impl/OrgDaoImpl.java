@@ -2,7 +2,7 @@ package cn.com.flat.head.dal.impl;
 
 import cn.com.flat.head.dal.OrgDao;
 import cn.com.flat.head.dal.mappers.OrgMapper;
-import cn.com.flat.head.pojo.BooleanCarrier;
+import cn.com.flat.head.pojo.OrgTreeBo;
 import cn.com.flat.head.pojo.Organization;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
@@ -51,5 +51,10 @@ public class OrgDaoImpl implements OrgDao {
     @Override
     public int editOrg(Organization org) {
         return  orgMapper.editOrg(org);
+    }
+
+    @Override
+    public List<OrgTreeBo> devTreeList(String parentId) {
+        return  orgMapper.devTreeList(parentId);
     }
 }

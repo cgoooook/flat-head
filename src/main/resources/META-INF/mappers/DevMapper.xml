@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="cn.com.flat.head.dal.mappers.DevMapper">
+
+    <resultMap id="devMap" type="cn.com.flat.head.pojo.Device">
+        <id column="device_id" property="deviceId" />
+        <result column="device_name" property="deviceName" />
+        <result column="device_code" property="deviceCode" />
+        <result column="device_ip" property="deviceIp" />
+        <result column="org_id" property="orgId" />
+        <result column="connection_id" property="connectionId" />
+    </resultMap>
+
+
+    <select id="getDevListPage" resultMap="devMap">
+        SELECT * FROM `kms_device`
+    </select>
+
+
+
+</mapper>

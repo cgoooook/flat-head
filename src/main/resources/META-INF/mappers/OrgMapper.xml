@@ -11,6 +11,13 @@
         <result column="leaf" property="leaf" />
     </resultMap>
 
+    <resultMap id="OrgTreeMap" type="cn.com.flat.head.pojo.OrgTreeBo">
+        <id column="org_id" property="id" />
+        <result column="org_name" property="text" />
+        <result column="parent_id" property="parent" />
+    </resultMap>
+
+
 
     <select id="getOrgListPage" resultMap="OrgMap">
         SELECT z.org_id,z.org_name,z.org_code,f.org_name as parent_name,z.leaf ,z.parent_id FROM kms_org as z left JOIN kms_org as f
@@ -62,5 +69,13 @@
         select * from kms_org where org_id=#{orgId};
 
     </select>
+
+    <select id="devTreeList" resultMap="OrgTreeMap">
+
+    select * from kms_org where parent_id=#{parentId}
+
+    </select>
+
+
 
 </mapper>

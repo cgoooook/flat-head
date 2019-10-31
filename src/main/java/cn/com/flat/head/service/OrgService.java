@@ -2,6 +2,7 @@ package cn.com.flat.head.service;
 
 import cn.com.flat.head.mybatis.model.Pageable;
 import cn.com.flat.head.pojo.BooleanCarrier;
+import cn.com.flat.head.pojo.OrgTreeBo;
 import cn.com.flat.head.pojo.Organization;
 
 import java.util.List;
@@ -20,4 +21,6 @@ public interface OrgService {
     Organization getOrgByOrgId(String orgId);
 
     BooleanCarrier editOrg(Organization org);
+
+    List<OrgTreeBo> devTreeList(String parentId);
 }

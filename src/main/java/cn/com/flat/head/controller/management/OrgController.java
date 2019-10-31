@@ -12,9 +12,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpSession;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 @Controller
 @RequestMapping("/sys/org")
@@ -24,7 +22,7 @@ public class OrgController {
     private OrgService orgService;
 
     @GetMapping
-    public String userPage() {
+    public String orgPage() {
         return "management/org";
     }
 

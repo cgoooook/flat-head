@@ -1,6 +1,7 @@
 package cn.com.flat.head.dal;
 
 import cn.com.flat.head.pojo.BooleanCarrier;
+import cn.com.flat.head.pojo.OrgTreeBo;
 import cn.com.flat.head.pojo.Organization;
 
 import java.util.List;
@@ -23,4 +24,6 @@ public interface OrgDao {
     Organization getOrgByOrgId(String orgId);
 
     int editOrg(Organization org);
+
+    List<OrgTreeBo> devTreeList(String parentId);
 }
