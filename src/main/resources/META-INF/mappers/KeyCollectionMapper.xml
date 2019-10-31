@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="cn.com.flat.head.dal.mappers.KeyCollectionMapper">
+
+    <resultMap id="CollectionMap" type="cn.com.flat.head.pojo.KeyCollection">
+        <id column="collection_id" property="collectionId" />
+        <result column="collection_name" property="collectionName" />
+        <result column="org_id" property="orgId" />
+    </resultMap>
+    <insert id="addCollection">
+        insert into kms_key_collection (collection_id, collection_name, org_id) VALUES
+        (#{collectionId}, #{collectionName}, #{orgId})
+    </insert>
+
+    <update id="updateConnection">
+        update kms_key_collection set collection_name=#{collectionName} where collection_id=#{collectionId}
+    </update>
+
+    <delete id="deleteKeyCollection">
+        delete from kms_key_collection where collection_id=#{collectionId}
+    </delete>
+
+    <select id="getKeyConnectionListPage" resultMap="CollectionMap">
+        select * from kms_key_collection where 1=1
+        <if test="orgId != null and orgId != ''">
+            and org_id=#{orgId}
+        </if>
+    </select>
+
+    <select id="getKeyConnectionById" resultMap="CollectionMap">
+        select * from kms_key_collection where collection_id=#{connectionId}
+    </select>
+
+    <select id="getCollectionByOrgId" resultMap="CollectionMap">
+        select * from kms_key_collection where org_id=#{orgId}
+    </select>
+
+</mapper>

@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="cn.com.flat.head.dal.mappers.KeyTemplateMapper">
+
+
+    <resultMap id="TemplateMap" type="cn.com.flat.head.pojo.KeyTemplate">
+        <id column="template_id" property="templateId" />
+        <result column="template_name" property="templateName" />
+        <result column="is_built_in" property="isBuiltIn" />
+        <result column="node" property="node" />
+        <result column="start_date" property="startDate" />
+        <result column="end_date" property="endDate" />
+        <result column="key_usages" property="keyUsages" />
+        <result column="extend_usages" property="extendUsages" />
+        <result column="status" property="status" />
+    </resultMap>
+
+    <insert id="addTemplate">
+        insert into kms_template (template_id, template_name, is_built_in, node, start_date, end_date, key_usages, extend_usages) VALUES
+        (#{templateId}, #{templateName}, #{isBuiltIn}, #{node}, #{startDate}, #{endDate}, #{keyUsages}, #{extendUsages})
+    </insert>
+
+    <update id="updateTemplate">
+        update kms_template set template_name=#{templateName}, node=#{node}, start_date=#{startDate}, end_date=#{endDate}, key_usages=#{keyUsages},
+                                extend_usages=#{extendUsages} where template_id=#{templateId}
+    </update>
+
+    <update id="updateTemplateStatus">
+        update kms_template set status = #{status} where template_id =#{templateId}
+    </update>
+    <delete id="deleteTemplate">
+        delete from kms_template where template_id=#{templateId}
+    </delete>
+
+    <select id="getTemplateListPage" resultMap="TemplateMap">
+        select  * from kms_template
+    </select>
+    <select id="getTemplateCountByName" resultType="java.lang.Integer">
+        select count(*) from kms_template where template_name=#{name}
+    </select>
+    <select id="getTemplateById" resultMap="TemplateMap">
+        select * from kms_template where template_id=#{templateId}
+    </select>
+
+
+</mapper>

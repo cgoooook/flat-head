@@ -3,6 +3,6 @@
 <mapper namespace="cn.com.flat.head.dal.mappers.LogMapper">
     <insert id="addLog" parameterType="cn.com.flat.head.log.Log">
         insert into kms_operate_log (log_id, operate_type, operate_user, operate_time, operator_result, operate_content, content_hmac, audit_flag) values
-        (#{logId}, #{operate_type}, #{operateUser}, #{operate_time}, #{operate_result}, #{operate_content}, #{contentHmac}, ${auditFlag})
+        (#{logId}, #{operateType}, #{operateUser}, #{operateTime}, #{operateResult}, #{operateContent}, #{contentHmac}, ${auditFlag})
     </insert>
 </mapper>

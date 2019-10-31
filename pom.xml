@@ -21,6 +21,7 @@
         <mybatis.spring.version>2.0.2</mybatis.spring.version>
         <druid.version>1.1.20</druid.version>
         <shiro.version>1.4.1</shiro.version>
+        <jna.version>3.0.9</jna.version>
     </properties>
 
     <dependencies>
@@ -107,6 +108,13 @@
             <groupId>org.apache.commons</groupId>
             <artifactId>commons-lang3</artifactId>
         </dependency>
+
+        <dependency>
+            <groupId>com.sun.jna</groupId>
+            <artifactId>jna</artifactId>
+            <version>${jna.version}</version>
+        </dependency>
+
 
 
     </dependencies>
