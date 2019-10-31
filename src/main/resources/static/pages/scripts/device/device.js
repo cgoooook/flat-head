@@ -135,3 +135,9 @@ var device = function () {
     }
 
 }();
+
+$('#jstree_div a').on('click', function () {
+    alert("begin");
+    //get_selected返回选中的列
+    console.log($('#jstree_div').jstree().get_selected(true));
+});

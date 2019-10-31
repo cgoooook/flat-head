@@ -72,6 +72,7 @@ var myTree =function () {
         init: function () {
             handleTree();
             inputChange();
+
         }
     }
 
@@ -86,14 +87,11 @@ var myTree =function () {
         console.log("selected");
     });*/
 
-
-$('a').on('click', function () {
+$("#jstree_div a").delegate("button","click",function(){
     alert("begin");
     //get_selected返回选中的列
-    console.log($('#jstree_div').jstree().get_selected(true));
+    console.log($('#jstree_div').jstree().get_selected(true))
 });
-
-
 
 function loadConfig(inst, selectedNode){
     var temp = selectedNode.id;
@@ -127,9 +125,13 @@ $('#jstree_div').bind("select_node.jstree", function(event, data) {
        var level = $("#"+selectedNode.id).attr("aria-level");
        if(parseInt(level) < 2){
            loadConfig(inst, selectedNode);
+       }else if(parseInt(level) == 2){
+           var orgId  =  $("#"+selectedNode.id).attr("id")
+            //todo callback
+       /*    callback.call(this, jsonarray);*/
+
        }
    }else {
         inst.close_node(selectedNode);
-
     }
 });
