@@ -220,7 +220,7 @@ DROP TABLE IF EXISTS `kms_org`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `kms_org` (
-                           `org_id` varchar(16) NOT NULL,
+                           `org_id` varchar(36) NOT NULL,
                            `org_name` varchar(200) DEFAULT NULL,
                            `org_code` varchar(200) DEFAULT NULL,
                            `parent_id` varchar(16) DEFAULT NULL,
