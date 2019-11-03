@@ -57,4 +57,9 @@ public class OrgDaoImpl implements OrgDao {
     public List<OrgTreeBo> devTreeList(String parentId) {
         return  orgMapper.devTreeList(parentId);
     }
+
+    @Override
+    public List<Organization> orgChildList() {
+        return orgMapper.orgChildList();
+    }
 }

@@ -33,6 +33,18 @@ public class OrgController {
         List<Organization> orgListPage = orgService.getOrgListPage(org, pageable);
         return new DataTablesResponse<>(pageable, orgListPage);
     }
+
+    @GetMapping("/childList")
+    @ResponseBody
+    public AjaxResponse orgChildList() {
+        List<Organization> orgListPage = orgService.orgChildList();
+        AjaxResponse ajaxResponse = new AjaxResponse();
+        ajaxResponse.setReturnState(ReturnState.OK);
+        ajaxResponse.setData(orgListPage);
+        return ajaxResponse;
+    }
+
+
     @PutMapping
     @ResponseBody
     public AjaxResponse addOrg(@RequestBody Organization org, HttpSession httpSession) {
