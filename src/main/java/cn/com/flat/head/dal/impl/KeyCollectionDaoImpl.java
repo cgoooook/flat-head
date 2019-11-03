@@ -23,18 +23,18 @@ public class KeyCollectionDaoImpl implements KeyCollectionDao {
 
 
     @Override
-    public List<KeyCollection> getCollectionListPage(String orgId) {
-        return keyCollectionMapper.getCollectionByOrgId(orgId);
+    public List<KeyCollection> getCollectionListPage(KeyCollection collection) {
+        return keyCollectionMapper.getKeyCollectionListPage(collection);
     }
 
     @Override
     public KeyCollection getCollectionById(String collectionId) {
-        return keyCollectionMapper.getKeyConnectionById(collectionId);
+        return keyCollectionMapper.getKeyCollectionById(collectionId);
     }
 
     @Override
     public List<KeyCollection> getCollectionByOrgId(String orgId) {
-        return keyCollectionMapper.getKeyConnectionListPage(orgId);
+        return keyCollectionMapper.getCollectionByOrgId(orgId);
     }
 
     @Override
@@ -44,7 +44,7 @@ public class KeyCollectionDaoImpl implements KeyCollectionDao {
 
     @Override
     public int updateCollection(KeyCollection collection) {
-        return keyCollectionMapper.updateConnection(collection);
+        return keyCollectionMapper.updateCollection(collection);
     }
 
     @Override

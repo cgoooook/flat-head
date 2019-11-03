@@ -45,9 +45,8 @@ public class DevController {
          if(StringUtils.isEmpty(parentId)){
              parentId ="-1";
          }
-         List<OrgTreeBo>  orgTrees  =   service.devTreeList(parentId);
 
-         return orgTrees;
+        return service.devTreeList(parentId);
     }
 
 

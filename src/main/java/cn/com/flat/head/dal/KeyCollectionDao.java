@@ -9,7 +9,7 @@ import java.util.List;
  */
 public interface KeyCollectionDao {
 
-    List<KeyCollection> getCollectionListPage(String orgId);
+    List<KeyCollection> getCollectionListPage(KeyCollection collection);
 
     KeyCollection getCollectionById(String collectionId);
 

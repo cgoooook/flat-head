@@ -25,5 +25,7 @@ public interface OrgMapper {
 
     List<OrgTreeBo> devTreeList(String parentId);
 
+    List<Organization> getTreeList();
+
     List<Organization> orgChildList();
 }

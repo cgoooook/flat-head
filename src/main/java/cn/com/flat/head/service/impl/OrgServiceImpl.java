@@ -111,6 +111,11 @@ public class OrgServiceImpl implements OrgService {
     }
 
     @Override
+    public List<Organization> getTreeList() {
+        return orgDao.getTreeList();
+    }
+
+    @Override
     public List<Organization> orgChildList() {
         return orgDao.orgChildList();
     }

@@ -49,7 +49,7 @@ public class OrgController {
     @ResponseBody
     public AjaxResponse addOrg(@RequestBody Organization org, HttpSession httpSession) {
         BooleanCarrier booleanCarrier = orgService.addOrg(org);
-        if(booleanCarrier.getResult()==false){
+        if(!booleanCarrier.getResult()){
             AjaxResponse ajaxResponse = new AjaxResponse();
             ajaxResponse.setReturnState(ReturnState.ERROR);
             ajaxResponse.setMsg(booleanCarrier.getMessage());
@@ -63,7 +63,7 @@ public class OrgController {
     public AjaxResponse editOrg(@RequestBody Organization org, HttpSession httpSession) {
 
         BooleanCarrier booleanCarrier = orgService.editOrg(org);
-        if(booleanCarrier.getResult()==false){
+        if(!booleanCarrier.getResult()){
             AjaxResponse ajaxResponse = new AjaxResponse();
             ajaxResponse.setReturnState(ReturnState.ERROR);
             ajaxResponse.setMsg(booleanCarrier.getMessage());
@@ -89,6 +89,16 @@ public class OrgController {
         AjaxResponse ajaxResponse = new AjaxResponse();
         ajaxResponse.setReturnState(ReturnState.OK);
         ajaxResponse.setData(org);
+        return ajaxResponse;
+    }
+
+
+    @GetMapping("/tree")
+    @ResponseBody
+    public AjaxResponse tree() {
+        AjaxResponse ajaxResponse = new AjaxResponse();
+        List<Organization> treeList = orgService.getTreeList();
+        ajaxResponse.setData(treeList);
         return ajaxResponse;
     }
 

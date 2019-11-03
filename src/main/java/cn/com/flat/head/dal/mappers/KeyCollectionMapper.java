@@ -11,11 +11,11 @@ import java.util.List;
 @RepositoryImpl
 public interface KeyCollectionMapper {
 
-    List<KeyCollection> getKeyConnectionListPage(String orgId);
+    List<KeyCollection> getKeyCollectionListPage(KeyCollection collection);
 
-    KeyCollection getKeyConnectionById(String connectionId);
+    KeyCollection getKeyCollectionById(String connectionId);
 
-    int updateConnection(KeyCollection connection);
+    int updateCollection(KeyCollection connection);
 
     List<KeyCollection> getCollectionByOrgId(String orgId);
 
