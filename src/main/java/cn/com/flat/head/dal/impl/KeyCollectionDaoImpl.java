@@ -65,4 +65,9 @@ public class KeyCollectionDaoImpl implements KeyCollectionDao {
     public int getCollectionByCollectionName(String name) {
         return keyCollectionMapper.getCollectionByName(name);
     }
+
+    @Override
+    public int deleteCollectionKeys(String collectionId) {
+        return collectionKeysMapper.deleteByCollectionId(collectionId);
+    }
 }

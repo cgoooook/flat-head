@@ -70,4 +70,26 @@ public class KeyCollectionController {
         return ajaxResponse;
     }
 
+    @GetMapping("/{collectionId}")
+    @ResponseBody
+    public AjaxResponse getCollectionById(@PathVariable("collectionId") String collectionId) {
+        AjaxResponse ajaxResponse = new AjaxResponse();
+        KeyCollection collectionByCollectionId = collectionService.getCollectionByCollectionId(collectionId);
+        ajaxResponse.setData(collectionByCollectionId);
+        return ajaxResponse;
+    }
+
+    @PostMapping
+    @ResponseBody
+    public AjaxResponse updateCollection(KeyCollection collection) {
+        AjaxResponse ajaxResponse = new AjaxResponse();
+        BooleanCarrier booleanCarrier = collectionService.updateCollection(collection);
+        if (!booleanCarrier.getResult()) {
+            ajaxResponse.setReturnState(ReturnState.ERROR);
+            ajaxResponse.setMsg(booleanCarrier.getMessage());
+            return ajaxResponse;
+        }
+        return ajaxResponse;
+    }
+
 }

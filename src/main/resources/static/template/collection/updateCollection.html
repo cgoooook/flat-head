@@ -1,0 +1,55 @@
+<div class="modal-dialog modal-lg">
+    <div class="modal-content" id="modalContent">
+        <div class="modal-header">
+            <button type="button" class="close" data-dismiss="modal" aria-hidden="true"></button>
+            <h4 class="modal-title font-green bold" id="modalTitle">{{i18n('keyCollection.addCollection')}}</h4>
+        </div>
+        <div class="modal-body form">
+            <form class="form-horizontal" id="dialogForm">
+                <div class="form-body">
+                    <input type="hidden" id="collectionId" value="{{collection.collectionId}}">
+                    <div class="row">
+                        <div class="col-md-12">
+                            <div class="col-md-8">
+                                <div class="form-group">
+                                    <label class="control-label col-md-4">{{i18n('keyCollection.name')}}
+                                        <span class="required" aria-required="true">* </span>
+                                    </label>
+                                    <div class="col-md-8">
+                                        <input type="text" class="form-control input-medium" id="collectionName"
+                                               name="collectionName"
+                                               placeholder="{{i18n('template.plaeaseInputTemplateName')}}" required
+                                               value="{{collection.collectionName}}"/>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-12">
+                            <div class="col-md-8">
+                                <div class="form-group">
+                                    <label class="control-label col-md-4">{{i18n('common.orgTitle')}}
+                                    </label>
+
+                                    <div class="col-sm-6">
+                                        <input type="text" class="form-control input-medium"
+                                               name="collectionName"
+                                               placeholder="{{i18n('template.plaeaseInputTemplateName')}}" required
+                                               value="{{collection.orgName}}" readonly/>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </form>
+        </div>
+        <div class="modal-footer">
+            <button type="button" class="btn btn-outline blue" id="updateBtn">{{i18n('common.save')}}</button>
+            <button type="button" class="btn btn-outline grey-gallery" data-dismiss="modal">
+                {{i18n('common.cancelBtn')}}
+            </button>
+        </div>
+    </div>
+</div>

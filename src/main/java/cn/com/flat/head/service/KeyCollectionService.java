@@ -19,4 +19,8 @@ public interface KeyCollectionService {
 
     List<KeyCollection> getKeyCollectionByOrgId(String orgId);
 
+    KeyCollection getCollectionByCollectionId(String collectionId);
+
+    BooleanCarrier updateCollection(KeyCollection collection);
+
 }
