@@ -16,6 +16,7 @@ var device = function () {
                     {data: 'deviceName', orderable: true},
                     {data: 'deviceCode', orderable: true},
                     {data: 'deviceIp', orderable: true},
+                    {data: 'orgName', orderable: true},
                     {
                         data: 'operate', orderable: false,
                         render: function (data, type, full) {
@@ -32,7 +33,7 @@ var device = function () {
             $("#confirmBtn").off("click").on("click", function () {
                 var $row = $table.DataTable().row($this.parents('tr')[0]);
                 $.ajax({
-                    url: "/sys/org/" + $row.data().orgId,
+                    url: "/sys/device/" + $row.data().deviceId,
                     dataType: "json",
                     type: "DELETE"
                 }).done(function (data) {
@@ -54,20 +55,30 @@ var device = function () {
 
 
     var handleEvents = function () {
-        $("#addOrg").on('click', function () {
-            var htmlTemplate = flat.remoteTemplate("/template/organization/addOrg.html", "");
-            $("#modalDialog").html(htmlTemplate).modal('show');
-            initSaveBtn();
+        $("#addDev").on('click', function (){
+            $.get("/sys/org/childList", function (data) {
+                if (data.ok) {
+
+                    var htmlTemplate = flat.remoteTemplate("/template/device/addDev.html",  {"orgList":data.data});
+                    $("#modalDialog").html(htmlTemplate).modal('show');
+                    initSaveBtn();
+                } else {
+                    flat.ajaxCallback(data);
+                }
+            });
+
+
+
         });
 
 
         $table.on('click', 'a.edit', function () {
             var $this = $(this);
             var $row = $table.DataTable().row($this.parents('tr')[0]);
-            $.get("/sys/org/" + $row.data().orgId, function (data) {
+            $.get("/sys/device/" + $row.data().deviceId, function (data) {
                 if (data.ok) {
-                    var org = data.data;
-                    var htmlTemplate = flat.remoteTemplate("/template/organization/editOrg.html", { reqData: org});
+                    var dev = data.data;
+                    var htmlTemplate = flat.remoteTemplate("/template/device/editDev.html", { reqData: dev});
                     $("#modalDialog").html(htmlTemplate).modal('show');
                     initSaveBtn();
                 } else {
@@ -83,13 +94,16 @@ var device = function () {
             $("#addBtn").on('click', function () {
                 if ($('#dialogForm').validate().form()) {
                     $.ajax({
-                        url: "/sys/org",
+                        url: "/sys/device",
                         type: "PUT",
                         dataType: "json",
                         contentType: "application/json; charset=utf-8",
                         data: JSON.stringify({
-                            orgCode: $("#orgCode").val(),
-                            orgName: $("#orgName").val(),
+                            deviceCode: $("#devCode").val(),
+                            deviceName: $("#devName").val(),
+                            deviceIp: $("#devIp").val(),
+                            orgId: $("#orgName option:selected").val(),
+                            collectionId: $("#keys option:selected").val(),
 
                         })
                     }).done(function (data) {
@@ -141,3 +155,23 @@ $('#jstree_div a').on('click', function () {
     //get_selected返回选中的列
     console.log($('#jstree_div').jstree().get_selected(true));
 });
+function orgChange(data) {
+    if(data!=null&&data!=""&&data!=undefined){
+        $.ajax({
+            url: "/key/collection/collection/"+data,
+            type: "get",
+            dataType: "json",
+            success: function(result){
+                console.log(result.data);
+                //    <option value="{{org.orgId}}">{{org.orgName}}</option>
+                var html ;
+                for(var i=0;i<result.data.length;i++){
+                    html+= "<option value='"+result.data[i].collectionId+"'>"+result.data[i].collectionName+"</option>";
+
+                }
+                $("#keys").html(html);
+            }
+        })
+    }
+
+}

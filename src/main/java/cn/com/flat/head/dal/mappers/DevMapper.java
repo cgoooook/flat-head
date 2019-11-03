@@ -8,4 +8,12 @@ import java.util.List;
 @RepositoryImpl
 public interface DevMapper {
     List<Device> getDevListPage(Device dev) ;
+
+    boolean deleteDevgById(String deviceId);
+
+    Device getDevById(String deviceId);
+
+    Device getDevByName(String deviceName);
+
+    int addDev(Device dev);
 }

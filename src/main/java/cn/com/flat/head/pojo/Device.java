@@ -9,7 +9,8 @@ public class Device {
     private String deviceCode;
     private String deviceIp;
     private String orgId;
-    private String connectionId;
+    private String orgName;
+    private String collectionId;
 
 
 }
