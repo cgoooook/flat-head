@@ -1,15 +1,17 @@
 package cn.com.flat.head.controller.management;
 
 import cn.com.flat.head.mybatis.model.Pageable;
+import cn.com.flat.head.pojo.BooleanCarrier;
 import cn.com.flat.head.pojo.KeyCollection;
 import cn.com.flat.head.service.KeyCollectionService;
+import cn.com.flat.head.web.AjaxResponse;
 import cn.com.flat.head.web.DataTablesResponse;
+import cn.com.flat.head.web.ReturnState;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.*;
 
+import javax.servlet.http.HttpSession;
 import java.util.List;
 
 /**
@@ -32,6 +34,18 @@ public class KeyCollectionController {
     public DataTablesResponse<KeyCollection> collectionLustTables(Pageable pageable, KeyCollection collection) {
         List<KeyCollection> keyCollectionListPage = collectionService.getKeyCollectionListPage(pageable, collection);
         return new DataTablesResponse<>(pageable, keyCollectionListPage);
+    }
+
+    @PutMapping
+    @ResponseBody
+    public AjaxResponse addCollection(@RequestBody KeyCollection keyCollection, HttpSession session) {
+        BooleanCarrier carrier = collectionService.addCollection(keyCollection);
+        AjaxResponse ajaxResponse = new AjaxResponse();
+        if (!carrier.getResult()) {
+            ajaxResponse.setReturnState(ReturnState.ERROR);
+            ajaxResponse.setMsg(carrier.getMessage());
+        }
+        return ajaxResponse;
     }
 
 }

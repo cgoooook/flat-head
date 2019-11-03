@@ -8,6 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
+import java.util.UUID;
 
 /**
  * Created by panzhuowen on 2019/10/28.
@@ -39,6 +40,7 @@ public class KeyCollectionDaoImpl implements KeyCollectionDao {
 
     @Override
     public int addCollection(KeyCollection collection) {
+        collection.setCollectionId(UUID.randomUUID().toString());
         return keyCollectionMapper.addCollection(collection);
     }
 
@@ -57,5 +59,10 @@ public class KeyCollectionDaoImpl implements KeyCollectionDao {
         collectionKeysMapper.deleteByCollectionId(collectionId);
         collectionKeysMapper.addCollectionKeys(collectionId, keys);
         return true;
+    }
+
+    @Override
+    public int getCollectionByCollectionName(String name) {
+        return keyCollectionMapper.getCollectionByName(name);
     }
 }

@@ -35,5 +35,8 @@
     <select id="getCollectionByOrgId" resultMap="CollectionMap">
         select * from kms_key_collection where org_id=#{orgId}
     </select>
+    <select id="getCollectionByName" resultType="java.lang.Integer">
+        select count(*) from kms_key_collection where collection_name=#{collectionName}
+    </select>
 
 </mapper>

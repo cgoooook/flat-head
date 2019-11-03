@@ -23,4 +23,6 @@ public interface KeyCollectionDao {
 
     boolean addCollectionKeys(String collectionId, List<String> keys);
 
+    int getCollectionByCollectionName(String name);
+
 }

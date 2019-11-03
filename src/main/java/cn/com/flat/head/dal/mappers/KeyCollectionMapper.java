@@ -23,4 +23,6 @@ public interface KeyCollectionMapper {
 
     int deleteKeyCollection(String collectionId);
 
+    int getCollectionByName(String collectionName);
+
 }

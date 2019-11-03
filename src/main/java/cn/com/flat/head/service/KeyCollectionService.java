@@ -1,6 +1,7 @@
 package cn.com.flat.head.service;
 
 import cn.com.flat.head.mybatis.model.Pageable;
+import cn.com.flat.head.pojo.BooleanCarrier;
 import cn.com.flat.head.pojo.KeyCollection;
 
 import java.util.List;
@@ -11,5 +12,7 @@ import java.util.List;
 public interface KeyCollectionService {
 
     List<KeyCollection> getKeyCollectionListPage(Pageable pageable, KeyCollection collection);
+
+    BooleanCarrier addCollection(KeyCollection collection);
 
 }
