@@ -6,7 +6,12 @@ import cn.com.flat.head.pojo.Device;
 import java.util.List;
 
 public interface DevService {
+
+
     List<Device> getDevListPage(Device dev, Pageable pageable);
+
+
+    int getDevCountByCollectionId(String collectionId);
 
 
 }

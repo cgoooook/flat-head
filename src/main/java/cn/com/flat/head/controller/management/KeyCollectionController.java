@@ -51,7 +51,14 @@ public class KeyCollectionController {
     @DeleteMapping("/{collectionId}")
     @ResponseBody
     public AjaxResponse deleteCollection(HttpSession session, @PathVariable("collectionId") String collectionId) {
-        return null;
+        BooleanCarrier booleanCarrier = collectionService.deleteKeyCollection(collectionId);
+        AjaxResponse ajaxResponse = new AjaxResponse();
+        if (!booleanCarrier.getResult()) {
+            ajaxResponse.setReturnState(ReturnState.ERROR);
+            ajaxResponse.setMsg(booleanCarrier.getMessage());
+            return ajaxResponse;
+        }
+        return ajaxResponse;
     }
 
 

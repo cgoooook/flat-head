@@ -27,6 +27,24 @@ var Collection = function () {
                 ]
             }
         });
+
+        $table.on('click', 'a.delete', function () {
+            var $this = $(this);
+            flat.showConfirm();
+            $("#confirmBtn").off("click").on("click", function () {
+                var $row = $table.DataTable().row($this.parents('tr')[0]);
+                $.ajax({
+                    url: "/key/collection/" + $row.data().collectionId,
+                    dataType: "json",
+                    type: "DELETE"
+                }).done(function (data) {
+                    if (flat.ajaxCallback(data)) {
+                        grid.reload();
+                        $("#confirmDialog").modal("hide");
+                    }
+                })
+            })
+        });
     };
 
     var handleEvents = function () {

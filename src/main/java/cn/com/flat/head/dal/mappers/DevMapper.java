@@ -7,5 +7,8 @@ import java.util.List;
 
 @RepositoryImpl
 public interface DevMapper {
+
     List<Device> getDevListPage(Device dev) ;
+
+    int getCollectionCountByCollectionId(String collectionId);
 }

@@ -1,10 +1,12 @@
 package cn.com.flat.head.service.impl;
 
+import cn.com.flat.head.dal.DevServiceDao;
 import cn.com.flat.head.dal.KeyCollectionDao;
 import cn.com.flat.head.mybatis.interceptor.PageableInterceptor;
 import cn.com.flat.head.mybatis.model.Pageable;
 import cn.com.flat.head.pojo.BooleanCarrier;
 import cn.com.flat.head.pojo.KeyCollection;
+import cn.com.flat.head.service.DevService;
 import cn.com.flat.head.service.KeyCollectionService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -19,6 +21,9 @@ public class KeyCollectionServiceImpl implements KeyCollectionService {
 
     @Autowired
     private KeyCollectionDao keyCollectionDao;
+
+    @Autowired
+    private DevServiceDao devServiceDao;
 
     @Override
     public List<KeyCollection> getKeyCollectionListPage(Pageable pageable, KeyCollection collection) {
@@ -43,7 +48,16 @@ public class KeyCollectionServiceImpl implements KeyCollectionService {
 
     @Override
     public BooleanCarrier deleteKeyCollection(String collectionId) {
-        return null;
+        BooleanCarrier booleanCarrier = new BooleanCarrier();
+        int collectionCountByCollectionId = devServiceDao.getCollectionCountByCollectionId(collectionId);
+        if (collectionCountByCollectionId > 0) {
+            booleanCarrier.setResult(false);
+            booleanCarrier.setMessage("keyCollection.collectionInUse");
+            return booleanCarrier;
+        }
+        int i = keyCollectionDao.deleteCollection(collectionId);
+        booleanCarrier.setResult(i == 1);
+        return booleanCarrier;
     }
 
     @Override

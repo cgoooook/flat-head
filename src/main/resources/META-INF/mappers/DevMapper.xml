@@ -15,7 +15,9 @@
     <select id="getDevListPage" resultMap="devMap">
         SELECT * FROM `kms_device`
     </select>
-
+    <select id="getCollectionCountByCollectionId" resultType="java.lang.Integer">
+        select count(*) from kms_device where connection_id=#{collectionId}
+    </select>
 
 
 </mapper>

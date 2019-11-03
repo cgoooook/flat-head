@@ -16,4 +16,9 @@ public class DevServiceDaoImpl implements DevServiceDao {
     public List<Device> getDevListPage(Device dev) {
         return devMapper.getDevListPage(dev);
     }
+
+    @Override
+    public int getCollectionCountByCollectionId(String collectionId) {
+        return devMapper.getCollectionCountByCollectionId(collectionId);
+    }
 }
