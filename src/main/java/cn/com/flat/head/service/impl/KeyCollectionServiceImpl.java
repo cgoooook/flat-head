@@ -41,5 +41,15 @@ public class KeyCollectionServiceImpl implements KeyCollectionService {
         return booleanCarrier;
     }
 
+    @Override
+    public BooleanCarrier deleteKeyCollection(String collectionId) {
+        return null;
+    }
+
+    @Override
+    public List<KeyCollection> getKeyCollectionByOrgId(String orgId) {
+        return keyCollectionDao.getCollectionByOrgId(orgId);
+    }
+
 
 }

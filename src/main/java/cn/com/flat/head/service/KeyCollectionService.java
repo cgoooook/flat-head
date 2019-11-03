@@ -15,4 +15,8 @@ public interface KeyCollectionService {
 
     BooleanCarrier addCollection(KeyCollection collection);
 
+    BooleanCarrier deleteKeyCollection(String collectionId);
+
+    List<KeyCollection> getKeyCollectionByOrgId(String orgId);
+
 }

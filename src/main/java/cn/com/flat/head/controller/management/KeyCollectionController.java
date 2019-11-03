@@ -48,4 +48,19 @@ public class KeyCollectionController {
         return ajaxResponse;
     }
 
+    @DeleteMapping("/{collectionId}")
+    @ResponseBody
+    public AjaxResponse deleteCollection(HttpSession session, @PathVariable("collectionId") String collectionId) {
+        return null;
+    }
+
+
+    @GetMapping("/collection/{orgId}")
+    @ResponseBody
+    public AjaxResponse getCollectionListByOrgId(@PathVariable("orgId") String orgId) {
+        AjaxResponse ajaxResponse = new AjaxResponse();
+        ajaxResponse.setData(collectionService.getKeyCollectionByOrgId(orgId));
+        return ajaxResponse;
+    }
+
 }
