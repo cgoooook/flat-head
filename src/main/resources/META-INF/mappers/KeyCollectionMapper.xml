@@ -29,7 +29,7 @@
     </select>
 
     <select id="getKeyCollectionById" resultMap="CollectionMap">
-        select * from kms_key_collection where collection_id=#{connectionId}
+        select kkc.*, ko.org_name from kms_key_collection kkc, kms_org ko where ko.org_id=kkc.org_id and collection_id=#{connectionId}
     </select>
 
     <select id="getCollectionByOrgId" resultMap="CollectionMap">

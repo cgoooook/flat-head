@@ -13,4 +13,7 @@ public interface DevService {
     boolean deleteDevById(String id);
 
     BooleanCarrier addDev(Device org);
+    int getDevCountByCollectionId(String collectionId);
+
+
 }

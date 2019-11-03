@@ -40,4 +40,9 @@ public class DevServiceDaoImpl implements DevServiceDao {
         return devMapper.getDevByName(deviceName);
 
     }
+
+    @Override
+    public int getCollectionCountByCollectionId(String collectionId) {
+        return devMapper.getCollectionCountByCollectionId(collectionId);
+    }
 }

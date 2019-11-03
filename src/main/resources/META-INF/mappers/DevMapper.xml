@@ -8,14 +8,12 @@
         <result column="device_code" property="deviceCode" />
         <result column="device_ip" property="deviceIp" />
         <result column="org_id" property="orgId" />
-        <result column="connection_id" property="collectionId" />
-        <result column="org_name" property="orgName" />
+        <result column="connection_id" property="connectionId" />
     </resultMap>
 
 
     <select id="getDevListPage" resultMap="devMap">
-        SELECT d.device_id,d.device_name,d.device_code,d.device_ip,d.org_id,d.collection_id,o.org_name  FROM kms_device d left join kms_org  o on  d.org_id= o.org_id
-
+        SELECT * FROM `kms_device`
     </select>
 
     <delete id="deleteDevgById">
@@ -29,6 +27,9 @@
 
     <select id="getDevByName" resultMap="devMap">
         select * from kms_device where device_name =#{deviceName}
+    </select>
+    <select id="getCollectionCountByCollectionId" resultType="java.lang.Integer">
+        select count(*) from kms_device where connection_id=#{collectionId}
     </select>
 
     <insert id="addDev"  >

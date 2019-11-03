@@ -27,6 +27,60 @@ var Collection = function () {
                 ]
             }
         });
+
+        $table.on('click', 'a.delete', function () {
+            var $this = $(this);
+            flat.showConfirm();
+            $("#confirmBtn").off("click").on("click", function () {
+                var $row = $table.DataTable().row($this.parents('tr')[0]);
+                $.ajax({
+                    url: "/key/collection/" + $row.data().collectionId,
+                    dataType: "json",
+                    type: "DELETE"
+                }).done(function (data) {
+                    if (flat.ajaxCallback(data)) {
+                        grid.reload();
+                        $("#confirmDialog").modal("hide");
+                    }
+                })
+            })
+        });
+
+        $table.on('click', 'a.edit', function () {
+            var $this = $(this);
+            var $row = $table.DataTable().row($this.parents('tr')[0]);
+            $.get("/key/collection/" + $row.data().collectionId, function (data) {
+                if (data.ok) {
+                    var collection = data.data;
+                    var htmlTemplate = flat.remoteTemplate("/template/collection/updateCollection.html", {collection: collection});
+                    $("#modalDialog").html(htmlTemplate).modal('show');
+                    initUpdateBtn();
+                } else {
+                    flat.ajaxCallback(data);
+                }
+            })
+        });
+
+        function initUpdateBtn() {
+            $("#updateBtn").on("click", function () {
+                if ($('#dialogForm').validate().form()) {
+                    $.ajax({
+                        url: "/key/collection",
+                        type: "POST",
+                        dataType: "json",
+                        data: {
+                            collectionId :$("#collectionId").val(),
+                            collectionName: $("#collectionName").val(),
+                        }
+                    }).done(function (data) {
+                        if (flat.ajaxCallback(data)) {
+                            $("#modalDialog").modal("hide");
+                            grid.reload();
+                        }
+                    })
+                }
+            })
+        }
     };
 
     var handleEvents = function () {

@@ -25,4 +25,6 @@ public interface KeyCollectionDao {
 
     int getCollectionByCollectionName(String name);
 
+    int deleteCollectionKeys(String collectionId);
+
 }

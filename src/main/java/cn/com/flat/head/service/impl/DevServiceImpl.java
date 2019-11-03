@@ -25,6 +25,11 @@ public class DevServiceImpl implements DevService {
     }
 
     @Override
+    public int getDevCountByCollectionId(String collectionId) {
+        return devServiceDao.getCollectionCountByCollectionId(collectionId);
+    }
+
+    @Override
     public boolean deleteDevById(String id) {
         return   devServiceDao.deleteDevgById(id);
     }

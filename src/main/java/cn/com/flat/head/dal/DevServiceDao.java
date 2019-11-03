@@ -7,7 +7,10 @@ import cn.com.flat.head.pojo.Device;
 import java.util.List;
 
 public interface DevServiceDao {
+
     List<Device> getDevListPage(Device dev);
+
+    int getCollectionCountByCollectionId(String collectionId);
 
     boolean deleteDevgById(String id);
 
