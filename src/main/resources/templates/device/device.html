@@ -14,28 +14,23 @@
     <div class="page-content-wrapper">
         <div class="page-content">
             <th:block th:include="includes/slider :: slider"/>
-            <body>
-            <!--
-                "checkbox",	:选择框
-                "contextmenu",：修改，右键节点，显示操作菜单
-                "dnd",		：拖放功能，整理节点		要想开启需要将core的check_callback设置为true
-                "massload",	：懒加载
-                "search",
-                "sort",	：排序
-                "state",	：保存状态
-                "types",
-                "unique",	：唯一插件
-                "wholerow",:整行，一个条目占满一行
-                "changed",
-                "conditionalselect"
-            -->
-            <input type="search" id="plugins4_q"/>
-            <div id="jstree_div"></div>
-
-            </body>
 
             <div class="row">
-                <div class="col-md-12">
+                <div class="col-md-2">
+                    <div class="portlet light portlet-fit bordered">
+                        <div class="portlet light portlet-fit portlet-datatable bordered">
+                            <div class="portlet-title">
+                                <div class="caption">
+                                    <span class="caption-subject font-dark sbold uppercase" th:text="${menu.menuName}"></span>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="portlet-body">
+                            <div id="jstree_div"></div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-10">
                     <div class="portlet light portlet-fit portlet-datatable bordered">
                         <div class="portlet-title">
                             <div class="caption">

@@ -37,7 +37,7 @@ public class OrgController {
     @ResponseBody
     public AjaxResponse addOrg(@RequestBody Organization org, HttpSession httpSession) {
         BooleanCarrier booleanCarrier = orgService.addOrg(org);
-        if(booleanCarrier.getResult()==false){
+        if(!booleanCarrier.getResult()){
             AjaxResponse ajaxResponse = new AjaxResponse();
             ajaxResponse.setReturnState(ReturnState.ERROR);
             ajaxResponse.setMsg(booleanCarrier.getMessage());
@@ -51,7 +51,7 @@ public class OrgController {
     public AjaxResponse editOrg(@RequestBody Organization org, HttpSession httpSession) {
 
         BooleanCarrier booleanCarrier = orgService.editOrg(org);
-        if(booleanCarrier.getResult()==false){
+        if(!booleanCarrier.getResult()){
             AjaxResponse ajaxResponse = new AjaxResponse();
             ajaxResponse.setReturnState(ReturnState.ERROR);
             ajaxResponse.setMsg(booleanCarrier.getMessage());
