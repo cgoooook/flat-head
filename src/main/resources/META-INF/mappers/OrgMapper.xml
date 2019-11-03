@@ -75,7 +75,9 @@
     select * from kms_org where parent_id=#{parentId}
 
     </select>
-
+    <select id="getTreeList" resultMap="OrgMap">
+        select * from kms_org
+    </select>
 
 
 </mapper>

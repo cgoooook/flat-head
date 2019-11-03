@@ -6,13 +6,14 @@
         <id column="collection_id" property="collectionId" />
         <result column="collection_name" property="collectionName" />
         <result column="org_id" property="orgId" />
+        <result column="org_name" property="orgName" />
     </resultMap>
     <insert id="addCollection">
         insert into kms_key_collection (collection_id, collection_name, org_id) VALUES
         (#{collectionId}, #{collectionName}, #{orgId})
     </insert>
 
-    <update id="updateConnection">
+    <update id="updateCollection">
         update kms_key_collection set collection_name=#{collectionName} where collection_id=#{collectionId}
     </update>
 
@@ -20,14 +21,14 @@
         delete from kms_key_collection where collection_id=#{collectionId}
     </delete>
 
-    <select id="getKeyConnectionListPage" resultMap="CollectionMap">
-        select * from kms_key_collection where 1=1
+    <select id="getKeyCollectionListPage" resultMap="CollectionMap">
+        select kkc.*, ko.org_name from kms_key_collection kkc, kms_org ko where kkc.org_id=ko.org_id
         <if test="orgId != null and orgId != ''">
-            and org_id=#{orgId}
+            and kkc.org_id=#{orgId}
         </if>
     </select>
 
-    <select id="getKeyConnectionById" resultMap="CollectionMap">
+    <select id="getKeyCollectionById" resultMap="CollectionMap">
         select * from kms_key_collection where collection_id=#{connectionId}
     </select>
 

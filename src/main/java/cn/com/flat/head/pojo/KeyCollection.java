@@ -15,4 +15,6 @@ public class KeyCollection {
 
     private String orgId;
 
+    private String orgName;
+
 }

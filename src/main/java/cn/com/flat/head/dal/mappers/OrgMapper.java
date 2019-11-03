@@ -24,4 +24,6 @@ public interface OrgMapper {
     int editOrg(Organization org);
 
     List<OrgTreeBo> devTreeList(String parentId);
+
+    List<Organization> getTreeList();
 }

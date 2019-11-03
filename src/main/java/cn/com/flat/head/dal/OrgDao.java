@@ -26,4 +26,6 @@ public interface OrgDao {
     int editOrg(Organization org);
 
     List<OrgTreeBo> devTreeList(String parentId);
+
+    List<Organization> getTreeList();
 }

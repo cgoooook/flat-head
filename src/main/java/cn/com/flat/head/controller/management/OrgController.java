@@ -81,4 +81,14 @@ public class OrgController {
     }
 
 
+    @GetMapping("/tree")
+    @ResponseBody
+    public AjaxResponse tree() {
+        AjaxResponse ajaxResponse = new AjaxResponse();
+        List<Organization> treeList = orgService.getTreeList();
+        ajaxResponse.setData(treeList);
+        return ajaxResponse;
+    }
+
+
 }
