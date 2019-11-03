@@ -67,4 +67,6 @@ public class OrgDaoImpl implements OrgDao {
     public List<Organization> orgChildList() {
         return orgMapper.orgChildList();
     }
+
+
 }

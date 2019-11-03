@@ -30,4 +30,6 @@ public interface OrgDao {
     List<Organization> getTreeList();
 
     List<Organization> orgChildList();
+
+
 }

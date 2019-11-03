@@ -79,9 +79,12 @@
     <select id="orgChildList" resultMap="OrgMap">
         SELECT z.org_id,z.org_name,z.org_code,f.org_name as parent_name,z.leaf ,z.parent_id FROM kms_org as z left JOIN kms_org as f
          on z.parent_id = f.org_id and z.parent_id != '-1' and z.leaf = 1
+    </select>
     <select id="getTreeList" resultMap="OrgMap">
         select * from kms_org
     </select>
+
+
 
 
 </mapper>

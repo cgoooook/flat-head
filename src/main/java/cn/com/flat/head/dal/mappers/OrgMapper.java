@@ -28,4 +28,6 @@ public interface OrgMapper {
     List<Organization> getTreeList();
 
     List<Organization> orgChildList();
+
+    List<Organization> orgList();
 }
