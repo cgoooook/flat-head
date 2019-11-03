@@ -5,6 +5,7 @@ import cn.com.flat.head.mybatis.interceptor.PageableInterceptor;
 import cn.com.flat.head.mybatis.model.Pageable;
 import cn.com.flat.head.pojo.BooleanCarrier;
 import cn.com.flat.head.pojo.Device;
+import cn.com.flat.head.pojo.Organization;
 import cn.com.flat.head.service.DevService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -27,6 +28,50 @@ public class DevServiceImpl implements DevService {
     @Override
     public int getDevCountByCollectionId(String collectionId) {
         return devServiceDao.getCollectionCountByCollectionId(collectionId);
+    }
+
+    @Override
+    public Device getDevByDevCode(String deviceCode) {
+        return devServiceDao.getDevByDevCode(deviceCode);
+    }
+
+    @Override
+    public BooleanCarrier editDev(Device dev) {
+        BooleanCarrier b = new BooleanCarrier();
+        b.setResult(true);
+        String devId =dev.getDeviceId();
+        String devName = dev.getDeviceName();
+        String deviceCode = dev.getDeviceCode();
+
+        Device devById = devServiceDao.getDevById(devId);
+
+        Device devByName = devServiceDao.getDevByName(devName);
+        Device devByDevCode = devServiceDao.getDevByDevCode(deviceCode);
+
+        if(devByName!=null){
+
+            if((!devId.equalsIgnoreCase(devByName.getDeviceId()))&&devByName.equals(devByName.getDeviceName())){
+                b.setResult(false);
+                b.setMessage("dev.nameIsRepeat");
+                return b;
+
+            }
+        }
+
+        if(devByDevCode!=null){
+            if((!devId.equalsIgnoreCase(devByDevCode.getDeviceId()))&&deviceCode.equals(devById.getDeviceId())){
+                b.setResult(false);
+                b.setMessage("dev.codeIsRepeat");
+                return b;
+            }
+        }
+
+
+
+
+
+        devServiceDao.editOrg(dev);
+        return b;
     }
 
     @Override

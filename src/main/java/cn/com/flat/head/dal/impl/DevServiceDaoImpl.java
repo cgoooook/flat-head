@@ -2,13 +2,11 @@ package cn.com.flat.head.dal.impl;
 
 import cn.com.flat.head.dal.DevServiceDao;
 import cn.com.flat.head.dal.mappers.DevMapper;
-import cn.com.flat.head.pojo.BooleanCarrier;
 import cn.com.flat.head.pojo.Device;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
-import java.util.UUID;
 
 @Repository
 public class DevServiceDaoImpl implements DevServiceDao {
@@ -39,6 +37,16 @@ public class DevServiceDaoImpl implements DevServiceDao {
     public Device getDevByName(String deviceName) {
         return devMapper.getDevByName(deviceName);
 
+    }
+
+    @Override
+    public Device getDevByDevCode(String deviceCode) {
+        return devMapper.getDevByDevCode(deviceCode);
+    }
+
+    @Override
+    public void editOrg(Device dev) {
+        devMapper.editDev(dev);
     }
 
     @Override

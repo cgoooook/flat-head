@@ -19,4 +19,8 @@ public interface DevServiceDao {
     Device getDevById(String deviceId);
 
     Device getDevByName(String deviceName);
+
+    Device getDevByDevCode(String deviceCode);
+
+    void editOrg(Device dev);
 }

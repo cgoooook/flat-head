@@ -16,4 +16,7 @@ public interface DevService {
     int getDevCountByCollectionId(String collectionId);
 
 
+    Device getDevByDevCode(String deviceCode);
+
+    BooleanCarrier editDev(Device dev);
 }

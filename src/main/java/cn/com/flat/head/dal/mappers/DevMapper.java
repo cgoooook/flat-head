@@ -19,4 +19,8 @@ public interface DevMapper {
     Device getDevByName(String deviceName);
 
     int addDev(Device dev);
+
+    Device getDevByDevCode(String deviceCode);
+
+    void editDev(Device dev);
 }

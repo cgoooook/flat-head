@@ -13,8 +13,8 @@ var device = function () {
                     "url": "/sys/device/list"
                 },
                 "columns": [
-                    {data: 'deviceName', orderable: true},
                     {data: 'deviceCode', orderable: true},
+                    {data: 'deviceName', orderable: true},
                     {data: 'deviceIp', orderable: true},
                     {data: 'orgName', orderable: true},
                     {
@@ -75,10 +75,12 @@ var device = function () {
         $table.on('click', 'a.edit', function () {
             var $this = $(this);
             var $row = $table.DataTable().row($this.parents('tr')[0]);
-            $.get("/sys/device/" + $row.data().deviceId, function (data) {
+            $.get("/sys/device/" + $row.data().deviceCode, function (data) {
                 if (data.ok) {
                     var dev = data.data;
-                    var htmlTemplate = flat.remoteTemplate("/template/device/editDev.html", { reqData: dev});
+                    console.log(dev);
+                    var collections = data.data.collectionIds
+                    var htmlTemplate = flat.remoteTemplate("/template/device/editDev.html", { reqData: dev,cols:collections});
                     $("#modalDialog").html(htmlTemplate).modal('show');
                     initSaveBtn();
                 } else {
@@ -118,14 +120,17 @@ var device = function () {
             $("#editBtn").on('click', function () {
                 if ($('#dialogForm').validate().form()) {
                     $.ajax({
-                        url: "/sys/org/edit",
+                        url: "/sys/device/edit",
                         type: "PUT",
                         dataType: "json",
                         contentType: "application/json; charset=utf-8",
                         data: JSON.stringify({
-                            orgId :$("#orgId").attr("text"),
-                            orgCode: $("#orgCode").val(),
-                            orgName: $("#orgName").val()
+                            deviceId  : $("#deviceId").val(),
+                            deviceCode: $("#deviceCode").val(),
+                            deviceName: $("#devName").val(),
+                            deviceIp: $("#devIp").val(),
+                            orgId: $("#orgName option:selected").val(),
+                            collectionId: $("#keys option:selected").val(),
                         })
                     }).done(function (data) {
                         if (flat.ajaxCallback(data)) {
