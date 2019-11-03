@@ -48,6 +48,7 @@ public class OrgController {
     @PutMapping
     @ResponseBody
     public AjaxResponse addOrg(@RequestBody Organization org, HttpSession httpSession) {
+        org.setLeaf(1);
         BooleanCarrier booleanCarrier = orgService.addOrg(org);
         if(!booleanCarrier.getResult()){
             AjaxResponse ajaxResponse = new AjaxResponse();
