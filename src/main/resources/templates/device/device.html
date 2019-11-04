@@ -38,7 +38,7 @@
                                 <span class="caption-subject font-dark sbold uppercase" th:text="${menu.menuName}"></span>
                             </div>
                             <div class="actions">
-                                <a href="javascript:;" class="btn btn-success btn-circle" id="addOrg"><i class="fa fa-plus faa-shake animated-hover"></i><span th:text="#{dev.addDev}"></span> </a>
+                                <a href="javascript:;" class="btn btn-success btn-circle" id="addDev"><i class="fa fa-plus faa-shake animated-hover"></i><span th:text="#{dev.addDev}"></span> </a>
                             </div>
                         </div>
                         <div class="portlet-body">
@@ -48,6 +48,7 @@
                                     <th> 应用编码</th>
                                     <th> 应用名称</th>
                                     <th> 设备IP</th>
+                                    <th> 机构名称</th>
                                     <th> 操作</th>
                                 </tr>
                                 </thead>
@@ -66,8 +67,10 @@
 <th:block th:include="includes/footer :: footer"/>
 <th:block th:include="includes/scripts :: scripts"/>
 <script id="actionBtn" type="text/html">
-    <a class="edit btn btn-outline default btn-xs purple" orgId="{{full.orgId}}"><i class="fa fa-edit"></i>{{i18n('common.edit')}}</a>
-    <a class="edit btn btn-outline default btn-xs yellow" orgId="{{full.orgId}}"><i class="fa fa-expand"></i>{{i18n('common.keyManage')}}</a>
+    <a class="edit btn btn-outline default btn-xs purple" deviceId="{{full.deviceId}}"><i class="fa fa-edit"></i>{{i18n('common.edit')}}</a>
+    <a class="edit btn btn-outline default btn-xs yellow" deviceId="{{full.deviceId}}"><i class="fa fa-expand"></i>{{i18n('common.keyManage')}}</a>
+    <a class="delete btn btn-outline default btn-xs red" deviceId="{{full.deviceId}}"><i class="fa fa-times"></i>{{i18n('common.delete')}}</a>
+
 </script>
 <script type="text/javascript" th:src="@{/plugins/jstree/jstree.js}"></script>
 <script th:src="@{/pages/scripts/device/device.js}" type="text/javascript"></script>

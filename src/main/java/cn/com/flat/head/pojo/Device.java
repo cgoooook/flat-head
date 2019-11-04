@@ -2,6 +2,8 @@ package cn.com.flat.head.pojo;
 
 import lombok.Data;
 
+import java.util.List;
+
 @Data
 public class Device {
     private String  deviceId;
@@ -9,7 +11,9 @@ public class Device {
     private String deviceCode;
     private String deviceIp;
     private String orgId;
-    private String connectionId;
-
+    private String orgName;
+    private String collectionId;
+    private String collectionName;
+    private List<KeyCollection> collectionIds;
 
 }

@@ -18,6 +18,38 @@ public class DevServiceDaoImpl implements DevServiceDao {
     }
 
     @Override
+    public boolean deleteDevgById(String id) {
+        return devMapper.deleteDevgById(id);
+    }
+
+    @Override
+    public int addDev(Device dev) {
+
+        return  devMapper.addDev(dev);
+    }
+
+    @Override
+    public Device getDevById(String deviceId) {
+        return devMapper.getDevById(deviceId);
+    }
+
+    @Override
+    public Device getDevByName(String deviceName) {
+        return devMapper.getDevByName(deviceName);
+
+    }
+
+    @Override
+    public Device getDevByDevCode(String deviceCode) {
+        return devMapper.getDevByDevCode(deviceCode);
+    }
+
+    @Override
+    public void editOrg(Device dev) {
+        devMapper.editDev(dev);
+    }
+
+    @Override
     public int getCollectionCountByCollectionId(String collectionId) {
         return devMapper.getCollectionCountByCollectionId(collectionId);
     }

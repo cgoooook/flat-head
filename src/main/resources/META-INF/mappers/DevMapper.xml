@@ -8,16 +8,65 @@
         <result column="device_code" property="deviceCode" />
         <result column="device_ip" property="deviceIp" />
         <result column="org_id" property="orgId" />
-        <result column="connection_id" property="connectionId" />
+        <result column="collection_id" property="collectionId" />
+        <result column="collection_name" property="collectionName" />
     </resultMap>
 
 
     <select id="getDevListPage" resultMap="devMap">
-        SELECT * FROM `kms_device`
+        select d.device_id,d.device_name,d.device_code,d.device_ip,o.org_name,d.org_id,d.collection_id from kms_device d  left join kms_org o                                                                                                                          on d.org_id=o.org_id
+
+    </select>
+
+    <delete id="deleteDevgById">
+
+        delete from  kms_device where device_id =#{deviceId}
+    </delete>
+
+   <select id="getDevById" resultMap="devMap">
+       select * from kms_device where device_id =#{deviceId}
+   </select>
+
+    <select id="getDevByName" resultMap="devMap">
+        select * from kms_device where device_name =#{deviceName}
     </select>
     <select id="getCollectionCountByCollectionId" resultType="java.lang.Integer">
         select count(*) from kms_device where connection_id=#{collectionId}
     </select>
+
+    <insert id="addDev"  >
+        INSERT INTO kms_device (
+            device_id,
+            device_name,
+            device_code,
+            device_ip,
+            org_id,
+            collection_id
+        ) value (#{deviceId},#{deviceName},#{deviceCode},#{deviceIp},#{orgId},#{collectionId})
+    </insert>
+    <select id="getDevByDevCode" resultMap="devMap">
+        SELECT
+            d.device_id,
+            d.device_name,
+            d.device_code,
+            d.device_ip,
+            o.org_id,
+            o.org_name,
+            d.collection_id
+        FROM
+            kms_device d
+                LEFT JOIN kms_org o ON d.org_id = o.org_id
+        where d.device_code =#{deviceCode}
+
+
+    </select>
+
+
+    <update id="editDev">
+        update kms_device set device_name =#{deviceName},device_code=#{deviceCode},device_ip=#{deviceIp},collection_id=#{collectionId}
+        where device_id =#{deviceId}
+    </update>
+
 
 
 </mapper>
