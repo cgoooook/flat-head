@@ -21,6 +21,11 @@ public class SDFImpl {
 	public synchronized void Impl_init() throws SDFException {
 		int rv = 0;
 
+		if ( hsmConfig == null) {
+			hsmConfig = new SDFConfigure();
+			new JNASDFApi();
+		}
+
 		if (pDevHandle != null)
 			return;
 
@@ -33,9 +38,7 @@ public class SDFImpl {
 
 		pDevHandle = ppDevHandle.getValue();
 		
-		if ( hsmConfig == null) {
-			hsmConfig = new SDFConfigure();
-		}
+
 	}
 
 	public synchronized void Impl_final() throws SDFException {
@@ -270,7 +273,7 @@ public class SDFImpl {
 			throw new IllegalArgumentException("Key encrypt input length than " + hsmConfig.getInputLengthMaxConfig() + " or less than 1.");			
 		}
 		
-		if ( isInputLengthBlockAbled(key.getKeyType(), pInput.length) ) {
+		if ( !isInputLengthBlockAbled(key.getKeyType(), pInput.length) ) {
 			throw new IllegalArgumentException("encrypt input length block invalid. ");					
 		}
 		
