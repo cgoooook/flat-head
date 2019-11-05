@@ -6,14 +6,14 @@ import cn.com.flat.head.sdf.util.Constants;
 
 public class SKey {
 	public static final int SKK_SM2_PRIV_KEY    = 0x00000001;
-	public static final int SKK_SM2_PRIV_KEY_ID = 0x00000001;
-	public static final int SKK_SM2_PUBL_KEY    = 0x00000001;
-	public static final int SKK_SM2_PUBL_KEY_ID = 0x00000001;
+	public static final int SKK_SM2_PRIV_KEY_ID = 0x00000002;
+	public static final int SKK_SM2_PUBL_KEY    = 0x00000003;
+	public static final int SKK_SM2_PUBL_KEY_ID = 0x00000004;
 
-	public static final int SKK_SM1_KEY         = 0x00000001;
-	public static final int SKK_SM1_KEY_ID      = 0x00000001;
-	public static final int SKK_SM4_KEY         = 0x00000001;
-	public static final int SKK_SM4_KEY_ID      = 0x00000001;
+	public static final int SKK_SM1_KEY         = 0x00000005;
+	public static final int SKK_SM1_KEY_ID      = 0x00000006;
+	public static final int SKK_SM4_KEY         = 0x00000007;
+	public static final int SKK_SM4_KEY_ID      = 0x00000008;
 
 	public static final String NAME_SKK_SM2_PRIV_KEY      = "SKK_SM2_PRIV_KEY";
 	public static final String NAME_SKK_SM2_PRIV_KEY_ID   = "SKK_SM2_PRIV_KEY_ID";

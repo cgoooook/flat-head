@@ -1,5 +1,7 @@
 package cn.com.flat.head.sdf.sdf.impl;
 
+import java.io.File;
+import java.io.FileInputStream;
 import java.util.Properties;
 
 public class SDFConfigure {
@@ -13,7 +15,7 @@ public class SDFConfigure {
 	public static final String NAME_SCNF_INPUT_LEN_MAX     = "INPUT_LENGTH_MAX";
 	public static final String NAME_SCNF_LIB_PATH          = "DLL_PATH";
 
-	protected static final String CONF_HSM_PROPERTIES = "cn/com/hsm/sdf/impl/sdf.properties";
+	protected static final String CONF_HSM_PROPERTIES = "config/sdf.properties";
 	
 	private Properties confHSM_;
 	
@@ -21,7 +23,7 @@ public class SDFConfigure {
 		if (confHSM_ == null) {
 			Properties confHSM = new Properties();
 			try {
-				confHSM.load(getClass().getClassLoader().getResourceAsStream(CONF_HSM_PROPERTIES));
+				confHSM.load(new FileInputStream(new File("config/sdf.properties")));
 				confHSM_ = confHSM;
 			} catch (Exception exception) {
 				System.err.println("Could not read properties for error code names: " + exception.getMessage());
