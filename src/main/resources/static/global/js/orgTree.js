@@ -36,7 +36,8 @@ var zTreeOrg = function () {
         url: "",
         clickCall: function (event, treeId, treeNode, clickFlag) {
 
-        }
+        },
+        rootClick: false
     };
 
     function addDiyDom(treeId, treeNode) {
@@ -49,6 +50,9 @@ var zTreeOrg = function () {
     }
 
     function beforeClick(treeId, treeNode, clickFlag) {
+        if (options.rootClick) {
+            return true;
+        }
         return treeNode.orgId !== "orgRoot";
     }
 

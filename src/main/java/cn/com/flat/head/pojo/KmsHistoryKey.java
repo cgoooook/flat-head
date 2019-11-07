@@ -3,10 +3,12 @@ package cn.com.flat.head.pojo;
 import lombok.Data;
 
 /**
- * Created by panzhuowen on 2019/10/29.
+ * Created by panzhuowen on 2019/11/5.
  */
 @Data
-public class Key {
+public class KmsHistoryKey {
+
+    private String keyHistoryId;
 
     private String keyId;
 
@@ -14,9 +16,9 @@ public class Key {
 
     private String keyAlg;
 
-    private int length;
+    private int keyLength;
 
-    private  int version;
+    private int version;
 
     private String checkValue;
 
@@ -26,11 +28,7 @@ public class Key {
 
     private String templateId;
 
-    private String templateName;
-
     private String orgId;
-
-    private String orgName;
 
     private int status;
 
