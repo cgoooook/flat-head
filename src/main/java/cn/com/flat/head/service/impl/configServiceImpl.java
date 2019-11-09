@@ -1,8 +1,11 @@
 package cn.com.flat.head.service.impl;
 
+import cn.com.flat.head.dal.ConfigDao;
 import cn.com.flat.head.pojo.BooleanCarrier;
 import cn.com.flat.head.pojo.Jdbc;
+import cn.com.flat.head.pojo.LogConfig;
 import cn.com.flat.head.service.ConfigService;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.io.FileUrlResource;
 import org.springframework.core.io.Resource;
 import org.springframework.stereotype.Service;
@@ -21,7 +24,8 @@ import java.util.Properties;
 @Service
 public class configServiceImpl implements ConfigService {
     public static final String  PREFIX="jdbc.";
-
+    @Autowired
+    ConfigDao configDao;
     @Override
     public BooleanCarrier  updateJdbcConfig(Jdbc jdbc) {
 
@@ -90,4 +94,22 @@ public class configServiceImpl implements ConfigService {
 
         return jdbc;
     }
+
+    @Override
+    public List<LogConfig> getLogConfig() {
+
+        return configDao.getLogConfig();
+    }
+
+    @Override
+    public void editLogLevel(String logLevel) {
+        configDao.editLogLevel(logLevel);
+    }
+
+    @Override
+    public void editLogDays(String logDays) {
+        configDao.editLogDays(logDays);
+    }
+
+
 }
