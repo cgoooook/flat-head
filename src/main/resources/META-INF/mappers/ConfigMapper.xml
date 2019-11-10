@@ -7,7 +7,14 @@
         <result column="config_name" property="configName" />
         <result column="config_value" property="configValue" />
     </resultMap>
-
+    
+    <resultMap id="sysLogo" type="cn.com.flat.head.pojo.SysLogo">
+        <id column="id" property="id" />
+        <result column="logo" property="logo" />
+        <result column="status" property="status" />
+    </resultMap>
+    
+    
     <select id="getLogConfig" resultMap="ConfigMap">
 
       select * from sys_config
@@ -26,6 +33,33 @@
         where  config_name ='log_days'
 
     </update>
+    <update id="updateCopyright">
 
+        update   sys_config set config_value = #{copyright}
+        where  config_name ='copyright'
+
+    </update>
+
+    <update id="updateLogo">
+    update  sys_logo set status = 0
+    where status =1
+
+    </update>
+
+    <insert id="insertLogo" useGeneratedKeys="true" keyProperty="id">
+        insert into sys_logo (
+            logo,
+            status
+        ) value (#{logo},#{status})
+    </insert>
+
+    <select id="getUiInfo" resultMap="sysLogo">
+     select * from    sys_logo where status = 1
+
+    </select>
+    <select id="getCopyright" resultMap="ConfigMap">
+
+        select * from sys_config where config_name = 'copyright'
+    </select>
 
 </mapper>

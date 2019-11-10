@@ -3,6 +3,7 @@ package cn.com.flat.head.dal.impl;
 import cn.com.flat.head.dal.ConfigDao;
 import cn.com.flat.head.dal.mappers.LogConfigMapper;
 import cn.com.flat.head.pojo.LogConfig;
+import cn.com.flat.head.pojo.SysLogo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
@@ -25,6 +26,29 @@ public class ConfigDaoImpl implements ConfigDao {
     @Override
     public void editLogDays(String logDays) {
         logConfigMapper.editLogDays(logDays);
+    }
+
+    @Override
+    public void updateCopyright(String copyright) {
+        logConfigMapper.updateCopyright(copyright);
+    }
+
+    @Override
+    public void updateLogo() {
+        logConfigMapper.updateLogo();
+    }
+
+    @Override
+    public void insertLogo(SysLogo sysLogo) {
+        logConfigMapper.insertLogo(sysLogo);
+    }
+
+    @Override
+    public SysLogo getUiInfo() {
+        LogConfig logConfig = logConfigMapper.getCopyright();
+        SysLogo uiInfo = logConfigMapper.getUiInfo();
+        uiInfo.setCopyright(logConfig.getConfigValue());
+        return uiInfo;
     }
 
 

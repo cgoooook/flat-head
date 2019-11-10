@@ -4,16 +4,15 @@ import cn.com.flat.head.dal.ConfigDao;
 import cn.com.flat.head.pojo.BooleanCarrier;
 import cn.com.flat.head.pojo.Jdbc;
 import cn.com.flat.head.pojo.LogConfig;
+import cn.com.flat.head.pojo.SysLogo;
 import cn.com.flat.head.service.ConfigService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.io.FileUrlResource;
 import org.springframework.core.io.Resource;
 import org.springframework.stereotype.Service;
+import org.springframework.web.multipart.MultipartFile;
 
-import java.io.FileOutputStream;
-import java.io.IOException;
-import java.io.InputStream;
-import java.io.OutputStream;
+import java.io.*;
 import java.lang.reflect.Field;
 import java.lang.reflect.InvocationTargetException;
 import java.net.MalformedURLException;
@@ -109,6 +108,36 @@ public class configServiceImpl implements ConfigService {
     @Override
     public void editLogDays(String logDays) {
         configDao.editLogDays(logDays);
+    }
+
+    @Override
+    public void editUiConfig(MultipartFile file, String copyright) {
+        try {
+            InputStream ins = file.getInputStream();
+            byte[] buffer=new byte[1024];
+            int len=0;
+            ByteArrayOutputStream bos=new ByteArrayOutputStream();
+            while((len=ins.read(buffer))!=-1){
+                bos.write(buffer,0,len);
+            }
+            bos.flush();
+            byte data[] = bos.toByteArray();
+            configDao.updateCopyright(copyright);
+            SysLogo sysLogo = new SysLogo();
+            sysLogo.setLogo(data);
+            sysLogo.setStatus(1);
+            configDao.updateLogo();
+            configDao.insertLogo(sysLogo);
+
+        } catch (Exception e) {
+
+            e.printStackTrace();
+        }
+    }
+
+    @Override
+    public SysLogo getUiInfo() {
+        return configDao.getUiInfo();
     }
 
 
