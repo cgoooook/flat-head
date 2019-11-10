@@ -14,23 +14,30 @@
         <result column="org_id" property="orgId" />
         <result column="org_name" property="orgName" />
         <result column="status" property="status" />
+        <result column="mode" property="mode" />
     </resultMap>
 
     <insert id="addKey">
         insert into kms_a_key (key_id, key_name, key_alg, length, check_value, key_value, create_by, template_id,
-                               org_id, status)
-        values (#{keyId}, #{keyName}, #{keyAlg}, #{length}, #{chekcValue}, #{keyValue}, #{createBy}, #{templateId}, #{orgId}, #{status});
+                               org_id, status, mode)
+        values (#{keyId}, #{keyName}, #{keyAlg}, #{length}, #{checkValue}, #{keyValue}, #{createBy}, #{templateId}, #{orgId}, #{status}, #{mode});
     </insert>
 
     <update id="updateKey">
 
     </update>
+    <update id="updateKeyStatus">
+        update kms_a_key set status=${status} where key_id=#{keyId}
+    </update>
 
     <select id="getKeyListPage" resultMap="KeyMap">
         select kak.*, ko.org_name, kt.template_name from kms_a_key kak, kms_org ko, kms_template kt where kt.template_id=kak.template_id and kak.org_id=ko.org_id
         <if test="orgId != null and orgId != ''">
-            and kak.org_id=#{orgId}
+            and (kak.org_id=#{orgId} or kak.org_id='orgRoot')
         </if>
+    </select>
+    <select id="getRootKeyCount" resultType="java.lang.Integer">
+        select count(*) from kms_a_key where org_id='orgRoot'
     </select>
 
 

@@ -56,4 +56,9 @@ public class KeyTemplateDaoImpl implements KeyTemplateDao {
     public int updateTemplate(KeyTemplate template) {
         return keyTemplateMapper.updateTemplate(template);
     }
+
+    @Override
+    public List<KeyTemplate> getTemplateUse() {
+       return keyTemplateMapper.getTemplateUse();
+    }
 }

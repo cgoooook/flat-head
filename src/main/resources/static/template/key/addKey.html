@@ -1,0 +1,136 @@
+<div class="modal-dialog modal-lg">
+    <div class="modal-content" id="modalContent">
+        <div class="modal-header">
+            <button type="button" class="close" data-dismiss="modal" aria-hidden="true"></button>
+            <h4 class="modal-title font-green bold" id="modalTitle">{{i18n('key.addKey')}}</h4>
+        </div>
+        <div class="modal-body form">
+            <form class="form-horizontal" id="dialogForm">
+                <div class="form-body">
+                    <div class="row">
+                        <div class="col-md-12">
+                            <div class="col-md-8">
+                                <div class="form-group">
+                                    <label class="control-label col-md-4">{{i18n('key.label')}}
+                                        <span class="required" aria-required="true">* </span>
+                                    </label>
+                                    <div class="col-md-8">
+                                        <input type="text" class="form-control input-medium" id="keyName"
+                                               name="keyName"
+                                               placeholder="{{i18n('keyCollection.pleaseInputCollectionName')}}" required
+                                               value=""/>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-12">
+                            <div class="col-md-8">
+                                <div class="form-group">
+                                    <label class="control-label col-md-4">{{i18n('common.orgTitle')}}
+                                        <span class="required" aria-required="true">* </span>
+                                    </label>
+
+                                    <div class="col-sm-6">
+                                        <select class="form-control" id="orgIdSelect" required>
+                                            <option value="">{{i18n('common.pleaseSelect')}}</option>
+                                            {{each orgList as org}}
+                                            <option value="{{org.orgId}}">{{org.orgName}}</option>
+                                            {{/each}}
+                                        </select>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-12">
+                            <div class="col-md-8">
+                                <div class="form-group">
+                                    <label class="control-label col-md-4">{{i18n('key.alg')}}
+                                        <span class="required" aria-required="true">* </span>
+                                    </label>
+
+                                    <div class="col-sm-6">
+                                        <select class="form-control" id="keyAlg" required>
+                                            <option value="">{{i18n('common.pleaseSelect')}}</option>
+                                            <option value="SM4">SM4</option>
+                                        </select>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-12">
+                            <div class="col-md-8">
+                                <div class="form-group">
+                                    <label class="control-label col-md-4">{{i18n('key.length')}}
+                                        <span class="required" aria-required="true">* </span>
+                                    </label>
+
+                                    <div class="col-sm-6">
+                                        <select class="form-control" id="length" required>
+                                            <option value="">{{i18n('common.pleaseSelect')}}</option>
+                                            <option value="128">128</option>
+                                        </select>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-12">
+                            <div class="col-md-8">
+                                <div class="form-group">
+                                    <label class="control-label col-md-4">{{i18n('key.templateName')}}
+                                        <span class="required" aria-required="true">* </span>
+                                    </label>
+
+                                    <div class="col-sm-6">
+                                        <select class="form-control" id="templateId" required>
+                                            <option value="">{{i18n('common.pleaseSelect')}}</option>
+                                            {{each templateList as template}}
+                                            <option value="{{template.templateId}}">{{template.templateName}}</option>
+                                            {{/each}}
+                                        </select>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-12">
+                            <div class="col-md-8">
+                                <div class="form-group">
+                                    <label class="control-label col-md-4">{{i18n('key.genMode')}}
+                                        <span class="required" aria-required="true">* </span>
+                                    </label>
+
+                                    <div class="col-sm-6">
+                                        <select class="form-control" id="genMode" required>
+                                            <option value="">{{i18n('common.pleaseSelect')}}</option>
+                                            <option value="random">{{i18n('key.genRandom')}}</option>
+                                            {{if !rootKey}}
+                                            <option value="derive">{{i18n('key.genDerive')}}</option>
+                                            {{/if}}
+                                            <option value="compose">{{i18n('key.composition')}}</option>
+                                        </select>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+            </form>
+        </div>
+        <div class="modal-footer">
+            <button type="button" class="btn btn-outline blue" id="addBtn">{{i18n('common.save')}}</button>
+            <button type="button" class="btn btn-outline grey-gallery" data-dismiss="modal">
+                {{i18n('common.cancelBtn')}}
+            </button>
+        </div>
+    </div>
+</div>

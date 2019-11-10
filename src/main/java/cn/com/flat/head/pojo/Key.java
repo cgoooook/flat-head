@@ -2,6 +2,8 @@ package cn.com.flat.head.pojo;
 
 import lombok.Data;
 
+import java.util.List;
+
 /**
  * Created by panzhuowen on 2019/10/29.
  */
@@ -33,5 +35,13 @@ public class Key {
     private String orgName;
 
     private int status;
+
+    private String generate;
+
+    private String mode;
+
+    private int composeNum;
+
+    private List<String> composes;
 
 }

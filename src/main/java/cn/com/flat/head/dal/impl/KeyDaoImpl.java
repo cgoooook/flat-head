@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
+import java.util.UUID;
 
 /**
  * Created by panzhuowen on 2019/11/6.
@@ -20,5 +21,22 @@ public class KeyDaoImpl implements KeyDao {
     @Override
     public List<Key> getKeyListPage(Key key) {
         return keyMapper.getKeyListPage(key);
+    }
+
+    @Override
+    public int getRootKeyCount() {
+        return keyMapper.getRootKeyCount();
+    }
+
+    @Override
+    public int addKey(Key key) {
+        key.setKeyId(UUID.randomUUID().toString());
+        key.setStatus(2);
+        return keyMapper.addKey(key);
+    }
+
+    @Override
+    public int updateKeyStatus(String keyId, int status) {
+        return keyMapper.updateKeyStatus(keyId, status);
     }
 }

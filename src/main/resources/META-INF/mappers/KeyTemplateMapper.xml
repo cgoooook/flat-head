@@ -41,6 +41,9 @@
     <select id="getTemplateById" resultMap="TemplateMap">
         select * from kms_template where template_id=#{templateId}
     </select>
+    <select id="getTemplateUse" resultMap="TemplateMap">
+        select * from kms_template where status=1
+    </select>
 
 
 </mapper>

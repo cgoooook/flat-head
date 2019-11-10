@@ -11,4 +11,10 @@ public interface KeyDao {
 
     List<Key> getKeyListPage(Key key);
 
+    int getRootKeyCount();
+
+    int addKey(Key key);
+
+    int updateKeyStatus(String keyId, int status);
+
 }

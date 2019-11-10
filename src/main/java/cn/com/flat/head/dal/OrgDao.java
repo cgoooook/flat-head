@@ -11,7 +11,6 @@ public interface OrgDao {
 
     Organization getOrgByOrgName(String orgName);
 
-
     int addOrg(Organization org);
 
     Organization getOrgParentIdEqNegative1();
@@ -19,7 +18,6 @@ public interface OrgDao {
     boolean deleteOrgById(String id);
 
     Organization getOrgByOrgCode(String orgCode);
-
 
     Organization getOrgByOrgId(String orgId);
 

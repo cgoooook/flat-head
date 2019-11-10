@@ -2,6 +2,7 @@ package cn.com.flat.head.dal.mappers;
 
 import cn.com.flat.head.mybatis.RepositoryImpl;
 import cn.com.flat.head.pojo.Key;
+import org.apache.ibatis.annotations.Param;
 
 import java.util.List;
 
@@ -17,4 +18,7 @@ public interface KeyMapper {
 
     int updateKey(Key key);
 
+    int getRootKeyCount();
+
+    int updateKeyStatus(@Param("keyId") String keyId, @Param("status") int status);
 }
