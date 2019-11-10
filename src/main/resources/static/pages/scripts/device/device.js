@@ -8,6 +8,9 @@ var device = function () {
         $table = $("#devTables");
         grid.init({
             src: $table,
+            onQuery: function (data) {
+                data.orgId = $("#orgIdTree").val()
+            },
             dataTable: {
                 "ajax": {
                     "url": "/sys/device/list"
@@ -146,37 +149,27 @@ var device = function () {
         }
     };
 
+    var handleOrgTree = function () {
+        var option = {
+            url: "/sys/org/tree",
+            clickCall: clickCall
+        };
+        zTreeOrg.init(option);
+
+        function clickCall(event, treeId, treeNode, clickFlag) {
+            if (treeNode.orgId) {
+                $("#orgIdTree").val(treeNode.orgId);
+                grid.reload();
+            }
+        }
+    };
+
     return {
         init: function () {
             handleTables();
             handleEvents();
+            handleOrgTree();
         }
     }
 
 }();
-
-$('#jstree_div a').on('click', function () {
-    alert("begin");
-    //get_selected返回选中的列
-    console.log($('#jstree_div').jstree().get_selected(true));
-});
-function orgChange(data) {
-    if(data!=null&&data!=""&&data!=undefined){
-        $.ajax({
-            url: "/key/collection/collection/"+data,
-            type: "get",
-            dataType: "json",
-            success: function(result){
-                console.log(result.data);
-                //    <option value="{{org.orgId}}">{{org.orgName}}</option>
-                var html ;
-                for(var i=0;i<result.data.length;i++){
-                    html+= "<option value='"+result.data[i].collectionId+"'>"+result.data[i].collectionName+"</option>";
-
-                }
-                $("#keys").html(html);
-            }
-        })
-    }
-
-}
