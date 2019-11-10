@@ -63,6 +63,94 @@ var Key = function () {
             })
         });
 
+        $table.on('click', 'a.active', function () {
+            var $this = $(this);
+            flat.showConfirm({
+                confirmContent: flat.i18n("key.activeTips"),
+                confirmBtn: flat.i18n("key.status2")
+            });
+            $("#confirmBtn").off("click").on("click", function () {
+                var $row = $table.DataTable().row($this.parents('tr')[0]);
+                $.ajax({
+                    url: "/key/key/status/" + $row.data().keyId,
+                    dataType: "json",
+                    type: "POST",
+                    data: {
+                        status: 2
+                    }
+                }).done(function (data) {
+                    if (flat.ajaxCallback(data)) {
+                        grid.reload();
+                        $("#confirmDialog").modal("hide");
+                    }
+                })
+            })
+        });
+
+
+        $table.on('click', 'a.archive', function () {
+            var $this = $(this);
+            flat.showConfirm({
+                confirmContent: flat.i18n("key.archiveTips"),
+                confirmBtn: flat.i18n("key.status4")
+            });
+            $("#confirmBtn").off("click").on("click", function () {
+                var $row = $table.DataTable().row($this.parents('tr')[0]);
+                $.ajax({
+                    url: "/key/key/status/" + $row.data().keyId,
+                    dataType: "json",
+                    type: "POST",
+                    data: {
+                        status: 4
+                    }
+                }).done(function (data) {
+                    if (flat.ajaxCallback(data)) {
+                        grid.reload();
+                        $("#confirmDialog").modal("hide");
+                    }
+                })
+            })
+        });
+
+        $table.on('click', 'a.delete', function () {
+            var $this = $(this);
+            flat.showConfirm();
+            $("#confirmBtn").off("click").on("click", function () {
+                var $row = $table.DataTable().row($this.parents('tr')[0]);
+                $.ajax({
+                    url: "/key/key/status/" + $row.data().keyId,
+                    dataType: "json",
+                    type: "POST",
+                    data: {
+                        status: 5
+                    }
+                }).done(function (data) {
+                    if (flat.ajaxCallback(data)) {
+                        grid.reload();
+                        $("#confirmDialog").modal("hide");
+                    }
+                })
+            })
+        });
+
+        $table.on('click', 'a.detail', function () {
+            var $this = $(this);
+            var $row = $table.DataTable().row($this.parents('tr')[0]);
+            var keyId = $row.data().keyId;
+            $.get("/key/key/detail/" + keyId, function (data) {
+                if (data.ok) {
+                    var key = data.data.key;
+                    var historyList = data.data.historyList;
+                    var htmlTemplate = flat.remoteTemplate("/template/key/keyDetail.html",{key: key, historyList: historyList});
+                    $("#modalDialog").html(htmlTemplate).modal('show');
+                } else {
+                    flat.ajaxCallback(data);
+                }
+            });
+
+
+        });
+
     };
 
     var handleEvents = function () {

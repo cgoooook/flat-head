@@ -1,8 +1,10 @@
 package cn.com.flat.head.dal.impl;
 
 import cn.com.flat.head.dal.KeyDao;
+import cn.com.flat.head.dal.mappers.KeyHistoryMapper;
 import cn.com.flat.head.dal.mappers.KeyMapper;
 import cn.com.flat.head.pojo.Key;
+import cn.com.flat.head.pojo.KeyHistory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
@@ -17,6 +19,9 @@ public class KeyDaoImpl implements KeyDao {
 
     @Autowired
     private KeyMapper keyMapper;
+
+    @Autowired
+    private KeyHistoryMapper keyHistoryMapper;
 
     @Override
     public List<Key> getKeyListPage(Key key) {
@@ -38,5 +43,15 @@ public class KeyDaoImpl implements KeyDao {
     @Override
     public int updateKeyStatus(String keyId, int status) {
         return keyMapper.updateKeyStatus(keyId, status);
+    }
+
+    @Override
+    public Key getKeyById(String keyId) {
+        return keyMapper.getKeyById(keyId);
+    }
+
+    @Override
+    public List<KeyHistory> getKeyHistory(String keyId) {
+        return keyHistoryMapper.getKeyHistory(keyId);
     }
 }

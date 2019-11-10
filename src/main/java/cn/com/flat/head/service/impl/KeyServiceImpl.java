@@ -7,10 +7,7 @@ import cn.com.flat.head.dal.KeyTemplateDao;
 import cn.com.flat.head.dal.OrgDao;
 import cn.com.flat.head.mybatis.interceptor.PageableInterceptor;
 import cn.com.flat.head.mybatis.model.Pageable;
-import cn.com.flat.head.pojo.BooleanCarrier;
-import cn.com.flat.head.pojo.Key;
-import cn.com.flat.head.pojo.KeyTemplate;
-import cn.com.flat.head.pojo.Organization;
+import cn.com.flat.head.pojo.*;
 import cn.com.flat.head.service.KeyService;
 import org.apache.shiro.codec.Hex;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -98,5 +95,15 @@ public class KeyServiceImpl implements KeyService {
     @Override
     public boolean updateKeyStatus(String keyId, int status) {
         return keyDao.updateKeyStatus(keyId, status) >= 1;
+    }
+
+    @Override
+    public Key getKeyById(String keyId) {
+        return keyDao.getKeyById(keyId);
+    }
+
+    @Override
+    public List<KeyHistory> getKeyHistory(String keyId) {
+        return keyDao.getKeyHistory(keyId);
     }
 }

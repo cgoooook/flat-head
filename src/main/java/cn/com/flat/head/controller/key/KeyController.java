@@ -1,10 +1,7 @@
 package cn.com.flat.head.controller.key;
 
 import cn.com.flat.head.mybatis.model.Pageable;
-import cn.com.flat.head.pojo.BooleanCarrier;
-import cn.com.flat.head.pojo.Key;
-import cn.com.flat.head.pojo.KeyTemplate;
-import cn.com.flat.head.pojo.Organization;
+import cn.com.flat.head.pojo.*;
 import cn.com.flat.head.service.KeyService;
 import cn.com.flat.head.web.AjaxResponse;
 import cn.com.flat.head.web.DataTablesResponse;
@@ -78,6 +75,19 @@ public class KeyController {
     public AjaxResponse updateKeyStatus(@PathVariable("keyId") String keyId, int status, HttpSession session) {
         return AjaxResponse
                 .getInstanceByResult(keyService.updateKeyStatus(keyId, status), session);
+    }
+
+    @GetMapping("/detail/{keyId}")
+    @ResponseBody
+    public AjaxResponse keyDetail(@PathVariable("keyId") String keyId) {
+        AjaxResponse ajaxResponse = new AjaxResponse();
+        Map<String, Object> data = new HashMap<>();
+        Key keyById = keyService.getKeyById(keyId);
+        List<KeyHistory> keyHistory = keyService.getKeyHistory(keyId);
+        data.put("key", keyById);
+        data.put("historyList", keyHistory);
+        ajaxResponse.setData(data);
+        return ajaxResponse;
     }
 
 }

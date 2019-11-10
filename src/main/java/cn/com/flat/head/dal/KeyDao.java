@@ -1,6 +1,7 @@
 package cn.com.flat.head.dal;
 
 import cn.com.flat.head.pojo.Key;
+import cn.com.flat.head.pojo.KeyHistory;
 
 import java.util.List;
 
@@ -16,5 +17,9 @@ public interface KeyDao {
     int addKey(Key key);
 
     int updateKeyStatus(String keyId, int status);
+
+    Key getKeyById(String keyId);
+
+    List<KeyHistory> getKeyHistory(String keyId);
 
 }
