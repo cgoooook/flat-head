@@ -15,10 +15,11 @@ public interface ConfigDao {
 
     void updateCopyright(String copyright);
 
-
     void updateLogo();
 
     void insertLogo(SysLogo sysLogo);
 
     SysLogo getUiInfo();
+
+    LogConfig getCopyright();
 }

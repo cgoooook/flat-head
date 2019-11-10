@@ -45,10 +45,16 @@ public class ConfigDaoImpl implements ConfigDao {
 
     @Override
     public SysLogo getUiInfo() {
-        LogConfig logConfig = logConfigMapper.getCopyright();
+
         SysLogo uiInfo = logConfigMapper.getUiInfo();
-        uiInfo.setCopyright(logConfig.getConfigValue());
+
         return uiInfo;
+    }
+
+    @Override
+    public LogConfig getCopyright() {
+        LogConfig logConfig = logConfigMapper.getCopyright();
+        return logConfig;
     }
 
 

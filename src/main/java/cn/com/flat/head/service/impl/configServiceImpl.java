@@ -6,6 +6,7 @@ import cn.com.flat.head.pojo.Jdbc;
 import cn.com.flat.head.pojo.LogConfig;
 import cn.com.flat.head.pojo.SysLogo;
 import cn.com.flat.head.service.ConfigService;
+import org.bouncycastle.util.encoders.Base64;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.io.FileUrlResource;
 import org.springframework.core.io.Resource;
@@ -137,7 +138,29 @@ public class configServiceImpl implements ConfigService {
 
     @Override
     public SysLogo getUiInfo() {
-        return configDao.getUiInfo();
+        LogConfig copyright = configDao.getCopyright();
+        SysLogo uiInfo = configDao.getUiInfo();
+        if(uiInfo==null){
+            uiInfo= new SysLogo();
+            InputStream ins = this.getClass().getClassLoader().getResourceAsStream("static/pages/img/noimage.png");
+            byte data[];
+            try {
+            byte[] buffer=new byte[1024];
+            int len=0;
+            ByteArrayOutputStream bos=new ByteArrayOutputStream();
+            while((len=ins.read(buffer))!=-1){
+                bos.write(buffer,0,len);
+            }
+
+                bos.flush();
+                data = bos.toByteArray();
+                uiInfo.setLogo(data);
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        }
+        uiInfo.setCopyright(copyright.getConfigValue());
+        return uiInfo;
     }
 
 
