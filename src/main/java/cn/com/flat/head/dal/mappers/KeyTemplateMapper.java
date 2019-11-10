@@ -26,4 +26,5 @@ public interface KeyTemplateMapper {
 
     KeyTemplate getTemplateById(String templateId);
 
+    List<KeyTemplate> getTemplateUse();
 }

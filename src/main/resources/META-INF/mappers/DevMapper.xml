@@ -31,7 +31,7 @@
         select * from kms_device where device_name =#{deviceName}
     </select>
     <select id="getCollectionCountByCollectionId" resultType="java.lang.Integer">
-        select count(*) from kms_device where connection_id=#{collectionId}
+        select count(*) from kms_device where collection_id=#{collectionId}
     </select>
 
     <insert id="addDev"  >

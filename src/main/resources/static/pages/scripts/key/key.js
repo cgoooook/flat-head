@@ -23,7 +23,11 @@ var Key = function () {
                     {data: 'checkValue', orderable: true},
                     {data: 'templateName', orderable: true},
                     {data: 'version', orderable: true},
-                    {data: 'status', orderable: true},
+                    {data: 'status', orderable: true,
+                        render: function (data, type, full) {
+                            return flat.i18n("key.status" + data);
+                        }
+                    },
                     {
                         data: 'operate', orderable: false,
                         render: function (data, type, full) {
@@ -33,6 +37,79 @@ var Key = function () {
                 ]
             }
         });
+
+
+        $table.on('click', 'a.inactive', function () {
+            var $this = $(this);
+            flat.showConfirm({
+                confirmContent: flat.i18n("key.inactiveTips"),
+                confirmBtn: flat.i18n("key.status3")
+            });
+            $("#confirmBtn").off("click").on("click", function () {
+                var $row = $table.DataTable().row($this.parents('tr')[0]);
+                $.ajax({
+                    url: "/key/key/status/" + $row.data().keyId,
+                    dataType: "json",
+                    type: "POST",
+                    data: {
+                        status: 3
+                    }
+                }).done(function (data) {
+                    if (flat.ajaxCallback(data)) {
+                        grid.reload();
+                        $("#confirmDialog").modal("hide");
+                    }
+                })
+            })
+        });
+
+    };
+
+    var handleEvents = function () {
+        $("#addKey").on('click', function () {
+            $.get("/key/key/keyGenInfo", function (data) {
+                if (data.ok) {
+                    var orgList = data.data.orgList;
+                    var templateList = data.data.templateList;
+                    var rootKey = data.data.rootKey;
+                    var htmlTemplate = flat.remoteTemplate("/template/key/addKey.html",
+                        {orgList: orgList, templateList: templateList, rootKey: rootKey});
+                    $("#modalDialog").html(htmlTemplate).modal('show');
+                    initAddBtn();
+                } else {
+                    flat.ajaxCallback(data);
+                }
+            })
+        });
+
+        function initAddBtn() {
+            $("#addBtn").on('click', function () {
+                var validation = {};
+                if ($('#dialogForm').validate(validation).form()) {
+                    $.ajax({
+                        url: "/key/key",
+                        type: "PUT",
+                        dataType: "json",
+                        contentType: "application/json; charset=utf-8",
+                        data: JSON.stringify({
+                            keyName: $('#keyName').val(),
+                            keyAlg: $("#keyAlg").val(),
+                            length: $("#length").val(),
+                            templateId: $("#templateId").val(),
+                            mode: $("#genMode").val(),
+                            orgId :$("#orgIdSelect").val(),
+                            collectionName: $("#collectionName").val()
+                        })
+                    }).done(function (data) {
+                        if (flat.ajaxCallback(data)) {
+                            $("#modalDialog").modal("hide");
+                            grid.reload();
+                        }
+                    })
+                }
+            });
+
+        }
     };
 
     var handleOrgTree = function () {
@@ -54,6 +131,7 @@ var Key = function () {
         init: function () {
             handleTables();
             handleOrgTree();
+            handleEvents();
         }
     }
 

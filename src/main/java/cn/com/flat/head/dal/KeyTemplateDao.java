@@ -23,4 +23,6 @@ public interface KeyTemplateDao {
 
     int updateTemplate(KeyTemplate template);
 
+    List<KeyTemplate> getTemplateUse();
+
 }
