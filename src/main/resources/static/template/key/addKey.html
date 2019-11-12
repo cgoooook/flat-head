@@ -33,7 +33,7 @@
                                     </label>
 
                                     <div class="col-sm-6">
-                                        <select class="form-control" id="orgIdSelect" required>
+                                        <select class="form-control" name="orgIdSelect" id="orgIdSelect" required>
                                             <option value="">{{i18n('common.pleaseSelect')}}</option>
                                             {{each orgList as org}}
                                             <option value="{{org.orgId}}">{{org.orgName}}</option>
@@ -53,7 +53,7 @@
                                     </label>
 
                                     <div class="col-sm-6">
-                                        <select class="form-control" id="keyAlg" required>
+                                        <select class="form-control" id="keyAlg" name="keyAlg" required>
                                             <option value="">{{i18n('common.pleaseSelect')}}</option>
                                             <option value="SM4">SM4</option>
                                         </select>
@@ -71,7 +71,7 @@
                                     </label>
 
                                     <div class="col-sm-6">
-                                        <select class="form-control" id="length" required>
+                                        <select class="form-control" id="length" name="length" required>
                                             <option value="">{{i18n('common.pleaseSelect')}}</option>
                                             <option value="128">128</option>
                                         </select>
@@ -89,7 +89,7 @@
                                     </label>
 
                                     <div class="col-sm-6">
-                                        <select class="form-control" id="templateId" required>
+                                        <select class="form-control" id="templateId" name="templateId" required>
                                             <option value="">{{i18n('common.pleaseSelect')}}</option>
                                             {{each templateList as template}}
                                             <option value="{{template.templateId}}">{{template.templateName}}</option>
@@ -109,7 +109,7 @@
                                     </label>
 
                                     <div class="col-sm-6">
-                                        <select class="form-control" id="genMode" required>
+                                        <select class="form-control" id="genMode" name="genMode" required>
                                             <option value="">{{i18n('common.pleaseSelect')}}</option>
                                             <option value="random">{{i18n('key.genRandom')}}</option>
                                             {{if !rootKey}}
@@ -121,6 +121,30 @@
                                 </div>
                             </div>
                         </div>
+                    </div>
+                    <div class="row" style="display: none" id="genModeCompose">
+                        <div class="col-md-12">
+                            <div class="col-md-8">
+                                <div class="form-group">
+                                    <label class="control-label col-md-4">{{i18n('key.componseNums')}}
+                                        <span class="required" aria-required="true">* </span>
+                                    </label>
+
+                                    <div class="col-sm-6">
+                                        <select class="form-control" id="genModeComposeNum" name="genModeComposeNum">
+                                            <option value="">{{i18n('common.pleaseSelect')}}</option>
+                                            <option value="2">2</option>
+                                            <option value="3">3</option>
+                                            <option value="4">4</option>
+                                            <option value="5">5</option>
+                                        </select>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div id="innerDom">
+
                     </div>
                 </div>
 

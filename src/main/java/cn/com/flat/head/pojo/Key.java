@@ -44,4 +44,6 @@ public class Key {
 
     private List<String> composes;
 
+    private String deriveParam;
+
 }

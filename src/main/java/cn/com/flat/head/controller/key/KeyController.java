@@ -3,6 +3,7 @@ package cn.com.flat.head.controller.key;
 import cn.com.flat.head.mybatis.model.Pageable;
 import cn.com.flat.head.pojo.*;
 import cn.com.flat.head.service.KeyService;
+import cn.com.flat.head.service.OrgService;
 import cn.com.flat.head.web.AjaxResponse;
 import cn.com.flat.head.web.DataTablesResponse;
 import cn.com.flat.head.web.ReturnState;
@@ -26,6 +27,9 @@ public class KeyController {
 
     @Autowired
     private KeyService keyService;
+
+    @Autowired
+    private OrgService orgService;
 
 
     @RequestMapping
@@ -87,6 +91,15 @@ public class KeyController {
         data.put("key", keyById);
         data.put("historyList", keyHistory);
         ajaxResponse.setData(data);
+        return ajaxResponse;
+    }
+
+    @GetMapping("/getOrg")
+    @ResponseBody
+    public AjaxResponse getOrgForDerive(String orgId) {
+        AjaxResponse ajaxResponse = new AjaxResponse();
+        Organization orgByOrgId = orgService.getOrgByOrgId(orgId);
+        ajaxResponse.setData(orgByOrgId);
         return ajaxResponse;
     }
 

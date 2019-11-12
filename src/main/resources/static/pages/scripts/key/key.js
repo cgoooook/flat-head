@@ -163,6 +163,8 @@ var Key = function () {
                     var htmlTemplate = flat.remoteTemplate("/template/key/addKey.html",
                         {orgList: orgList, templateList: templateList, rootKey: rootKey});
                     $("#modalDialog").html(htmlTemplate).modal('show');
+                    orgSelectInit();
+                    initGenMode();
                     initAddBtn();
                 } else {
                     flat.ajaxCallback(data);
@@ -170,24 +172,120 @@ var Key = function () {
             })
         });
 
+        function initGenMode() {
+            $("#genMode").on('change', function () {
+                $("#genModeComposeNum").removeAttr("required");
+                $("#genModeCompose").css("display", "none");
+                var $this = $(this);
+                if ($this.val() === 'random') {
+                    $("#genModeCompose").css("display", "none");
+                    return;
+                }
+                if ($this.val() === 'derive') {
+                    $('#innerDom').html("");
+                    var htmlTemplate = flat.remoteTemplate("/template/key/derive.html", {});
+                    $('#innerDom').html(htmlTemplate);
+                    if ($("#orgIdSelect").val() !== '') {
+                        $.get("/key/key/getOrg?orgId=" + $("#orgIdSelect").val(), function (data) {
+                            if (data.ok) {
+                                var org = data.data;
+                                $("#deriveParams").val(org.orgCode)
+                            }
+                        })
+                    }
+                }
+
+                if ($this.val() === 'compose') {
+                    $("#genModeCompose").css("display", "block");
+                    $("#genModeComposeNum").attr("required", "required");
+                    composeSelectInit();
+
+                }
+            })
+        }
+
+        function composeSelectInit() {
+            $("#genModeComposeNum").off().on('change', function () {
+                var $this = $(this);
+                var composeNum = $this.val() / 1;
+                var composeArray = [];
+                for (var i = 0; i < composeNum; i++) {
+                    composeArray.push(i + 1);
+                }
+                var htmlTemplate = flat.remoteTemplate("/template/key/compose.html", {composes: composeArray});
+                $('#innerDom').html(htmlTemplate);
+            })
+        }
+
+        function orgSelectInit() {
+            $("#orgIdSelect").on('change', function () {
+                var $this = $(this);
+                if ($this.val() !== '' && $("#genMode").val() === 'derive') {
+                    $.get("/key/key/getOrg?orgId=" + $("#orgIdSelect").val(), function (data) {
+                        if (data.ok) {
+                            var org = data.data;
+                            $("#deriveParams").val(org.orgCode)
+                        }
+                    })
+                }
+            })
+        }
+
         function initAddBtn() {
             $("#addBtn").on('click', function () {
                 var validation = {};
+                var genMode = $("#genMode").val();
+                var data = {};
+                if (genMode === "derive"){
+                    data = {
+                        keyName: $('#keyName').val(),
+                        keyAlg: $("#keyAlg").val(),
+                        length: $("#length").val(),
+                        templateId: $("#templateId").val(),
+                        mode: genMode,
+                        orgId :$("#orgIdSelect").val(),
+                        deriveParam: $("#deriveParams").val()
+                    }
+                } else if (genMode === 'compose') {
+                    var composes = [];
+                    var comNums = $("#genModeComposeNum").val();
+                    var rules = {};
+                    for (var i = 1; i <= comNums; i++) {
+                        rules['confirmCompose' + i] = {equalTo: "#compose" + i }
+                        composes.push($("#compose" + i).val())
+                    }
+                    validation = {
+                        rules: rules
+                    };
+
+                    data = {
+                        keyName: $('#keyName').val(),
+                        keyAlg: $("#keyAlg").val(),
+                        length: $("#length").val(),
+                        templateId: $("#templateId").val(),
+                        mode: genMode,
+                        orgId :$("#orgIdSelect").val(),
+                        composes: composes
+                    };
+
+                } else {
+                    data = {
+                        keyName: $('#keyName').val(),
+                        keyAlg: $("#keyAlg").val(),
+                        length: $("#length").val(),
+                        templateId: $("#templateId").val(),
+                        mode: genMode,
+                        orgId :$("#orgIdSelect").val()
+                    }
+
+                }
                 if ($('#dialogForm').validate(validation).form()) {
                     $.ajax({
                         url: "/key/key",
                         type: "PUT",
                         dataType: "json",
                         contentType: "application/json; charset=utf-8",
-                        data: JSON.stringify({
-                            keyName: $('#keyName').val(),
-                            keyAlg: $("#keyAlg").val(),
-                            length: $("#length").val(),
-                            templateId: $("#templateId").val(),
-                            mode: $("#genMode").val(),
-                            orgId :$("#orgIdSelect").val(),
-                            collectionName: $("#collectionName").val()
-                        })
+                        data: JSON.stringify(data)
                     }).done(function (data) {
                         if (flat.ajaxCallback(data)) {
                             $("#modalDialog").modal("hide");
