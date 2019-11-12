@@ -22,4 +22,6 @@ public interface KeyDao {
 
     List<KeyHistory> getKeyHistory(String keyId);
 
+    boolean updateKey(Key key);
+
 }

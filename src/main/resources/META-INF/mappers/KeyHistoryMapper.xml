@@ -2,7 +2,8 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
 <mapper namespace="cn.com.flat.head.dal.mappers.KeyHistoryMapper">
     <resultMap id="KeyMap" type="cn.com.flat.head.pojo.KeyHistory">
-        <id column="key_id" property="keyId" />
+        <id column="key_history_id" property="keyHistoryId" />
+        <result column="Key_id" property="keyId" />
         <result column="key_name" property="keyName" />
         <result column="key_alg" property="keyAlg" />
         <result column="length" property="length" />
@@ -12,6 +13,10 @@
         <result column="org_id" property="orgId" />
         <result column="status" property="status" />
     </resultMap>
+    <update id="adHistoryKey">
+        insert into kms_a_key_history (key_history_id,key_id, key_name, key_alg, length, check_value, key_value, create_by, template_id, org_id, status, version) VALUES
+            (#{keyHistoryId},#{keyId}, #{keyName}, #{keyAlg}, #{length}, #{checkValue},#{keyValue}, #{createBy}, #{templateId}, #{orgId}, #{status}, #{version})
+    </update>
 
     <select id="getKeyHistory" resultType="cn.com.flat.head.pojo.KeyHistory">
         select *

@@ -77,7 +77,15 @@ public class KeyController {
     @PostMapping
     @ResponseBody
     public AjaxResponse updateKey(Key key,HttpSession session) {
-        return AjaxResponse.getInstanceByResult(true, session);
+        AjaxResponse ajaxResponse = new AjaxResponse();
+        Subject subject = SecurityUtils.getSubject();
+        key.setCreateBy(subject.getPrincipal().toString());
+        BooleanCarrier booleanCarrier = keyService.updateKey(key);
+        if (!booleanCarrier.getResult()) {
+            ajaxResponse.setReturnState(ReturnState.ERROR);
+            ajaxResponse.setMsg(booleanCarrier.getMessage());
+        }
+        return ajaxResponse;
     }
 
     @PostMapping("/status/{keyId}")

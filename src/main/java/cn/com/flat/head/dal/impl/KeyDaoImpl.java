@@ -54,4 +54,32 @@ public class KeyDaoImpl implements KeyDao {
     public List<KeyHistory> getKeyHistory(String keyId) {
         return keyHistoryMapper.getKeyHistory(keyId);
     }
+
+    @Override
+    public boolean updateKey(Key key) {
+        Key keyById = getKeyById(key.getKeyId());
+        key.setVersion(keyById.getVersion() + 1);
+        int updateKeyNum = keyMapper.updateKey(key);
+        KeyHistory keyHistory = convertKeyToHistory(keyById);
+        int ret = keyHistoryMapper.adHistoryKey(keyHistory);
+        return (updateKeyNum + ret > 1);
+    }
+
+    private KeyHistory convertKeyToHistory(Key key) {
+        KeyHistory keyHistory = new KeyHistory();
+        keyHistory.setKeyHistoryId(UUID.randomUUID().toString());
+        keyHistory.setKeyId(key.getKeyId());
+        keyHistory.setKeyName(key.getKeyName());
+        keyHistory.setKeyAlg(key.getKeyAlg());
+        keyHistory.setLength(key.getLength());
+        keyHistory.setKeyValue(key.getKeyValue());
+        keyHistory.setCheckValue(key.getCheckValue());
+        keyHistory.setVersion(key.getVersion());
+        key.setCreateBy(key.getCreateBy());
+        keyHistory.setOrgId(key.getOrgId());
+        keyHistory.setTemplateId(key.getTemplateId());
+        keyHistory.setStatus(key.getStatus());
+        keyHistory.setMode(key.getMode());
+        return keyHistory;
+    }
 }

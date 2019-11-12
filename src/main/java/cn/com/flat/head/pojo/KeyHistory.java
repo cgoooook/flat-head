@@ -32,4 +32,6 @@ public class KeyHistory {
 
     private int status;
 
+    private String mode;
+
 }

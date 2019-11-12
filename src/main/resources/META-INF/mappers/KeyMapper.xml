@@ -14,6 +14,7 @@
         <result column="org_id" property="orgId" />
         <result column="org_name" property="orgName" />
         <result column="status" property="status" />
+        <result column="check_value" property="checkValue" />
         <result column="org_code" property="orgCode" />
         <result column="mode" property="mode" />
     </resultMap>
@@ -25,7 +26,7 @@
     </insert>
 
     <update id="updateKey">
-
+        update kms_a_key set key_value=#{keyValue}, check_value=#{checkValue}, version=${version}, create_by=#{createBy} where key_id=#{keyId}
     </update>
     <update id="updateKeyStatus">
         update kms_a_key set status=${status} where key_id=#{keyId}

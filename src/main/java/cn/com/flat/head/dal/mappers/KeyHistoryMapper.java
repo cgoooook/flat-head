@@ -13,4 +13,6 @@ public interface KeyHistoryMapper {
 
     List<KeyHistory> getKeyHistory(String keyId);
 
+    int adHistoryKey(KeyHistory keyHistory);
+
 }

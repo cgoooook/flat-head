@@ -71,8 +71,7 @@ public class KeyServiceImpl implements KeyService {
             if ("random".equalsIgnoreCase(key.getMode())) {
                 fSecretKey = cryptoInstance.generateKey(key.getKeyAlg(), key.getLength());
             } else if ("derive".equalsIgnoreCase(key.getMode())) {
-                Organization orgByOrgId = orgDao.getOrgByOrgId(key.getOrgId());
-                fSecretKey = cryptoInstance.deriveKey(key, orgByOrgId.getOrgCode());
+                fSecretKey = cryptoInstance.deriveKey(key, key.getDeriveParam());
             } else if ("compose".equalsIgnoreCase(key.getMode())) {
                 fSecretKey = cryptoInstance.composeKey(key.getComposes(), key.getKeyAlg());
             } else {
@@ -105,5 +104,34 @@ public class KeyServiceImpl implements KeyService {
     @Override
     public List<KeyHistory> getKeyHistory(String keyId) {
         return keyDao.getKeyHistory(keyId);
+    }
+
+    @Override
+    public BooleanCarrier updateKey(Key key) {
+        BooleanCarrier booleanCarrier = new BooleanCarrier();
+        try {
+            FSecretKey fSecretKey = null;
+            if ("random".equalsIgnoreCase(key.getMode())) {
+                fSecretKey = cryptoInstance.generateKey(key.getKeyAlg(), key.getLength());
+            } else if ("derive".equalsIgnoreCase(key.getMode())) {
+                fSecretKey = cryptoInstance.deriveKey(key, key.getDeriveParam());
+            } else if ("compose".equalsIgnoreCase(key.getMode())) {
+                fSecretKey = cryptoInstance.composeKey(key.getComposes(), key.getKeyAlg());
+            } else {
+                booleanCarrier.setResult(false);
+                booleanCarrier.setMessage("");
+                return booleanCarrier;
+            }
+            key.setCheckValue(new String(Hex.encode(fSecretKey.getCheckValue())));
+            key.setKeyValue(new String(Hex.encode(fSecretKey.getKey())));
+            boolean ret = keyDao.updateKey(key);
+            booleanCarrier.setResult(ret);
+            return booleanCarrier;
+        } catch (Exception e) {
+            e.printStackTrace();
+            booleanCarrier.setResult(false);
+            booleanCarrier.setMessage("");
+            return booleanCarrier;
+        }
     }
 }
