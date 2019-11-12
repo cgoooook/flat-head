@@ -154,6 +154,81 @@ var Key = function () {
     };
 
     var handleEvents = function () {
+
+        $table.on('click', 'a.update', function () {
+            var $this = $(this);
+            var $row = $table.DataTable().row($this.parents('tr')[0]);
+            var keyId = $row.data().keyId;
+            $.get("/key/key/detail/" + keyId, function (data) {
+                if (data.ok) {
+                    var key = data.data.key;
+                    var htmlTemplate = flat.remoteTemplate("/template/key/updateKey.html",{key: key});
+                    $("#modalDialog").html(htmlTemplate).modal('show');
+                    if (key.mode === "compose") {
+                        composeSelectInit();
+                    }
+                    initUpdateBtn();
+                } else {
+                    flat.ajaxCallback(data);
+                }
+            });
+
+
+        });
+
+        function initUpdateBtn() {
+            $("#addBtn").on('click', function () {
+                var validation = {};
+                var genMode = $("#genMode").val();
+                var data = {};
+                if (genMode === "derive"){
+                    data = {
+                        keyId:$("#keyId").val(),
+                        mode: genMode,
+                        deriveParam: $("#deriveParams").val()
+                    }
+                } else if (genMode === 'compose') {
+                    var composes = [];
+                    var comNums = $("#genModeComposeNum").val();
+                    var rules = {};
+                    for (var i = 1; i <= comNums; i++) {
+                        rules['confirmCompose' + i] = {equalTo: "#compose" + i }
+                        composes.push($("#compose" + i).val())
+                    }
+                    validation = {
+                        rules: rules
+                    };
+
+                    data = {
+                        keyId:$("#keyId").val(),
+                        mode: genMode,
+                        orgId :$("#orgIdSelect").val(),
+                        composes: composes
+                    };
+
+                } else {
+                    data = {
+                        keyId:$("#keyId").val(),
+                        mode: genMode
+                    }
+
+                }
+                if ($('#dialogForm').validate(validation).form()) {
+                    $.ajax({
+                        url: "/key/key",
+                        type: "POST",
+                        dataType: "json",
+                        data: data
+                    }).done(function (data) {
+                        if (flat.ajaxCallback(data)) {
+                            $("#modalDialog").modal("hide");
+                            grid.reload();
+                        }
+                    })
+                }
+            });
+        }
+
         $("#addKey").on('click', function () {
             $.get("/key/key/keyGenInfo", function (data) {
                 if (data.ok) {

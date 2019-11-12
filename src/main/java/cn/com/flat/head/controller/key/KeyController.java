@@ -74,6 +74,12 @@ public class KeyController {
         return ajaxResponse;
     }
 
+    @PostMapping
+    @ResponseBody
+    public AjaxResponse updateKey(Key key,HttpSession session) {
+        return AjaxResponse.getInstanceByResult(true, session);
+    }
+
     @PostMapping("/status/{keyId}")
     @ResponseBody
     public AjaxResponse updateKeyStatus(@PathVariable("keyId") String keyId, int status, HttpSession session) {

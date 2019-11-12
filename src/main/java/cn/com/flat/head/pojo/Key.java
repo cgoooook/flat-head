@@ -34,6 +34,8 @@ public class Key {
 
     private String orgName;
 
+    private String orgCode;
+
     private int status;
 
     private String generate;
