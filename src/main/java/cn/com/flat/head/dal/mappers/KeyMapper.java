@@ -23,4 +23,6 @@ public interface KeyMapper {
     int updateKeyStatus(@Param("keyId") String keyId, @Param("status") int status);
 
     Key getKeyById(String keyId);
+
+    Key getRootKey();
 }

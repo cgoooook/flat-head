@@ -24,4 +24,6 @@ public interface KeyDao {
 
     boolean updateKey(Key key);
 
+    Key getRootKey();
+
 }

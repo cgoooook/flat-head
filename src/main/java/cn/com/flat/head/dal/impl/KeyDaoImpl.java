@@ -65,6 +65,11 @@ public class KeyDaoImpl implements KeyDao {
         return (updateKeyNum + ret > 1);
     }
 
+    @Override
+    public Key getRootKey() {
+        return keyMapper.getRootKey();
+    }
+
     private KeyHistory convertKeyToHistory(Key key) {
         KeyHistory keyHistory = new KeyHistory();
         keyHistory.setKeyHistoryId(UUID.randomUUID().toString());

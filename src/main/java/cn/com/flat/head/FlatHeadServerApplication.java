@@ -1,5 +1,6 @@
 package cn.com.flat.head;
 
+import org.bouncycastle.jce.provider.BouncyCastleProvider;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.ImportAutoConfiguration;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
@@ -7,12 +8,15 @@ import org.springframework.boot.autoconfigure.context.MessageSourceAutoConfigura
 import org.springframework.context.ApplicationContextInitializer;
 import org.springframework.context.annotation.ImportResource;
 
+import java.security.Security;
+
 @SpringBootApplication
 @ImportAutoConfiguration(MessageSourceAutoConfiguration.class)
 @ImportResource(value = {"classpath:dal/flat-application-dal.xml", "classpath:dal/shiro-config.xml"})
 public class FlatHeadServerApplication {
 
     public static void main(String[] args) {
+        Security.addProvider(new BouncyCastleProvider());
         SpringApplication application = new SpringApplication(FlatHeadServerApplication.class);
         application.addInitializers((ApplicationContextInitializer) applicationContext -> applicationContext.getBeanFactory().setCacheBeanMetadata(false));
         application.run(args);

@@ -71,7 +71,8 @@ public class KeyServiceImpl implements KeyService {
             if ("random".equalsIgnoreCase(key.getMode())) {
                 fSecretKey = cryptoInstance.generateKey(key.getKeyAlg(), key.getLength());
             } else if ("derive".equalsIgnoreCase(key.getMode())) {
-                fSecretKey = cryptoInstance.deriveKey(key, key.getDeriveParam());
+                Key rootKey = keyDao.getRootKey();
+                fSecretKey = cryptoInstance.deriveKey(rootKey, key.getDeriveParam());
             } else if ("compose".equalsIgnoreCase(key.getMode())) {
                 fSecretKey = cryptoInstance.composeKey(key.getComposes(), key.getKeyAlg());
             } else {
@@ -110,11 +111,15 @@ public class KeyServiceImpl implements KeyService {
     public BooleanCarrier updateKey(Key key) {
         BooleanCarrier booleanCarrier = new BooleanCarrier();
         try {
+            Key keyById = keyDao.getKeyById(key.getKeyId());
+            key.setKeyAlg(keyById.getKeyAlg());
+            key.setLength(keyById.getLength());
             FSecretKey fSecretKey = null;
             if ("random".equalsIgnoreCase(key.getMode())) {
                 fSecretKey = cryptoInstance.generateKey(key.getKeyAlg(), key.getLength());
             } else if ("derive".equalsIgnoreCase(key.getMode())) {
-                fSecretKey = cryptoInstance.deriveKey(key, key.getDeriveParam());
+                Key rootKey = keyDao.getRootKey();
+                fSecretKey = cryptoInstance.deriveKey(rootKey, key.getDeriveParam());
             } else if ("compose".equalsIgnoreCase(key.getMode())) {
                 fSecretKey = cryptoInstance.composeKey(key.getComposes(), key.getKeyAlg());
             } else {

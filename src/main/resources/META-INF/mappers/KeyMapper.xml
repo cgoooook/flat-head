@@ -46,6 +46,9 @@
         select kak.*, ko.org_name,ko.org_code, kt.template_name from kms_a_key kak, kms_org ko, kms_template kt where kt.template_id=kak.template_id and kak.org_id=ko.org_id
                                                                                                       and kak.status!=5 and kak.key_id=#{keyId}
     </select>
+    <select id="getRootKey" resultMap="KeyMap" >
+        select * from kms_a_key where org_id='orgRoot'
+    </select>
 
 
 </mapper>

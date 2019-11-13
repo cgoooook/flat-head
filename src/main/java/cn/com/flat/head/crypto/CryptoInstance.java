@@ -28,7 +28,7 @@ public class CryptoInstance {
 
     static {
         try {
-//            session = SCrypto.getSession();
+            session = SCrypto.getSession();
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -41,17 +41,16 @@ public class CryptoInstance {
     public FSecretKey generateKey(String algorithm , int length) throws CryptoException {
         try {
             FSecretKey fSecretKey = new FSecretKey();
-//            SKey sKey = session.generateKey(new SMechanism(covertSymAlgGen(algorithm)), length);
-//            byte[] key = sKey.getKey();
-//            byte[] checkValue = getCheckValue(algorithm, length, sKey);
+            SKey sKey = session.generateKey(new SMechanism(covertSymAlgGen(algorithm)), length);
+            byte[] key = sKey.getKey();
+            byte[] checkValue = getCheckValue(algorithm, length, sKey);
             fSecretKey.setAlgorithm(algorithm);
-            fSecretKey.setKey("key".getBytes());
-            fSecretKey.setCheckValue("checkValue".getBytes());
+            fSecretKey.setKey(key);
+            fSecretKey.setCheckValue(checkValue);
             return fSecretKey;
         } catch (Exception e) {
-            e.printStackTrace();
+            throw new CryptoException("generate key error, cause by", e);
         }
-        return null;
     }
 
     private byte[] getCheckValue(String algorithm, int length, SKey sKey) throws Exception {
@@ -63,18 +62,17 @@ public class CryptoInstance {
     }
 
     public FSecretKey deriveKey(Key key, String derives) throws CryptoException {
-        int algEnc = covertSymAlgEnc(key.getKeyAlg());
-//        SKey sKey = new SKey(SKey.SKK_SM4_KEY);
-//        sKey.setKey(Hex.decode(key.getKeyValue()));
+        SKey sKey = new SKey(SKey.SKK_SM4_KEY);
+        sKey.setKey(Hex.decode(key.getKeyValue()));
         byte[] deriveCompent = getDeriveCompent(derives);
         try {
             FSecretKey fSecretKey = new FSecretKey();
-//            SKey sKey = session.generateKey(new SMechanism(covertSymAlgGen(algorithm)), length);
-//            byte[] key = sKey.getKey();
-//            byte[] checkValue = getCheckValue(algorithm, length, sKey);
+            byte[] encrypt = session.encrypt(new SMechanism(covertSymAlgEnc(key.getKeyAlg())), sKey, deriveCompent);
+            SKey deriverKey = new SKey(SKey.SKK_SM4_KEY, encrypt);
+            byte[] checkValue = getCheckValue(key.getKeyAlg(), key.getLength(), deriverKey);
             fSecretKey.setAlgorithm(fSecretKey.getAlgorithm());
-            fSecretKey.setKey("key".getBytes());
-            fSecretKey.setCheckValue("checkValue".getBytes());
+            fSecretKey.setKey(encrypt);
+            fSecretKey.setCheckValue(checkValue);
             return fSecretKey;
         } catch (Exception e) {
             e.printStackTrace();
@@ -83,32 +81,15 @@ public class CryptoInstance {
         return null;
     }
 
-    public FSecretKey composeKey(List<String> composes, String algorithm) throws Exception {
+    public FSecretKey composeKey(List<String> composes, String algorithm) throws CryptoException {
         FSecretKey fSecretKey = new FSecretKey();
-//            SKey sKey = session.generateKey(new SMechanism(covertSymAlgGen(algorithm)), length);
-//            byte[] key = sKey.getKey();
-//            byte[] checkValue = getCheckValue(algorithm, length, sKey);
-        fSecretKey.setAlgorithm(algorithm);
-        fSecretKey.setKey("key".getBytes());
-        fSecretKey.setCheckValue("checkValue".getBytes());
+
+
         return fSecretKey;
     }
 
     public FKeyPair generateKeyPair(String algorithm) throws CryptoException {
         return null;
-    }
-
-
-
-    public static void main(String[] args) throws Exception {
-//        FSecretKey fSecretKey = CryptoInstance.getCryptoInstance().generateKey("SM4", 128);
-//        System.out.println(new String(Hex.encode(fSecretKey.getKey())));
-//        System.out.println(new String(Hex.encode(fSecretKey.getCheckValue())));
-        Security.addProvider(new BouncyCastleProvider());
-        MessageDigest digest = MessageDigest.getInstance("MD5", "BC");
-        digest.update("123".getBytes());
-        byte[] digest1 = digest.digest();
-        System.out.println(digest1.length);
     }
 
     private int covertSymAlgGen(String alg) {
@@ -118,6 +99,10 @@ public class CryptoInstance {
         }
 
         return -1;
+    }
+
+    private byte[] protectKey(byte[] key) {
+        return null;
     }
 
     private byte[] getDeriveCompent(String derive) {
