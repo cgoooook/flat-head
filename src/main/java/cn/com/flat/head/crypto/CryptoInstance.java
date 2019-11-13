@@ -82,10 +82,33 @@ public class CryptoInstance {
     }
 
     public FSecretKey composeKey(List<String> composes, String algorithm) throws CryptoException {
-        FSecretKey fSecretKey = new FSecretKey();
+        try {
+            FSecretKey fSecretKey = new FSecretKey();
+            byte[] tempKey = new byte[16];
+            for (String compose : composes) {
+                if (compose.getBytes().length != 16) {
+                    throw new CryptoException("compose must be 16 bytes");
+                }
+                or(tempKey, compose.getBytes());
+            }
 
+            SKey sKey = new SKey(SKey.SKK_SM4_KEY, tempKey);
+            byte[] checkValue = getCheckValue(algorithm, 16, sKey);
+            fSecretKey.setCheckValue(checkValue);
+            fSecretKey.setKey(tempKey);
 
-        return fSecretKey;
+            return fSecretKey;
+        } catch (CryptoException e) {
+            throw e;
+        } catch (Exception e) {
+            throw new CryptoException("compose key error", e);
+        }
+    }
+
+    private void or(byte[] temp, byte[] compose) {
+        for (int i = 0 ; i < 16; i++) {
+            temp[i] = (byte) (temp[i] ^ compose[i]);
+        }
     }
 
     public FKeyPair generateKeyPair(String algorithm) throws CryptoException {
