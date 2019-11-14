@@ -27,4 +27,8 @@ public interface KeyService {
     List<KeyHistory> getKeyHistory(String keyId);
 
     BooleanCarrier updateKey(Key key);
+
+    List<Key> getKeyListByOrgId(String orgId);
+
+    List<Key> getCollectionKeyByCollectionId(String collectionId);
 }

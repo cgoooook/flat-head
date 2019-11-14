@@ -50,5 +50,13 @@
         select * from kms_a_key where org_id='orgRoot'
     </select>
 
+    <select id="getKeyListByOrgId" resultMap="KeyMap">
+        select * from kms_a_key where org_id=#{orgId}  and status=2
+    </select>
+    <select id="getKeyListByCollectionId" resultMap="KeyMap">
+        select kak.* from kms_a_key kak, kms_key_collection kkc, kms_collection_key kck where kak.key_id=kck.key_id and kck.connection_id=kkc.collection_id and
+                                                                                          kkc.collection_id=#{collectionId}
+    </select>
+
 
 </mapper>

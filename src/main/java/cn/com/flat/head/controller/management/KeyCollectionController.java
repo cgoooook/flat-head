@@ -2,8 +2,10 @@ package cn.com.flat.head.controller.management;
 
 import cn.com.flat.head.mybatis.model.Pageable;
 import cn.com.flat.head.pojo.BooleanCarrier;
+import cn.com.flat.head.pojo.Key;
 import cn.com.flat.head.pojo.KeyCollection;
 import cn.com.flat.head.service.KeyCollectionService;
+import cn.com.flat.head.service.KeyService;
 import cn.com.flat.head.web.AjaxResponse;
 import cn.com.flat.head.web.DataTablesResponse;
 import cn.com.flat.head.web.ReturnState;
@@ -22,7 +24,10 @@ import java.util.List;
 public class KeyCollectionController {
 
     @Autowired
-    private KeyCollectionService collectionService;
+    private KeyCollectionService keyCollectionService;
+
+    @Autowired
+    private KeyService keyService;
 
     @RequestMapping
     public String keyCollection() {
@@ -32,14 +37,14 @@ public class KeyCollectionController {
     @PostMapping("/list")
     @ResponseBody
     public DataTablesResponse<KeyCollection> collectionLustTables(Pageable pageable, KeyCollection collection) {
-        List<KeyCollection> keyCollectionListPage = collectionService.getKeyCollectionListPage(pageable, collection);
+        List<KeyCollection> keyCollectionListPage = keyCollectionService.getKeyCollectionListPage(pageable, collection);
         return new DataTablesResponse<>(pageable, keyCollectionListPage);
     }
 
     @PutMapping
     @ResponseBody
     public AjaxResponse addCollection(@RequestBody KeyCollection keyCollection, HttpSession session) {
-        BooleanCarrier carrier = collectionService.addCollection(keyCollection);
+        BooleanCarrier carrier = keyCollectionService.addCollection(keyCollection);
         AjaxResponse ajaxResponse = new AjaxResponse();
         if (!carrier.getResult()) {
             ajaxResponse.setReturnState(ReturnState.ERROR);
@@ -51,7 +56,7 @@ public class KeyCollectionController {
     @DeleteMapping("/{collectionId}")
     @ResponseBody
     public AjaxResponse deleteCollection(HttpSession session, @PathVariable("collectionId") String collectionId) {
-        BooleanCarrier booleanCarrier = collectionService.deleteKeyCollection(collectionId);
+        BooleanCarrier booleanCarrier = keyCollectionService.deleteKeyCollection(collectionId);
         AjaxResponse ajaxResponse = new AjaxResponse();
         if (!booleanCarrier.getResult()) {
             ajaxResponse.setReturnState(ReturnState.ERROR);
@@ -66,7 +71,7 @@ public class KeyCollectionController {
     @ResponseBody
     public AjaxResponse getCollectionListByOrgId(@PathVariable("orgId") String orgId) {
         AjaxResponse ajaxResponse = new AjaxResponse();
-        ajaxResponse.setData(collectionService.getKeyCollectionByOrgId(orgId));
+        ajaxResponse.setData(keyCollectionService.getKeyCollectionByOrgId(orgId));
         return ajaxResponse;
     }
 
@@ -74,7 +79,7 @@ public class KeyCollectionController {
     @ResponseBody
     public AjaxResponse getCollectionById(@PathVariable("collectionId") String collectionId) {
         AjaxResponse ajaxResponse = new AjaxResponse();
-        KeyCollection collectionByCollectionId = collectionService.getCollectionByCollectionId(collectionId);
+        KeyCollection collectionByCollectionId = keyCollectionService.getCollectionByCollectionId(collectionId);
         ajaxResponse.setData(collectionByCollectionId);
         return ajaxResponse;
     }
@@ -83,12 +88,30 @@ public class KeyCollectionController {
     @ResponseBody
     public AjaxResponse updateCollection(KeyCollection collection) {
         AjaxResponse ajaxResponse = new AjaxResponse();
-        BooleanCarrier booleanCarrier = collectionService.updateCollection(collection);
+        BooleanCarrier booleanCarrier = keyCollectionService.updateCollection(collection);
         if (!booleanCarrier.getResult()) {
             ajaxResponse.setReturnState(ReturnState.ERROR);
             ajaxResponse.setMsg(booleanCarrier.getMessage());
             return ajaxResponse;
         }
+        return ajaxResponse;
+    }
+
+    @GetMapping("/getKeyListByOrgId")
+    @ResponseBody
+    public AjaxResponse getKeyListByOrgId(String orgId) {
+        AjaxResponse ajaxResponse = new AjaxResponse();
+        List<Key> keyListByOrgId = keyService.getKeyListByOrgId(orgId);
+        ajaxResponse.setData(keyListByOrgId);
+        return ajaxResponse;
+    }
+
+    @GetMapping("/getCollectionKeys")
+    @ResponseBody
+    public AjaxResponse getCollectionKeys(String collectionId) {
+        AjaxResponse ajaxResponse = new AjaxResponse();
+        List<Key> collectionKeyByCollectionId = keyService.getCollectionKeyByCollectionId(collectionId);
+        ajaxResponse.setData(collectionKeyByCollectionId);
         return ajaxResponse;
     }
 

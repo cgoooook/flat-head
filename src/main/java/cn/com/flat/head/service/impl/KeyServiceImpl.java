@@ -139,4 +139,14 @@ public class KeyServiceImpl implements KeyService {
             return booleanCarrier;
         }
     }
+
+    @Override
+    public List<Key> getKeyListByOrgId(String orgId) {
+        return keyDao.getKeyListByOrgId(orgId);
+    }
+
+    @Override
+    public List<Key> getCollectionKeyByCollectionId(String collectionId) {
+        return keyDao.getKeyListByCollectionId(collectionId);
+    }
 }

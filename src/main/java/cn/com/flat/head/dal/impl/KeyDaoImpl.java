@@ -70,6 +70,16 @@ public class KeyDaoImpl implements KeyDao {
         return keyMapper.getRootKey();
     }
 
+    @Override
+    public List<Key> getKeyListByOrgId(String orgId) {
+        return keyMapper.getKeyListByOrgId(orgId);
+    }
+
+    @Override
+    public List<Key> getKeyListByCollectionId(String collection) {
+        return keyMapper.getKeyListByCollectionId(collection);
+    }
+
     private KeyHistory convertKeyToHistory(Key key) {
         KeyHistory keyHistory = new KeyHistory();
         keyHistory.setKeyHistoryId(UUID.randomUUID().toString());

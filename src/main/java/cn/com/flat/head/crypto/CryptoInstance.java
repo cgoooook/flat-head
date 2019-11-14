@@ -7,10 +7,8 @@ import cn.com.flat.head.sdf.cipher.SKey;
 import cn.com.flat.head.sdf.cipher.SMechanism;
 import cn.com.flat.head.sdf.util.Arrays;
 import cn.com.flat.head.sdf.util.encoders.Hex;
-import org.bouncycastle.jce.provider.BouncyCastleProvider;
 
 import java.security.MessageDigest;
-import java.security.Security;
 import java.util.List;
 
 /**
