@@ -61,6 +61,20 @@ var Collection = function () {
             })
         });
 
+        $table.on('click', 'a.keyMange', function () {
+            var $this = $(this);
+            var $row = $table.DataTable().row($this.parents('tr')[0]);
+            $.get("/key/collection/getCollectionKeys?collectionId=" + $row.data().collectionId, function (data) {
+                if (data.ok) {
+                    var key = data.data;
+                    var htmlTemplate = flat.remoteTemplate("/template/collection/collectionKey.html", {keys: key});
+                    $("#modalDialog").html(htmlTemplate).modal('show');
+                } else {
+                    flat.ajaxCallback(data);
+                }
+            })
+        });
+
         function initUpdateBtn() {
             $("#updateBtn").on("click", function () {
                 if ($('#dialogForm').validate().form()) {

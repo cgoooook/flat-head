@@ -26,7 +26,7 @@ public class CryptoInstance {
 
     static {
         try {
-            session = SCrypto.getSession();
+//            session = SCrypto.getSession();
         } catch (Exception e) {
             e.printStackTrace();
         }
