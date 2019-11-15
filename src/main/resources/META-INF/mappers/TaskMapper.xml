@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="cn.com.flat.head.dal.mappers.TaskMapper">
+
+    <resultMap id="TaskMap" type="cn.com.flat.head.pojo.Task">
+        <id column="id" property="id" />
+        <result column="task_name" property="taskName" />
+        <result column="algorithm" property="algorithm" />
+        <result column="planned_quantity" property="plannedQuantity" />
+        <result column="current_quantity" property="currentQuantity" />
+        <result column="status" property="status" />
+        <result column="length" property="length"/>
+    </resultMap>
+
+
+
+    <select id="getTaskListPage" resultMap="TaskMap">
+        SELECT * from kms_a_task
+    </select>
+
+    <select id="getTaskById" resultMap="TaskMap">
+
+        select * from kms_a_task where id=#{id}
+
+    </select>
+
+    <insert id="addTask">
+
+      insert  into kms_a_task (task_name, algorithm, planned_quantity, current_quantity, status,length) value (#{taskName},#{algorithm},#{plannedQuantity},#{currentQuantity},#{status},#{length})
+
+    </insert>
+
+    <delete id="deleteTaskById">
+    delete   from kms_a_task where id = #{id}
+
+    </delete>
+
+    <update id="editTask">
+          update kms_a_task set task_name = #{taskName},algorithm=#{algorithm},length =#{length},planned_quantity=#{plannedQuantity} where id = #{id}
+
+    </update>
+
+</mapper>
