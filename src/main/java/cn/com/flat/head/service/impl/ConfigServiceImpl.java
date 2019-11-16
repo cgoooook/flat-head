@@ -1,6 +1,7 @@
 package cn.com.flat.head.service.impl;
 
 import cn.com.flat.head.dal.ConfigDao;
+import cn.com.flat.head.exception.KMSException;
 import cn.com.flat.head.pojo.*;
 import cn.com.flat.head.service.ConfigService;
 import org.bouncycastle.util.encoders.Base64;
@@ -19,7 +20,7 @@ import java.util.List;
 import java.util.Properties;
 
 @Service
-public class configServiceImpl implements ConfigService {
+public class ConfigServiceImpl implements ConfigService {
     public static final String  PREFIX="jdbc.";
     @Autowired
     ConfigDao configDao;
@@ -100,7 +101,19 @@ public class configServiceImpl implements ConfigService {
 
     @Override
     public void editLogLevel(String logLevel) {
-        configDao.editLogLevel(logLevel);
+        try {
+            Resource resource = new FileUrlResource("config/application.properties");
+            Properties properties = new Properties();
+            InputStream inputStream = resource.getInputStream();
+            properties.load(inputStream);
+            inputStream.close();
+            OutputStream out = new FileOutputStream(resource.getFile());
+            properties.setProperty("logging.level.cn.com.flat.head", logLevel);
+            properties.store(out, "update log level by system");
+            configDao.editLogLevel(logLevel);
+        } catch (Exception e) {
+            throw new KMSException("update log level error", e);
+        }
     }
 
     @Override

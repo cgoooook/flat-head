@@ -1,6 +1,5 @@
 package cn.com.flat.head.controller.config;
 
-import cn.com.flat.head.pojo.BooleanCarrier;
 import cn.com.flat.head.pojo.LogConfig;
 import cn.com.flat.head.pojo.LogConfigBo;
 import cn.com.flat.head.service.ConfigService;
@@ -28,24 +27,24 @@ public class LogConfigController {
 
     @GetMapping("/config")
     @ResponseBody
-    public Map getLogConfig(){
+    public Map getLogConfig() {
         List<LogConfig> config = configService.getLogConfig();
-        Map<String,String> map = new HashMap();
-        for (LogConfig logConfg:config) {
-          if("log_level".equalsIgnoreCase(logConfg.getConfigName())){
-              map.put("log_level",logConfg.getConfigValue());
-          }else if("log_days".equalsIgnoreCase(logConfg.getConfigName())){
-              map.put("log_days",logConfg.getConfigValue());
-          }
+        Map<String, String> map = new HashMap();
+        for (LogConfig logConfg : config) {
+            if ("log_level".equalsIgnoreCase(logConfg.getConfigName())) {
+                map.put("log_level", logConfg.getConfigValue());
+            } else if ("log_days".equalsIgnoreCase(logConfg.getConfigName())) {
+                map.put("log_days", logConfg.getConfigValue());
+            }
         }
         return map;
     }
+
     @PostMapping("/config")
     @ResponseBody
-    public AjaxResponse editLogConfig(@RequestBody LogConfigBo bo, HttpSession httpSession){
-
-         configService.editLogLevel(bo.getLogLevel());
-         configService.editLogDays(bo.getLogDays());
+    public AjaxResponse editLogConfig(@RequestBody LogConfigBo bo, HttpSession httpSession) {
+        configService.editLogLevel(bo.getLogLevel());
+        configService.editLogDays(bo.getLogDays());
         AjaxResponse ajaxResponse = new AjaxResponse();
         ajaxResponse.setReturnState(ReturnState.OK);
         return ajaxResponse;

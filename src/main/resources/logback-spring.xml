@@ -5,7 +5,7 @@
 
     <include resource="org/springframework/boot/logging/logback/defaults.xml" />
 
-    <springProperty scope="context" name="level" source="logging.level.cn.com.flat.head"/>
+    <springProperty scope="context" name="logging.level" source="logging.level.cn.com.flat.head"/>
     <springProperty scope="context" name="path"  source="logging.file.path"/>
 
     <appender name="STDOUT" class="ch.qos.logback.core.ConsoleAppender">
@@ -120,12 +120,12 @@
         </appender>
     </springProfile>
 
-    <logger name="cn.com.flat.head" level="${level}" additivity="false">
+    <logger name="cn.com.flat.head" level="${logging.level}" additivity="false">
         <appender-ref ref="ROOT-APPENDER"/>
         <appender-ref ref="ERROR-APPENDER"/>
     </logger>
 
-    <root level="${level}">
+    <root level="${logging.level}">
         <appender-ref ref="STDOUT"/>
         <appender-ref ref="ROOT-APPENDER"/>
         <appender-ref ref="ERROR-APPENDER"/>
