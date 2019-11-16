@@ -74,10 +74,14 @@
                                         <span class="required" aria-required="true">* </span>
                                     </label>
                                     <div class="col-md-6">
-                                        <select class="form-control" id="orgName" onchange="orgChange(this.options[this.options.selectedIndex].value)">
-                                            <option value="{{reqData.orgId}}">{{reqData.orgName}}</option>
+                                        <select class="form-control" id="orgName" name="orgName" disabled="disabled">
                                             {{each orgList as org}}
+                                            {{if reqData.orgId == org.orgId}}
+                                            <option value="{{org.orgId}}" selected>{{org.orgName}}</option>
+                                            {{else}}
                                             <option value="{{org.orgId}}">{{org.orgName}}</option>
+                                            {{/if}}
+
                                             {{/each}}
                                         </select>
                                     </div>
@@ -101,12 +105,14 @@
 
 
                                     <div class="col-md-6">
-                                        <select type="text" class="form-control" id="keys" value
-                                               name="keys" onchange="orgChange(this.options[this.options.selectedIndex].value)">
-                                            <option value="{{reqData.collectionId}}">{{reqData.collectionName}}</option>
+                                        <select class="form-control" id="keys"
+                                               name="keys">
+                                            <option value="">{{i18n('common.pleaseSelect')}}</option>
                                             {{each cols as col}}
-                                            {{if col.collectionId != reqData.collectionId}}
+                                            {{if col.collectionId == reqData.collectionId}}
                                             <option value="{{col.collectionId}}" selected>{{col.collectionName}}</option>
+                                            {{else}}
+                                            <option value="{{col.collectionId}}">{{col.collectionName}}</option>
                                             {{/if}}
                                             {{/each}}
 

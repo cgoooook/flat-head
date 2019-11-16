@@ -9,14 +9,15 @@ import java.util.List;
 public interface DevService {
     List<Device> getDevListPage(Device dev, Pageable pageable);
 
-
     boolean deleteDevById(String id);
 
     BooleanCarrier addDev(Device org);
+
     int getDevCountByCollectionId(String collectionId);
 
-
     Device getDevByDevCode(String deviceCode);
+
+    Device getDevByDevId(String deviceId);
 
     BooleanCarrier editDev(Device dev);
 }

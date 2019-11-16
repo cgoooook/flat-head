@@ -14,7 +14,9 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpSession;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 @Controller
 @RequestMapping("/sys/device")
@@ -22,9 +24,9 @@ public class DevController {
     @Autowired
     private DevService devService;
     @Autowired
-    private OrgService service;
+    private OrgService orgService;
     @Autowired
-    private KeyCollectionService collectionService;
+    private KeyCollectionService keyCollectionService;
 
     @GetMapping
     public String devicePage() {
@@ -45,7 +47,7 @@ public class DevController {
              parentId ="-1";
          }
 
-        return service.devTreeList(parentId);
+        return orgService.devTreeList(parentId);
     }
 
     @PutMapping
@@ -61,17 +63,29 @@ public class DevController {
         return AjaxResponse.getInstanceByResult(booleanCarrier.getResult(), httpSession);
     }
 
-    @GetMapping("/{deviceCode}")
+    @GetMapping("/getKeyCollections")
     @ResponseBody
-    public AjaxResponse getOrg(@PathVariable("deviceCode") String deviceCode, HttpSession session) {
-        Device dev = devService.getDevByDevCode(deviceCode);
-        KeyCollection collectionByCollectionId = collectionService.getCollectionByCollectionId(dev.getCollectionId());
-        dev.setCollectionName(collectionByCollectionId.getCollectionName());
-        List<KeyCollection> keyCollectionByOrgId = collectionService.getKeyCollectionByOrgId(dev.getOrgId());
-        dev.setCollectionIds(keyCollectionByOrgId);
+    public AjaxResponse getOrg(String orgId, HttpSession session) {
+        List<KeyCollection> keyCollectionByOrgId = keyCollectionService.getKeyCollectionByOrgId(orgId);
         AjaxResponse ajaxResponse = new AjaxResponse();
         ajaxResponse.setReturnState(ReturnState.OK);
-        ajaxResponse.setData(dev);
+        ajaxResponse.setData(keyCollectionByOrgId);
+        return ajaxResponse;
+    }
+
+    @GetMapping("/{deviceId}")
+    @ResponseBody
+    public AjaxResponse getDevice(@PathVariable("deviceId") String deviceId, HttpSession session) {
+        Device devByDevId = devService.getDevByDevId(deviceId);
+        List<KeyCollection> keyCollectionByOrgId = keyCollectionService.getKeyCollectionByOrgId(devByDevId.getOrgId());
+        List<Organization> treeList = orgService.getTreeList();
+        Map<String, Object> data = new HashMap<>();
+        data.put("orgList", treeList);
+        data.put("collection", keyCollectionByOrgId);
+        data.put("dev", devByDevId);
+        AjaxResponse ajaxResponse = new AjaxResponse();
+        ajaxResponse.setReturnState(ReturnState.OK);
+        ajaxResponse.setData(data);
         return ajaxResponse;
     }
 
@@ -89,7 +103,7 @@ public class DevController {
     }
 
 
-    @DeleteMapping("/devTreeList")
+    @DeleteMapping("/{deviceId}")
     @ResponseBody
     public AjaxResponse deleteDev(@PathVariable("deviceId") String deviceId, HttpSession session) {
         boolean b = devService.deleteDevById(deviceId);

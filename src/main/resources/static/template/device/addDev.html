@@ -74,7 +74,7 @@
                                         <span class="required" aria-required="true">* </span>
                                     </label>
                                     <div class="col-md-6">
-                                        <select class="form-control" id="orgName" onchange="orgChange(this.options[this.options.selectedIndex].value)">
+                                        <select class="form-control" id="orgName" name="orgName">
                                             <option value="">{{i18n('common.pleaseSelect')}}</option>
                                             {{each orgList as org}}
                                             <option value="{{org.orgId}}">{{org.orgName}}</option>
@@ -87,10 +87,6 @@
                         </div>
                     </div>
 
-
-
-
-
                     <div class="row">
                         <div class="col-md-12">
                             <div class="col-md-10">
@@ -101,8 +97,9 @@
 
 
                                     <div class="col-md-6">
-                                        <select type="text" class="form-control" id="keys"
-                                               name="keys"/>
+                                        <select class="form-control" id="keys" name="keys">
+                                            <option value="">{{i18n('common.pleaseSelect')}}</option>
+                                        </select>
                                     </div>
                                 </div>
                             </div>
