@@ -23,4 +23,8 @@ public interface KeyCollectionService {
 
     BooleanCarrier updateCollection(KeyCollection collection);
 
+    boolean delSubKey(String collectionId, String keyId);
+
+    boolean addSubKeys(List<String> keyIds, String collectionId);
+
 }

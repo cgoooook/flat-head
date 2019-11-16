@@ -8,29 +8,23 @@
             <form class="form-horizontal" id="dialogForm">
                 <div class="form-body">
                     <div class="row">
-                        <input type="hidden" id="subOrgId" value="{{orgId}}">
-                        <input type="hidden" id="collectionIdSub" value="{{collectionId}}">
-                        <a href="javascript:;" class="btn btn-success btn-sm" style="margin: 15px;" id="addKey"><i class="fa fa-plus faa-shake animated-hover"></i>
-                        {{i18n('key.addKey')}}</a>
-                    </div>
-                    <div class="row">
                         <div class="col-md-12">
-                            <table class="table table-bordered table-hover">
+                            <table class="table table-bordered table-hover subKeyTable">
                                 <thead>
                                 <tr>
+                                    <th><input type="checkbox" class="checkAll"></th>
                                     <th>{{i18n('key.version')}}</th>
                                     <th>{{i18n('key.label')}}</th>
                                     <th>{{i18n('key.checkValue')}}</th>
-                                    <th>{{i18n('common.operation')}}</th>
                                 </tr>
                                 </thead>
                                 <tbody>
                                 {{each keys as key}}
                                 <tr>
+                                    <th><input type="checkbox" attr-keyId="{{key.keyId}}" class="singleCheck"></th>
                                     <td>{{key.version}}</td>
                                     <td>{{key.keyName}}</td>
                                     <td>{{key.checkValue}}</td>
-                                    <td><a class="deleteSubKey btn btn-outline default btn-xs red" attr-keyId="{{key.keyId}}"><i class="fa fa-times"></i>{{i18n('common.delete')}}</a></td>
                                 </tr>
                                 {{/each}}
                                 </tbody>
@@ -42,6 +36,7 @@
             </form>
         </div>
         <div class="modal-footer">
+            <button type="button" class="btn btn-outline blue" id="addSubKey">{{i18n('common.save')}}</button>
             <button type="button" class="btn btn-outline grey-gallery" data-dismiss="modal">
                 {{i18n('common.cancelBtn')}}
             </button>

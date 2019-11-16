@@ -141,8 +141,8 @@ public class KeyServiceImpl implements KeyService {
     }
 
     @Override
-    public List<Key> getKeyListByOrgId(String orgId) {
-        return keyDao.getKeyListByOrgId(orgId);
+    public List<Key> getKeyListByOrgId(String orgId, String collectionId) {
+        return keyDao.getKeyListByOrgId(orgId, collectionId);
     }
 
     @Override

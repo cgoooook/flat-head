@@ -2,6 +2,8 @@ package cn.com.flat.head.pojo;
 
 import lombok.Data;
 
+import java.util.List;
+
 /**
  * Created by panzhuowen on 2019/10/28.
  */
@@ -10,6 +12,6 @@ public class CollectionKeys {
 
     private String collectionId;
 
-    private String keyId;
+    private List<String> keyIds;
 
 }

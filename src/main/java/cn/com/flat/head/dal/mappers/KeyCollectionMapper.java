@@ -2,6 +2,7 @@ package cn.com.flat.head.dal.mappers;
 
 import cn.com.flat.head.mybatis.RepositoryImpl;
 import cn.com.flat.head.pojo.KeyCollection;
+import org.apache.ibatis.annotations.Param;
 
 import java.util.List;
 
@@ -24,5 +25,9 @@ public interface KeyCollectionMapper {
     int deleteKeyCollection(String collectionId);
 
     int getCollectionByName(String collectionName);
+
+    int delSunKey(@Param("collectionId") String collectionId, @Param("keyId") String keyId);
+
+    int addSubKeys(@Param("keyIds")List<String> keyIds, @Param("collectionId")String collectionId);
 
 }

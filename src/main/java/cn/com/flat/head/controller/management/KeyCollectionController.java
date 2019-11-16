@@ -2,6 +2,7 @@ package cn.com.flat.head.controller.management;
 
 import cn.com.flat.head.mybatis.model.Pageable;
 import cn.com.flat.head.pojo.BooleanCarrier;
+import cn.com.flat.head.pojo.CollectionKeys;
 import cn.com.flat.head.pojo.Key;
 import cn.com.flat.head.pojo.KeyCollection;
 import cn.com.flat.head.service.KeyCollectionService;
@@ -14,6 +15,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpSession;
+import java.util.Arrays;
 import java.util.List;
 
 /**
@@ -99,9 +101,9 @@ public class KeyCollectionController {
 
     @GetMapping("/getKeyListByOrgId")
     @ResponseBody
-    public AjaxResponse getKeyListByOrgId(String orgId) {
+    public AjaxResponse getKeyListByOrgId(String orgId, String collectionId) {
         AjaxResponse ajaxResponse = new AjaxResponse();
-        List<Key> keyListByOrgId = keyService.getKeyListByOrgId(orgId);
+        List<Key> keyListByOrgId = keyService.getKeyListByOrgId(orgId, collectionId);
         ajaxResponse.setData(keyListByOrgId);
         return ajaxResponse;
     }
@@ -115,4 +117,15 @@ public class KeyCollectionController {
         return ajaxResponse;
     }
 
+    @DeleteMapping("/delSubKey")
+    @ResponseBody
+    public AjaxResponse delSubKey(String collectionId, String keyId, HttpSession session) {
+        return AjaxResponse.getInstanceByResult(keyCollectionService.delSubKey(collectionId, keyId),session);
+    }
+
+    @PostMapping("/addSubKeys")
+    @ResponseBody
+    public AjaxResponse addSubKeys(@RequestBody CollectionKeys collectionKeys, HttpSession session) {
+        return AjaxResponse.getInstanceByResult(keyCollectionService.addSubKeys(collectionKeys.getKeyIds(), collectionKeys.getCollectionId()), session);
+    }
 }

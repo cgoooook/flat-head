@@ -26,7 +26,7 @@ public interface KeyDao {
 
     Key getRootKey();
 
-    List<Key> getKeyListByOrgId(String orgId);
+    List<Key> getKeyListByOrgId(String orgId, String collectionId);
 
     List<Key> getKeyListByCollectionId(String collection);
 

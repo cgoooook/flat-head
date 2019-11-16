@@ -70,4 +70,14 @@ public class KeyCollectionDaoImpl implements KeyCollectionDao {
     public int deleteCollectionKeys(String collectionId) {
         return collectionKeysMapper.deleteByCollectionId(collectionId);
     }
+
+    @Override
+    public int delSubKey(String collectionId, String keyId) {
+        return keyCollectionMapper.delSunKey(collectionId, keyId);
+    }
+
+    @Override
+    public int addSubKeys(List<String> keyIds, String collectionId) {
+        return keyCollectionMapper.addSubKeys(keyIds, collectionId);
+    }
 }

@@ -26,7 +26,7 @@ public interface KeyMapper {
 
     Key getRootKey();
 
-    List<Key> getKeyListByOrgId(String orgId);
+    List<Key> getKeyListByOrgId(@Param("orgId") String orgId, @Param("collectionId")String collectionId);
 
     List<Key> getKeyListByCollectionId(String collectionId);
 }
