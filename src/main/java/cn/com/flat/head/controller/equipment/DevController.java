@@ -4,6 +4,7 @@ import cn.com.flat.head.mybatis.model.Pageable;
 import cn.com.flat.head.pojo.*;
 import cn.com.flat.head.service.DevService;
 import cn.com.flat.head.service.KeyCollectionService;
+import cn.com.flat.head.service.KeyService;
 import cn.com.flat.head.service.OrgService;
 import cn.com.flat.head.web.AjaxResponse;
 import cn.com.flat.head.web.DataTablesResponse;
@@ -27,6 +28,9 @@ public class DevController {
     private OrgService orgService;
     @Autowired
     private KeyCollectionService keyCollectionService;
+
+    @Autowired
+    private KeyService keyService;
 
     @GetMapping
     public String devicePage() {
@@ -108,6 +112,16 @@ public class DevController {
     public AjaxResponse deleteDev(@PathVariable("deviceId") String deviceId, HttpSession session) {
         boolean b = devService.deleteDevById(deviceId);
         return AjaxResponse.getInstanceByResult(b, session);
+    }
+
+    @GetMapping("/keysDetail")
+    @ResponseBody
+    public AjaxResponse getKeysDetail(String devId) {
+        AjaxResponse ajaxResponse = new AjaxResponse();
+        Device devByDevId = devService.getDevByDevId(devId);
+        List<Key> collectionKeyByCollectionId = keyService.getCollectionKeyByCollectionId(devByDevId.getCollectionId());
+        ajaxResponse.setData(collectionKeyByCollectionId);
+        return ajaxResponse;
     }
 
 

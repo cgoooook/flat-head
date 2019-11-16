@@ -47,6 +47,19 @@ var device = function () {
                 })
             })
         });
+
+        $table.on('click', 'a.keyManage', function () {
+            var $this = $(this);
+            var $row = $table.DataTable().row($this.parents('tr')[0]);
+            $.get("/sys/device/keysDetail?devId=" + $row.data().deviceId, function (data) {
+                if (data.ok) {
+                    var htmlTemplate = flat.remoteTemplate("/template/device/devKeys.html",  {keys:data.data});
+                    $("#modalDialog").html(htmlTemplate).modal('show');
+                } else {
+                    flat.ajaxCallback(data)
+                }
+            });
+        });
     };
 
 
