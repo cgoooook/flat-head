@@ -1,10 +1,7 @@
 package cn.com.flat.head.service.impl;
 
 import cn.com.flat.head.dal.ConfigDao;
-import cn.com.flat.head.pojo.BooleanCarrier;
-import cn.com.flat.head.pojo.Jdbc;
-import cn.com.flat.head.pojo.LogConfig;
-import cn.com.flat.head.pojo.SysLogo;
+import cn.com.flat.head.pojo.*;
 import cn.com.flat.head.service.ConfigService;
 import org.bouncycastle.util.encoders.Base64;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -161,6 +158,12 @@ public class configServiceImpl implements ConfigService {
         }
         uiInfo.setCopyright(copyright.getConfigValue());
         return uiInfo;
+    }
+
+    @Override
+    public BooleanCarrier testMail(Mail mail) {
+       // SimpleMailMessage message = new SimpleMailMessage();
+        return null;
     }
 
 
