@@ -29,7 +29,7 @@ public class configServiceImpl implements ConfigService {
         Properties prop = new Properties();
         BooleanCarrier booleanCarrier = new  BooleanCarrier();
         try{
-         Resource resource = new FileUrlResource("config/application.properties");
+         Resource resource = new FileUrlResource("config/jdbc.properties");
          InputStream inputStream = resource.getInputStream();
          prop.load(inputStream);
          Field[] declaredFields = jdbc.getClass().getDeclaredFields();
@@ -66,7 +66,7 @@ public class configServiceImpl implements ConfigService {
         Resource resource = null;
         Jdbc jdbc = new Jdbc();
         try {
-            resource = new FileUrlResource("config/application.properties");
+            resource = new FileUrlResource("config/jdbc.properties");
             InputStream inputStream = resource.getInputStream();
             prop.load(inputStream);
             Field[] declaredFields = jdbc.getClass().getDeclaredFields();
