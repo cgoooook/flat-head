@@ -80,4 +80,9 @@ public class KeyCollectionDaoImpl implements KeyCollectionDao {
     public int addSubKeys(List<String> keyIds, String collectionId) {
         return keyCollectionMapper.addSubKeys(keyIds, collectionId);
     }
+
+    @Override
+    public int getCollectionKeyNum(String collectionId) {
+        return keyCollectionMapper.getKeyCollectionKeyNum(collectionId);
+    }
 }

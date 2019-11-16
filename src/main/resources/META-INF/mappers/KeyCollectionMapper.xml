@@ -47,5 +47,8 @@
     <select id="getCollectionByName" resultType="java.lang.Integer">
         select count(*) from kms_key_collection where collection_name=#{collectionName}
     </select>
+    <select id="getKeyCollectionKeyNum" resultType="java.lang.Integer">
+        select count(*) from kms_collection_key where collection_id=#{collectionId}
+    </select>
 
 </mapper>

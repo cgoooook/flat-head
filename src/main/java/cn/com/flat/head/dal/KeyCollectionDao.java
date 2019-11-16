@@ -31,4 +31,6 @@ public interface KeyCollectionDao {
 
     int addSubKeys(List<String> keyIds, String collectionId);
 
+    int getCollectionKeyNum(String collectionId);
+
 }

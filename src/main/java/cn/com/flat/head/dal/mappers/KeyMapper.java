@@ -28,5 +28,7 @@ public interface KeyMapper {
 
     List<Key> getKeyListByOrgId(@Param("orgId") String orgId, @Param("collectionId")String collectionId);
 
+    List<Key> getKeyListByOrgIdNotEmpty(@Param("orgId") String orgId, @Param("collectionId")String collectionId);
+
     List<Key> getKeyListByCollectionId(String collectionId);
 }

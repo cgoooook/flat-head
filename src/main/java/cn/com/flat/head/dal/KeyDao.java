@@ -28,6 +28,8 @@ public interface KeyDao {
 
     List<Key> getKeyListByOrgId(String orgId, String collectionId);
 
+    List<Key> getKeyListByOrgIdNotEmpty(String orgId, String collectionId);
+
     List<Key> getKeyListByCollectionId(String collection);
 
 }

@@ -76,6 +76,11 @@ public class KeyDaoImpl implements KeyDao {
     }
 
     @Override
+    public List<Key> getKeyListByOrgIdNotEmpty(String orgId, String collectionId) {
+        return keyMapper.getKeyListByOrgIdNotEmpty(orgId, collectionId);
+    }
+
+    @Override
     public List<Key> getKeyListByCollectionId(String collection) {
         return keyMapper.getKeyListByCollectionId(collection);
     }

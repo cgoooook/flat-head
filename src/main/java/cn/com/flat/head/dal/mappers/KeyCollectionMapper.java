@@ -30,4 +30,6 @@ public interface KeyCollectionMapper {
 
     int addSubKeys(@Param("keyIds")List<String> keyIds, @Param("collectionId")String collectionId);
 
+    int getKeyCollectionKeyNum(String collectionId);
+
 }
