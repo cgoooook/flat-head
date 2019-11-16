@@ -80,6 +80,25 @@ var Template = function () {
             });
         });
 
+        $table.on('click', 'a.copy', function () {
+            var $this = $(this);
+            var $row = $table.DataTable().row($this.parents('tr')[0]);
+            $.get("/key/template/" + $row.data().templateId, function (data) {
+                if (data.ok) {
+                    var template = data.data;
+                    var htmlTemplate = flat.remoteTemplate("/template/template/copyTemplate.html", {
+                        template: template
+                    });
+                    $("#modalDialog").html(htmlTemplate).modal('show');
+                    initDatePicker();
+                    initUsagesChecker(template);
+                    initSaveBtn();
+                } else {
+                    flat.ajaxCallback(data);
+                }
+            });
+        });
+
         $table.on('click', 'a.enable', function () {
             var $this = $(this);
             flat.showConfirm({
