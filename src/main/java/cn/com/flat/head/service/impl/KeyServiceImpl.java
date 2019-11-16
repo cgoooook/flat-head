@@ -2,6 +2,7 @@ package cn.com.flat.head.service.impl;
 
 import cn.com.flat.head.crypto.CryptoInstance;
 import cn.com.flat.head.crypto.FSecretKey;
+import cn.com.flat.head.dal.KeyCollectionDao;
 import cn.com.flat.head.dal.KeyDao;
 import cn.com.flat.head.dal.KeyTemplateDao;
 import cn.com.flat.head.dal.OrgDao;
@@ -27,6 +28,9 @@ public class KeyServiceImpl implements KeyService {
 
     @Autowired
     private OrgDao orgDao;
+
+    @Autowired
+    private KeyCollectionDao keyCollectionDao;
 
 
     @Autowired
@@ -141,8 +145,8 @@ public class KeyServiceImpl implements KeyService {
     }
 
     @Override
-    public List<Key> getKeyListByOrgId(String orgId) {
-        return keyDao.getKeyListByOrgId(orgId);
+    public List<Key> getKeyListByOrgId(String orgId, String collectionId) {
+        return keyDao.getKeyListByOrgIdNotEmpty(orgId, collectionId);
     }
 
     @Override

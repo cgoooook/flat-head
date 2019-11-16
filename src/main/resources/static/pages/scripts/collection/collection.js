@@ -66,14 +66,151 @@ var Collection = function () {
             var $row = $table.DataTable().row($this.parents('tr')[0]);
             $.get("/key/collection/getCollectionKeys?collectionId=" + $row.data().collectionId, function (data) {
                 if (data.ok) {
+                    var orgId = $row.data().orgId;
                     var key = data.data;
-                    var htmlTemplate = flat.remoteTemplate("/template/collection/collectionKey.html", {keys: key});
+                    var htmlTemplate = flat.remoteTemplate("/template/collection/collectionKey.html", {keys: key,
+                        orgId: orgId, collectionId: $row.data().collectionId});
                     $("#modalDialog").html(htmlTemplate).modal('show');
+                    initSubKeyDelete();
+                    initAddSubKey();
                 } else {
                     flat.ajaxCallback(data);
                 }
             })
         });
+
+        function initSubKeyDelete() {
+            $("a.deleteSubKey").on("click", function () {
+                var $this = $(this);
+                flat.showConfirm();
+                $("#confirmBtn").off("click").on("click", function () {
+                    var $row = $table.DataTable().row($this.parents('tr')[0]);
+                    $.ajax({
+                        url: "/key/collection/delSubKey",
+                        dataType: "json",
+                        type: "DELETE",
+                        data: {
+                            collectionId: $("#collectionIdSub").val(),
+                            keyId: $this.attr("attr-keyId")
+                        }
+                    }).done(function (data) {
+                        if (flat.ajaxCallback(data)) {
+                            $("#confirmDialog").modal("hide");
+                            var orgId = $("#subOrgId").val();
+                            var collectionId = $("#collectionIdSub").val();
+                            $.get("/key/collection/getCollectionKeys?collectionId=" + collectionId, function (data) {
+                                if (data.ok) {
+                                    var key = data.data;
+                                    var htmlTemplate = flat.remoteTemplate("/template/collection/collectionKey.html", {keys: key,
+                                        orgId: orgId, collectionId: collectionId});
+                                    $("#modalDialog").html(htmlTemplate);
+                                    initSubKeyDelete();
+                                    initAddSubKey();
+                                } else {
+                                    flat.ajaxCallback(data);
+                                }
+                            })
+                        }
+                    })
+                })
+            });
+        }
+
+        function initAddSubKey() {
+            $("#addKey").on("click", function () {
+                var orgId = $("#subOrgId").val();
+                $.get('/key/collection/getKeyListByOrgId?orgId=' + orgId + "&collectionId=" + $("#collectionIdSub").val(), function (data) {
+                    if (data.ok) {
+                        var keys = data.data;
+                        var htmlTemplate = flat.remoteTemplate("/template/collection/addSubKey.html", {keys: keys});
+                        $("#modalDialogSub").html(htmlTemplate).modal('show');
+                        initCheck();
+                        initAddSubKeyBtn();
+                    } else {
+                        flat.ajaxCallback(data);
+                    }
+                });
+
+            });
+        }
+
+        function initCheck() {
+            $("table.subKeyTable").on("click", "input", function () {
+                var $this = $(this);
+                var checkBoxes = $("table.subKeyTable").find("input[type=checkbox]");
+                if ($this.hasClass("checkAll")) {
+                    if ($this.is(':checked')) {
+                        $.each(checkBoxes, function () {
+                            var $this = $(this);
+                            $this.prop("checked", true)
+                        })
+                    } else {
+                        $.each(checkBoxes, function () {
+                            var $this = $(this);
+                            $this.prop("checked", false)
+                        })
+                    }
+                } else {
+                    if ($this.is(':checked')) {
+                        var checkNum = $("table.subKeyTable").find("input[type=checkbox]:checked").length;
+                        if (checkNum === checkBoxes.length - 1) {
+                            $.each(checkBoxes, function () {
+                                var $this = $(this);
+                                $this.prop("checked", true)
+                            })
+                        }
+                    } else {
+                        var checkNum = $("table.subKeyTable").find("input[type=checkbox]:checked").length;
+                        if (checkNum !== checkBoxes.length) {
+                            $(".checkAll").prop("checked", false)
+                        }
+                    }
+                }
+
+            })
+        }
+
+        function initAddSubKeyBtn() {
+            $("#addSubKey").on("click", function () {
+                var keyIds = [];
+                var $input = $("input.singleCheck:checked");
+                if ($input.length <= 0) {
+                    toast.error("请选要添加的密钥");
+                    return;
+                }
+                    $.each($input, function () {
+                    keyIds.push($(this).attr("attr-keyId"));
+                });
+                $.ajax({
+                    url: "/key/collection/addSubKeys",
+                    type: "POST",
+                    dataType: "json",
+                    contentType: "application/json; charset=utf-8",
+                    data: JSON.stringify({
+                        collectionId :$("#collectionIdSub").val(),
+                        keyIds: keyIds
+                    })
+                }).done(function (data) {
+                    if (flat.ajaxCallback(data)) {
+                        $("#modalDialogSub").modal('hide');
+                        var orgId = $("#subOrgId").val();
+                        var collectionId = $("#collectionIdSub").val();
+                        $.get("/key/collection/getCollectionKeys?collectionId=" + collectionId, function (data) {
+                            if (data.ok) {
+                                var key = data.data;
+                                var htmlTemplate = flat.remoteTemplate("/template/collection/collectionKey.html", {keys: key,
+                                    orgId: orgId, collectionId: collectionId});
+                                $("#modalDialog").html(htmlTemplate);
+                                initSubKeyDelete();
+                                initAddSubKey();
+                            } else {
+                                flat.ajaxCallback(data);
+                            }
+                        })
+                    }
+                })
+            })
+        }
 
         function initUpdateBtn() {
             $("#updateBtn").on("click", function () {

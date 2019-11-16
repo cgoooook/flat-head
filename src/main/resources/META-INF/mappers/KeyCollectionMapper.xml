@@ -12,6 +12,12 @@
         insert into kms_key_collection (collection_id, collection_name, org_id) VALUES
         (#{collectionId}, #{collectionName}, #{orgId})
     </insert>
+    <insert id="addSubKeys">
+        insert into kms_collection_key (key_id, collection_id) VALUES
+        <foreach collection="keyIds" item="item" separator=",">
+           (#{item}, #{collectionId})
+        </foreach>
+    </insert>
 
     <update id="updateCollection">
         update kms_key_collection set collection_name=#{collectionName} where collection_id=#{collectionId}
@@ -19,6 +25,9 @@
 
     <delete id="deleteKeyCollection">
         delete from kms_key_collection where collection_id=#{collectionId}
+    </delete>
+    <delete id="delSunKey">
+        delete from kms_collection_key where collection_id=#{collectionId} and key_id=#{keyId}
     </delete>
 
     <select id="getKeyCollectionListPage" resultMap="CollectionMap">
@@ -37,6 +46,9 @@
     </select>
     <select id="getCollectionByName" resultType="java.lang.Integer">
         select count(*) from kms_key_collection where collection_name=#{collectionName}
+    </select>
+    <select id="getKeyCollectionKeyNum" resultType="java.lang.Integer">
+        select count(*) from kms_collection_key where collection_id=#{collectionId}
     </select>
 
 </mapper>

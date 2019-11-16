@@ -51,11 +51,16 @@
     </select>
 
     <select id="getKeyListByOrgId" resultMap="KeyMap">
-        select * from kms_a_key where org_id=#{orgId}  and status=2
+        select kak.* from kms_a_key kak left join kms_collection_key kck on kak.org_id=#{orgId}  and kak.status=2
+            and kak.key_id!=kck.key_id and kck.collection_id=#{collectionId}
     </select>
     <select id="getKeyListByCollectionId" resultMap="KeyMap">
-        select kak.* from kms_a_key kak, kms_key_collection kkc, kms_collection_key kck where kak.key_id=kck.key_id and kck.connection_id=kkc.collection_id and
+        select kak.* from kms_a_key kak, kms_key_collection kkc, kms_collection_key kck where kak.key_id=kck.key_id and kck.collection_id=kkc.collection_id and
                                                                                           kkc.collection_id=#{collectionId}
+    </select>
+    <select id="getKeyListByOrgIdNotEmpty" resultMap="KeyMap">
+        select kak.* from kms_a_key kak  where kak.org_id=#{orgId}  and kak.status=2
+            and kak.key_id not in (select key_id from kms_collection_key where collection_id=#{collectionId})
     </select>
 
 

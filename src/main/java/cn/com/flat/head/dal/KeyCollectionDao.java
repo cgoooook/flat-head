@@ -27,4 +27,10 @@ public interface KeyCollectionDao {
 
     int deleteCollectionKeys(String collectionId);
 
+    int delSubKey(String collectionId, String keyId);
+
+    int addSubKeys(List<String> keyIds, String collectionId);
+
+    int getCollectionKeyNum(String collectionId);
+
 }

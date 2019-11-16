@@ -87,5 +87,15 @@ public class KeyCollectionServiceImpl implements KeyCollectionService {
         return booleanCarrier;
     }
 
+    @Override
+    public boolean delSubKey(String collectionId, String keyId) {
+        return keyCollectionDao.delSubKey(collectionId, keyId) >= 1;
+    }
+
+    @Override
+    public boolean addSubKeys(List<String> keyIds, String collectionId) {
+        return keyCollectionDao.addSubKeys(keyIds, collectionId) >= 1;
+    }
+
 
 }
