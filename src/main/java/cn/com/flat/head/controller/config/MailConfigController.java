@@ -1,10 +1,16 @@
 package cn.com.flat.head.controller.config;
 
+import cn.com.flat.head.pojo.BooleanCarrier;
+import cn.com.flat.head.pojo.Jdbc;
+import cn.com.flat.head.pojo.Mail;
 import cn.com.flat.head.service.ConfigService;
+import cn.com.flat.head.web.AjaxResponse;
+import cn.com.flat.head.web.ReturnState;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.*;
+
+import javax.servlet.http.HttpSession;
 
 @Controller
 @RequestMapping("/mail/config")
@@ -19,7 +25,18 @@ public class MailConfigController {
     }
 
 
-
+    @PostMapping("/test")
+    @ResponseBody
+    public AjaxResponse testMail(@RequestBody Mail mail, HttpSession httpSession){
+        BooleanCarrier booleanCarrier = configService.testMail(mail);
+        if(!booleanCarrier.getResult()){
+            AjaxResponse ajaxResponse = new AjaxResponse();
+            ajaxResponse.setReturnState(ReturnState.ERROR);
+            ajaxResponse.setMsg(booleanCarrier.getMessage());
+            return ajaxResponse;
+        }
+        return AjaxResponse.getInstanceByResult(booleanCarrier.getResult(), httpSession);
+    }
 
 
 

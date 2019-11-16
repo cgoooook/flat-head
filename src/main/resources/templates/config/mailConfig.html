@@ -17,7 +17,7 @@
             <div class="modal-dialog modal-lg">
                 <div class="modal-header">
                     <button type="button" class="close" data-dismiss="modal" aria-hidden="true"></button>
-                    <h4 class="modal-title font-green bold" id="modalTitle"><span th:text="#{config.db.edit}"></span>
+                    <h4 class="modal-title font-green bold" id="modalTitle"><span th:text="#{mail.config}"></span>
                     </h4>
                 </div>
                 <div class="modal-body form">
@@ -34,7 +34,7 @@
 
                                             <div class="col-sm-6">
                                                 <input type="text" class="form-control"
-                                                       id="url" name="url" required
+                                                       id="addr" name="addr" required
                                                        maxlength="16" th:placeholder="#{mail.input.addr }"
                                                        value=""/>
                                             </div>
@@ -55,7 +55,7 @@
 
                                             <div class="col-md-6">
                                                 <input type="text" class="form-control" id="port"
-                                                       name="username" th:placeholder="#{mail.input.port }"
+                                                       name="port" th:placeholder="#{mail.input.port }"
                                                        required
                                                        value=""/>
                                             </div>
@@ -76,8 +76,8 @@
 
 
                                             <div class="col-md-6">
-                                                <input type="text" class="form-control" id="timeout"
-                                                       name="password" th:placeholder="#{mail.input.timeout }" required
+                                                <input type="text" class="form-control" id="timeOut"
+                                                       name="timeOut" th:placeholder="#{mail.input.timeout }" required
                                                        value=""/>
                                             </div>
                                         </div>
@@ -95,8 +95,8 @@
                                                 <span class="required" aria-required="true">* </span>
                                             </label>
                                             <div class="col-md-6">
-                                                <input type="text" class="form-control" id="send"
-                                                       name="driver" th:placeholder="#{mail.input.send}" required
+                                                <input type="text" class="form-control" id="sendMailbox"
+                                                       name="sendMailbox" th:placeholder="#{mail.input.send}" required
                                                        value=""/>
                                             </div>
 
@@ -118,7 +118,7 @@
 
                                             <div class="col-md-6">
                                                 <input type="text" class="form-control" id="password"
-                                                       name="maxIdle" th:placeholder="#{mail.input.password}" required
+                                                       name="password" th:placeholder="#{mail.input.password}" required
                                                        value=""/>
                                             </div>
                                         </div>
@@ -137,8 +137,8 @@
 
 
                                             <div class="col-md-6">
-                                                <input type="text" class="form-control" id="recive"
-                                                       name="maxActive" th:placeholder="#{mail.input.recive}"
+                                                <input type="text" class="form-control" id="receivingMailbox"
+                                                       name="receivingMailbox" th:placeholder="#{mail.input.recive}"
                                                        required
                                                        value=""/>
                                             </div>
@@ -168,8 +168,12 @@
 </div>
 <th:block th:include="includes/footer :: footer"/>
 <th:block th:include="includes/scripts :: scripts"/>
+<script th:src="@{/pages/scripts/config/mailConfig.js}" type="text/javascript"></script>
 <script type="text/javascript">
+    $(function () {
+        mailConfig.init();
 
+    })
 </script>
 </body>
 </html>
