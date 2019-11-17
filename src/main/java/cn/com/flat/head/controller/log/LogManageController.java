@@ -3,6 +3,7 @@ package cn.com.flat.head.controller.log;
 import cn.com.flat.head.mybatis.model.Pageable;
 import cn.com.flat.head.pojo.OperateArchiveLog;
 import cn.com.flat.head.service.LogManageService;
+import cn.com.flat.head.web.DataTablesResponse;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -16,7 +17,7 @@ import java.util.List;
 @RequestMapping("/log/manage")
 public class LogManageController {
     @Autowired
-    LogManageService logManageService;
+    private LogManageService logManageService;
 
     @GetMapping
     public String toAdminLog(){
@@ -25,9 +26,9 @@ public class LogManageController {
 
     @PostMapping("/list")
     @ResponseBody
-    public List<OperateArchiveLog> getOperateArchiveLogs(OperateArchiveLog oal){
+    public DataTablesResponse<OperateArchiveLog> getOperateArchiveLogs(OperateArchiveLog oal, Pageable pageable){
 
-        return logManageService.getOperateArchiveLogs(oal);
+        return new DataTablesResponse<>(pageable, logManageService.getOperatorLogListPage(oal, pageable));
     }
 
 }

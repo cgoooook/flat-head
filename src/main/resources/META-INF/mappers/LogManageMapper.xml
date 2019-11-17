@@ -15,7 +15,7 @@
 
     <select id="getOperateArchiveLogs" resultMap="adminLog">
 
-    select * from kms_operate_archive_log
+    select * from kms_operate_log
         <where>
             <if test="operateType != null">
                 AND   operate_type=#{operateType}

@@ -5,7 +5,7 @@ var adminLog = function () {
 
     var handleTables = function () {
         grid = new Datatable();
-        $table = $("#adminTables");
+        $table = $("#ajax_tables");
         grid.init({
             src: $table,
             dataTable: {
@@ -15,17 +15,11 @@ var adminLog = function () {
                 "columns": [
                     {data: 'operateType', orderable: true},
                     {data: 'operateUser', orderable: true},
-                    {data: 'operateTime', orderable: true},
+                    {data: 'operateTime', orderable: true
+                    },
                     {data: 'operatorResult', orderable: true},
                     {data: 'operateContent', orderable: true},
-                    {
-                        data: 'operate', orderable: false,
-                        render: function (data, type, full) {
-                            return template("actionBtn", {data: data, type: type, full: full});
-                        }
-                    }
-                ],
-                "paging": false
+                ]
             }
         });
 

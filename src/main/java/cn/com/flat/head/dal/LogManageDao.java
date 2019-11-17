@@ -7,4 +7,5 @@ import java.util.List;
 public interface LogManageDao {
 
     List<OperateArchiveLog> getOperateArchiveLogs(OperateArchiveLog oal);
+
 }
