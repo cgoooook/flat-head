@@ -36,6 +36,11 @@ public class DevServiceImpl implements DevService {
     }
 
     @Override
+    public Device getDevByDevId(String deviceId) {
+        return devServiceDao.getDevById(deviceId);
+    }
+
+    @Override
     public BooleanCarrier editDev(Device dev) {
         BooleanCarrier b = new BooleanCarrier();
         b.setResult(true);

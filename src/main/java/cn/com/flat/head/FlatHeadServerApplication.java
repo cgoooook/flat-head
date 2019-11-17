@@ -7,10 +7,12 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.autoconfigure.context.MessageSourceAutoConfiguration;
 import org.springframework.context.ApplicationContextInitializer;
 import org.springframework.context.annotation.ImportResource;
+import org.springframework.context.annotation.PropertySource;
 
 import java.security.Security;
 
 @SpringBootApplication
+@PropertySource(value = {"file:config/bootstrap.properties","file:config/jdbc.properties", "file:config/application.properties"})
 @ImportAutoConfiguration(MessageSourceAutoConfiguration.class)
 @ImportResource(value = {"classpath:dal/flat-application-dal.xml", "classpath:dal/shiro-config.xml"})
 public class FlatHeadServerApplication {

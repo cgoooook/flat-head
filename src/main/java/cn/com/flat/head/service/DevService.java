@@ -13,10 +13,12 @@ public interface DevService {
     boolean deleteDevById(String id);
 
     BooleanCarrier addDev(Device org);
+
     int getDevCountByCollectionId(String collectionId);
 
-
     Device getDevByDevCode(String deviceCode);
+
+    Device getDevByDevId(String deviceId);
 
     BooleanCarrier editDev(Device dev);
 }
