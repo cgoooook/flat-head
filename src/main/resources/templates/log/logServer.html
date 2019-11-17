@@ -16,7 +16,7 @@
             <th:block th:include="includes/slider :: slider"/>
             <div class="modal-dialog modal-lg">
                 <div class="modal-header">
-                    <h4 class="modal-title font-green bold" id="modalTitle"><span text="${menu.menuName}"></span>
+                    <h4 class="modal-title font-green bold" id="modalTitle"><span th:text="${menu.menuName}"></span>
                     </h4>
                 </div>
             <div class="row">
