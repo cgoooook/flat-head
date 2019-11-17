@@ -16,4 +16,6 @@ public interface TaskMapper {
     void deleteTaskById(String id);
 
     void editTask(Task task);
+
+    int updateTaskStatus(String id, int status);
 }

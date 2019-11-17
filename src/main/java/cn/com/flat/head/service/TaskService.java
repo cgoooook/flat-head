@@ -16,4 +16,6 @@ public interface TaskService {
     void deleteTaskById(String id);
 
     BooleanCarrier editTask(Task task);
+
+    boolean updateTaskStatus(String id, int status);
 }

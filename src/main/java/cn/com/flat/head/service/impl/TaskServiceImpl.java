@@ -45,4 +45,14 @@ public class TaskServiceImpl implements TaskService {
         booleanCarrier.setResult(true);
         return booleanCarrier;
     }
+
+    @Override
+    public boolean updateTaskStatus(String id, int status) {
+        int num  = taskDao.updateTaskStatus(id, status);
+        if(num>0){
+            return  true;
+        }else {
+            return false;
+        }
+    }
 }

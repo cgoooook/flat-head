@@ -63,6 +63,12 @@ public class TaskController {
         taskService.deleteTaskById(id);
         return AjaxResponse.getInstanceByResult(true, session);
     }
+    @PostMapping("/status/{id}")
+    @ResponseBody
+    public AjaxResponse updateKeyStatus(@PathVariable("id") String id, int status, HttpSession session) {
+        return AjaxResponse
+                .getInstanceByResult(taskService.updateTaskStatus(id, status), session);
+    }
 
 
     @PutMapping("/edit")

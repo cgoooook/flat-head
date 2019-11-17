@@ -47,7 +47,53 @@ var task = function () {
             })
         });
 
+        $table.on('click', 'a.enable', function () {
+            var $this = $(this);
+            flat.showConfirm({
+                confirmContent: flat.i18n("template.enableTips"),
+                confirmBtn: flat.i18n("template.status1")
+            });
+            $("#confirmBtn").off("click").on("click", function () {
+                var $row = $table.DataTable().row($this.parents('tr')[0]);
+                $.ajax({
+                    url: "/task/config/status/" + $row.data().id,
+                    dataType: "json",
+                    type: "POST",
+                    data: {
+                        status: 1
+                    }
+                }).done(function (data) {
+                    if (flat.ajaxCallback(data)) {
+                        grid.reload();
+                        $("#confirmDialog").modal("hide");
+                    }
+                })
+            })
+        });
 
+        $table.on('click', 'a.disable', function () {
+            var $this = $(this);
+            flat.showConfirm({
+                confirmContent: flat.i18n("template.disableTips"),
+                confirmBtn: flat.i18n("template.status0")
+            });
+            $("#confirmBtn").off("click").on("click", function () {
+                var $row = $table.DataTable().row($this.parents('tr')[0]);
+                $.ajax({
+                    url: "/task/config//status/" + $row.data().id,
+                    dataType: "json",
+                    type: "POST",
+                    data: {
+                        status: 0
+                    }
+                }).done(function (data) {
+                    if (flat.ajaxCallback(data)) {
+                        grid.reload();
+                        $("#confirmDialog").modal("hide");
+                    }
+                })
+            })
+        });
 
     };
 
