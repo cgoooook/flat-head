@@ -38,6 +38,7 @@
                                                 </label>
                                                 <div class="col-md-6">
                                                     <select class="form-control" id="operateType">
+                                                        <option value="">请选择</option>
                                                         <option value="登录系统">登录系统</option>
                                                         <option value="生成密钥">生成密钥</option>
                                                         <option value="创建用户">创建用户</option>
@@ -60,6 +61,7 @@
 
                                                 <div class="col-md-6">
                                                     <select class="form-control" id="operatorResult">
+                                                        <option value="">请选择</option>
                                                         <option value="成功">成功</option>
                                                         <option value="失败">生成密钥</option>
 
@@ -89,27 +91,11 @@
 
                                     </div>
                                     <div class="col-md-12">
-                                        <div class="col-md-8">
-                                            <div class="form-group">
-                                                <label class="control-label col-md-4">
-                                                    <span th:text="#{common.startTime}"></span>
-                                                    <span class="required" aria-required="true">* </span>
-                                                </label>
-                                                <div class="col-md-8">
-                                                    <input type="text" class="datepicker form-control input-medium"
-                                                           id="startDate"
-                                                           readonly
-                                                           name="startDate" th:placeholder="#{common.pleaseSelect}"
-                                                           required
-                                                           value=""/>
-                                                </div>
-                                            </div>
-                                        </div>
 
                                         <div class="col-md-8">
                                             <div class="form-group">
                                                 <label class="control-label col-md-4">
-                                                    <span th:text="#{common.endTime}"></span>
+                                                    <span th:text="#{common.selectTime}"></span>
                                                     <span class="required" aria-required="true">* </span>
                                                 </label>
                                                 <div class="col-md-8">
@@ -124,7 +110,8 @@
                                         </div>
                                     </div>
                                 </div>
-
+                                <button type="button" class="btn btn-outline blue" id="query"><span
+                                        th:text="#{log.query}"></span></button>
                             </div>
                         </div>
                         <div class="portlet-body">
