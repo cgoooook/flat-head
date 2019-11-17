@@ -19,6 +19,10 @@ var adminLog = function () {
                     },
                     {data: 'operatorResult', orderable: true},
                     {data: 'operateContent', orderable: true},
+                    {data: 'operate', orderable: false,
+                    render: function () {
+                        return "";
+                    }}
                 ]
             }
         });

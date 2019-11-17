@@ -6,6 +6,11 @@
     <th:block th:include="includes/header :: styles"/>
     <link rel="stylesheet" th:href="@{/plugins/ztree/css/zTreeStyle/zTreeStyle.css}" type="text/css">
     <link rel="stylesheet" th:href="@{/global/css/ztree_custom.css}" type="text/css">
+    <style type="text/css">
+        .table .btn {
+            margin-right: 0;
+        }
+    </style>
 </head>
 <body class="page-header-fixed page-sidebar-closed-hide-logo page-content-white">
 <th:block th:include="includes/top :: top"/>
@@ -25,19 +30,51 @@
                                 <i th:class="${menu.menuIcon}"></i>
                                 <span class="caption-subject font-dark sbold uppercase" th:text="${menu.menuName}"></span>
                             </div>
-                            <div class="actions">
-                                <a href="javascript:;" class="btn btn-success btn-circle" id="addDev"><i class="fa fa-plus faa-shake animated-hover"></i><span th:text="#{dev.addDev}"></span> </a>
-                            </div>
                         </div>
                         <div class="portlet-body">
                             <table class="table table-striped table-bordered table-hover " id="ajax_tables">
                                 <thead>
                                 <tr role="row" class="heading">
-                                    <th> 操作类型</th>
-                                    <th> 用户</th>
-                                    <th> 操作时间</th>
-                                    <th> 结果</th>
-                                    <th> 操作内容</th>
+                                    <th width="10%"> 操作类型</th>
+                                    <th width="10%"> 用户</th>
+                                    <th width="15%"> 操作时间</th>
+                                    <th width="10%"> 结果</th>
+                                    <th width="30%"> 操作内容</th>
+                                    <th width="10%"> 操作</th>
+                                </tr>
+                                <tr>
+                                    <th>
+                                        <select name="order_status" class="form-control form-filter input-sm">
+                                            <option value="">Select...</option>
+                                            <option value="pending">Pending</option>
+                                            <option value="closed">Closed</option>
+                                            <option value="hold">On Hold</option>
+                                            <option value="fraud">Fraud</option>
+                                        </select>
+                                    </th>
+                                    <th> </th>
+                                    <th>
+                                        <div class="input-group date date-picker margin-bottom-5" data-date-format="dd/mm/yyyy">
+                                            <input type="text" class="form-control form-filter input-sm" readonly name="order_date_from" placeholder="From">
+                                            <span class="input-group-btn">
+                                                                <button class="btn btn-sm default" type="button">
+                                                                    <i class="fa fa-calendar"></i>
+                                                                </button>
+                                                            </span>
+                                        </div>
+                                    </th>
+                                    <th>
+                                        <select id="operateResultQuery" class="form-control form-filter input-sm">
+                                            <option value="1">1</option>
+                                        </select>
+                                    </th>
+                                    <th> </th>
+                                    <th>
+                                        <button class="btn btn-sm green btn-outline filter-submit margin-bottom">
+                                                <i class="fa fa-search"></i> Search</button>
+                                        <button class="btn btn-sm red btn-outline filter-cancel">
+                                            <i class="fa fa-times"></i> Reset</button>
+                                    </th>
                                 </tr>
                                 </thead>
                                 <tbody></tbody>
