@@ -9,7 +9,6 @@ import java.util.List;
 public interface DevService {
     List<Device> getDevListPage(Device dev, Pageable pageable);
 
-
     boolean deleteDevById(String id);
 
     BooleanCarrier addDev(Device org);
