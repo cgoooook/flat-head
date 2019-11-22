@@ -21,5 +21,6 @@ public interface ConfigService {
 
     SysLogo getUiInfo();
 
-    BooleanCarrier testMail(Mail mail);
+
+    void sendMail(Mail mail);
 }

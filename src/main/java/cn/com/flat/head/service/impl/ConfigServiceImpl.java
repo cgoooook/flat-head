@@ -8,6 +8,8 @@ import org.bouncycastle.util.encoders.Base64;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.io.FileUrlResource;
 import org.springframework.core.io.Resource;
+import org.springframework.mail.SimpleMailMessage;
+import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -24,6 +26,8 @@ public class ConfigServiceImpl implements ConfigService {
     public static final String  PREFIX="jdbc.";
     @Autowired
     ConfigDao configDao;
+    @Autowired
+    private JavaMailSender mailSender;
     @Override
     public BooleanCarrier  updateJdbcConfig(Jdbc jdbc) {
 
@@ -174,9 +178,13 @@ public class ConfigServiceImpl implements ConfigService {
     }
 
     @Override
-    public BooleanCarrier testMail(Mail mail) {
-       // SimpleMailMessage message = new SimpleMailMessage();
-        return null;
+    public void sendMail(Mail mail) {
+        SimpleMailMessage simpleMailMessage = new SimpleMailMessage();
+        simpleMailMessage.setFrom(mail.getSendMailbox());
+        simpleMailMessage.setTo(mail.getReceivingMailbox());
+        simpleMailMessage.setSubject("it is a test for spring boot");
+        simpleMailMessage.setText("mialSender");
+        mailSender.send(simpleMailMessage);
     }
 
 

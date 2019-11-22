@@ -28,15 +28,12 @@ public class MailConfigController {
     @PostMapping("/test")
     @ResponseBody
     public AjaxResponse testMail(@RequestBody Mail mail, HttpSession httpSession){
-        BooleanCarrier booleanCarrier = configService.testMail(mail);
-        if(!booleanCarrier.getResult()){
-            AjaxResponse ajaxResponse = new AjaxResponse();
-            ajaxResponse.setReturnState(ReturnState.ERROR);
-            ajaxResponse.setMsg(booleanCarrier.getMessage());
-            return ajaxResponse;
+        configService.sendMail(mail);
+        AjaxResponse ajaxResponse = new AjaxResponse();
+        ajaxResponse.setReturnState(ReturnState.OK);
+        return ajaxResponse;
         }
-        return AjaxResponse.getInstanceByResult(booleanCarrier.getResult(), httpSession);
-    }
+
 
 
 
