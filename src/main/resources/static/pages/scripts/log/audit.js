@@ -1,4 +1,4 @@
-var adminLog = function () {
+var audit = function () {
 
     var grid;
     var $table;
@@ -17,7 +17,7 @@ var adminLog = function () {
             },
             dataTable: {
                 ajax: {
-                    url: "/log/manage/list"
+                    url: "/log/audit/list"
                 },
                 "columns": [
                     {data: 'operateType', orderable: true},
@@ -33,10 +33,9 @@ var adminLog = function () {
                         }},
                     {data: 'operateContent', orderable: true},
                     {data: 'operate', orderable: false,
-                    render: function () {
-
-                        return "";
-                    }}
+                        render: function (data, type, full) {
+                            return template("actionBtn", {data: data, type: type, full: full});
+                        }}
                 ]
             }
         });
@@ -45,17 +44,17 @@ var adminLog = function () {
         return this.getFullYear() + "/" + (this.getMonth() + 1) + "/" + this.getDate() + "/ " + this.getHours() + ":" + this.getMinutes() + ":" + this.getSeconds();
     };
 
-        function initDatePicker() {
-            $("input.datepicker").datetimepicker({
-                isRTL: App.isRTL(),
-                language: DATETIME_PICKER,
-                format: "yyyy-mm-dd HH:mm:ss",
-                autoclose: true,
-                todayBtn: true,
-                pickerPosition: (App.isRTL() ? "bottom-right" : "bottom-left"),
-                minuteStep: 10
-            });
-        }
+    function initDatePicker() {
+        $("input.datepicker").datetimepicker({
+            isRTL: App.isRTL(),
+            language: DATETIME_PICKER,
+            format: "yyyy-mm-dd HH:mm:ss",
+            autoclose: true,
+            todayBtn: true,
+            pickerPosition: (App.isRTL() ? "bottom-right" : "bottom-left"),
+            minuteStep: 10
+        });
+    }
 
 
     return {

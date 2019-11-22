@@ -101,9 +101,16 @@
                                                 <span th:text="#{common.selectTime}"></span>
                                                 <span class="required" aria-required="true">* </span>
                                             </label>
-                                            <div class="col-md-8">
+                                            <div class="col-md-6">
                                                 <input type="text" class="datepicker form-control input-medium"
-                                                       id="startDate"
+                                                       id="operateTimeBegin"
+                                                       readonly
+                                                       name="startDate" th:placeholder="#{common.pleaseSelect}"
+                                                       required
+                                                       value=""/>
+                                                <span class="input-group-addon" style= "display:block "> 至 </span>
+                                                <input type="text" class="datepicker form-control input-medium"
+                                                       id="operateTimeEnd"
                                                        readonly
                                                        name="startDate" th:placeholder="#{common.pleaseSelect}"
                                                        required

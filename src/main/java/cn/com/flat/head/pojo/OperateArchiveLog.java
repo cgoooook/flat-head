@@ -14,6 +14,6 @@ public class OperateArchiveLog {
     private String operateContent;
     private String contentHmac;
     private int auditFlag;
-    private Date operateTimeBegin;
-    private Date operateTimeEnd;
+    private String operateTimeBegin;
+    private String operateTimeEnd;
 }
