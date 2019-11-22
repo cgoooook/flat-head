@@ -17,21 +17,21 @@
 
     select * from kms_operate_log
         <where>
-            <if test="operateType != null">
+            <if test="operateType != null  and operateType != ''">
                 AND   operate_type=#{operateType}
             </if>
 
-            <if test="operatorResult != 0">
+            <if test="operatorResult != 0 and operatorResult != ''">
                 AND operator_result=#{operatorResult}
             </if>
-            <if test="operateUser != null">
+            <if test="operateUser != null  and operateUser != ''">
                 AND operate_user=#{operateUser}
             </if>
-            <if test="operateTimeBegin != null">
-                AND operate_time  <![CDATA[ >= ]]>  #{operateTimeBegin}
+            <if test="operateTimeBegin != null and operateTimeBegin != ''">
+                AND operate_time  <![CDATA[ >= ]]> DATE_FORMAT(#{operateTimeBegin},'%Y-%m-%d %h:%i:%S')
             </if>
-            <if test="operateTimeEnd != null">
-                AND operate_time <![CDATA[ <= ]]>  #{operateTimeEnd}
+            <if test="operateTimeEnd != null and operateTimeEnd != ''">
+                AND operate_time <![CDATA[ <= ]]> DATE_FORMAT(#{operateTimeEnd},'%Y-%m-%d %h:%i:%S')
             </if>
 
         </where>

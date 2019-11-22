@@ -8,24 +8,33 @@ var adminLog = function () {
         $table = $("#ajax_tables");
         grid.init({
             src: $table,
+            onQuery:function (data) {
+                data.operateType=$("#operationType option:selected").val();
+                data.operatorResult=$("#operateResultQuery option:selected").val();
+                data.operateTimeBegin=$("#beginTime").val();
+                data.operateTimeEnd=$("#endTime").val();
+
+            },
             dataTable: {
-                "ajax": {
-                    "url": "/log/manage/list"
+                ajax: {
+                    url: "/log/manage/list"
                 },
                 "columns": [
                     {data: 'operateType', orderable: true},
                     {data: 'operateUser', orderable: true},
-                    {data: 'operateTime', orderable: true
-                    },
+                    {data: 'operateTime', orderable: true},
                     {data: 'operatorResult', orderable: true},
                     {data: 'operateContent', orderable: true},
                     {data: 'operate', orderable: false,
                     render: function () {
+
                         return "";
                     }}
                 ]
             }
         });
+    };
+
 
         function initDatePicker() {
             $("input.datepicker").datetimepicker({
@@ -40,13 +49,11 @@ var adminLog = function () {
         }
 
 
-    };
-
-
-
     return {
         init: function () {
             handleTables();
+            initDatePicker();
+
         }
     }
 

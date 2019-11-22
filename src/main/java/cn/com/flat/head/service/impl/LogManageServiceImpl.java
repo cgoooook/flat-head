@@ -21,6 +21,7 @@ public class LogManageServiceImpl implements LogManageService {
     @Override
     public List<OperateArchiveLog> getOperatorLogListPage(OperateArchiveLog oal, Pageable pageable) {
         PageableInterceptor.startPage(pageable);
-        return logManageDao.getOperateArchiveLogs(oal);
+        List<OperateArchiveLog> operateArchiveLogs = logManageDao.getOperateArchiveLogs(oal);
+        return operateArchiveLogs;
     }
 }

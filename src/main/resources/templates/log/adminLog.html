@@ -4,8 +4,7 @@
     <meta charset="UTF-8">
     <title>index</title>
     <th:block th:include="includes/header :: styles"/>
-    <link rel="stylesheet" th:href="@{/plugins/ztree/css/zTreeStyle/zTreeStyle.css}" type="text/css">
-    <link rel="stylesheet" th:href="@{/global/css/ztree_custom.css}" type="text/css">
+    <link rel="stylesheet" th:href="@{/plugins/bootstrap-datetimepicker/css/bootstrap-datetimepicker.min.css}" type="text/css">
     <style type="text/css">
         .table .btn {
             margin-right: 0;
@@ -28,7 +27,8 @@
                         <div class="portlet-title">
                             <div class="caption">
                                 <i th:class="${menu.menuIcon}"></i>
-                                <span class="caption-subject font-dark sbold uppercase" th:text="${menu.menuName}"></span>
+                                <span class="caption-subject font-dark sbold uppercase"
+                                      th:text="${menu.menuName}"></span>
                             </div>
                         </div>
                         <div class="portlet-body">
@@ -37,14 +37,15 @@
                                 <tr role="row" class="heading">
                                     <th width="10%"> 操作类型</th>
                                     <th width="10%"> 用户</th>
-                                    <th width="15%"> 操作时间</th>
+                                    <th width="30%"> 操作时间</th>
                                     <th width="10%"> 结果</th>
                                     <th width="30%"> 操作内容</th>
                                     <th width="10%"> 操作</th>
                                 </tr>
                                 <tr>
                                     <th>
-                                        <select name="order_status" class="form-control form-filter input-sm">
+                                        <select name="order_status" class="form-control form-filter input-sm"
+                                                id="operationType">
                                             <option value="">Select...</option>
                                             <option value="pending">Pending</option>
                                             <option value="closed">Closed</option>
@@ -52,12 +53,22 @@
                                             <option value="fraud">Fraud</option>
                                         </select>
                                     </th>
-                                    <th> </th>
+                                    <th></th>
                                     <th>
-                                        <div class="input-group date date-picker margin-bottom-5" data-date-format="dd/mm/yyyy">
-                                            <input type="text" class="form-control form-filter input-sm" readonly name="order_date_from" placeholder="From">
-                                            <span class="input-group-btn">
-                                                                <button class="btn btn-sm default" type="button">
+                                        <div class="input-group date date-picker margin-bottom-5"
+                                             data-date-format="dd/mm/yyyy">
+                                            <input type="text" class="form-control form-filter datepicker input-sm" readonly
+                                                   id="beginTime"  name="order_date_from" placeholder="start time">
+                                            <span class="input-group-btn" id="timeBegin">
+                                                                <button class="btn btn-sm default"  type="button">
+                                                                    <i class="fa fa-calendar"></i>
+                                                                </button>
+                                                            </span>
+
+                                            <input type="text" class="form-control form-filter datepicker input-sm" readonly
+                                                   id="endTime"  name="order_date_from" placeholder="End time">
+                                            <span class="input-group-btn" id="timespan">
+                                                                <button class="btn btn-sm default"  type="button">
                                                                     <i class="fa fa-calendar"></i>
                                                                 </button>
                                                             </span>
@@ -65,15 +76,18 @@
                                     </th>
                                     <th>
                                         <select id="operateResultQuery" class="form-control form-filter input-sm">
-                                            <option value="1">1</option>
+                                            <option value="1">成功</option>
+                                            <option value="-1">失败</option>
                                         </select>
                                     </th>
-                                    <th> </th>
+                                    <th></th>
                                     <th>
-                                        <button class="btn btn-sm green btn-outline filter-submit margin-bottom">
-                                                <i class="fa fa-search"></i> Search</button>
+                                        <button class="btn btn-sm green btn-outline filter-submit margin-bottom" >
+                                            <i class="fa fa-search"></i> Search
+                                        </button>
                                         <button class="btn btn-sm red btn-outline filter-cancel">
-                                            <i class="fa fa-times"></i> Reset</button>
+                                            <i class="fa fa-times"></i> Reset
+                                        </button>
                                     </th>
                                 </tr>
                                 </thead>
@@ -91,8 +105,8 @@
 </div>
 <th:block th:include="includes/footer :: footer"/>
 <th:block th:include="includes/scripts :: scripts"/>
-<script type="text/javascript" th:src="@{/plugins/ztree/js/jquery.ztree.all.min.js}"></script>
-<script type="text/javascript" th:src="@{/global/js/orgTree.js}"></script>
+<script type="text/javascript" th:src="@{/plugins/bootstrap-datetimepicker/js/bootstrap-datetimepicker.min.js}"></script>
+<script type="text/javascript" th:src="@{'/plugins/bootstrap-datetimepicker/js/locales/bootstrap-datetimepicker.' + ${#locale.language + '-' + #locale.country} + '.js'}"></script>
 <script id="actionBtn" type="text/html">
     <a class="edit btn btn-outline default btn-xs purple" deviceId="{{full.deviceId}}"><i class="fa fa-edit"></i>{{i18n('common.edit')}}</a>
     <a class="keyManage btn btn-outline default btn-xs yellow" deviceId="{{full.deviceId}}"><i class="fa fa-expand"></i>{{i18n('common.keyManage')}}</a>
