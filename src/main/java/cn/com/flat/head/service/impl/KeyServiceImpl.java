@@ -2,13 +2,13 @@ package cn.com.flat.head.service.impl;
 
 import cn.com.flat.head.crypto.CryptoInstance;
 import cn.com.flat.head.crypto.FSecretKey;
-import cn.com.flat.head.dal.KeyCollectionDao;
 import cn.com.flat.head.dal.KeyDao;
 import cn.com.flat.head.dal.KeyTemplateDao;
 import cn.com.flat.head.dal.OrgDao;
 import cn.com.flat.head.mybatis.interceptor.PageableInterceptor;
 import cn.com.flat.head.mybatis.model.Pageable;
 import cn.com.flat.head.pojo.*;
+import cn.com.flat.head.service.KeyGenServiceBC;
 import cn.com.flat.head.service.KeyService;
 import org.apache.shiro.codec.Hex;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -30,8 +30,7 @@ public class KeyServiceImpl implements KeyService {
     private OrgDao orgDao;
 
     @Autowired
-    private KeyCollectionDao keyCollectionDao;
-
+    private KeyGenServiceBC keyGenService;
 
     @Autowired
     private KeyTemplateDao keyTemplateDao;
@@ -71,17 +70,17 @@ public class KeyServiceImpl implements KeyService {
     public BooleanCarrier addKey(Key key) {
         BooleanCarrier booleanCarrier = new BooleanCarrier();
         try {
-            FSecretKey fSecretKey = null;
+            FSecretKey fSecretKey;
             if ("random".equalsIgnoreCase(key.getMode())) {
-                fSecretKey = cryptoInstance.generateKey(key.getKeyAlg(), key.getLength());
+                fSecretKey = keyGenService.generateRandomKey(key.getKeyAlg(), key.getLength());
             } else if ("derive".equalsIgnoreCase(key.getMode())) {
                 Key rootKey = keyDao.getRootKey();
-                fSecretKey = cryptoInstance.deriveKey(rootKey, key.getDeriveParam());
+                fSecretKey = keyGenService.deriveKey(rootKey, key.getDeriveParam());
             } else if ("compose".equalsIgnoreCase(key.getMode())) {
-                fSecretKey = cryptoInstance.composeKey(key.getComposes(), key.getKeyAlg());
+                fSecretKey = keyGenService.composeKey(key.getComposes(), key.getKeyAlg());
             } else {
                 booleanCarrier.setResult(false);
-                booleanCarrier.setMessage("");
+                booleanCarrier.setMessage("key.noMode");
                 return booleanCarrier;
             }
             key.setCheckValue(new String(Hex.encode(fSecretKey.getCheckValue())));
@@ -91,7 +90,7 @@ public class KeyServiceImpl implements KeyService {
             return booleanCarrier;
         } catch (Exception e) {
             booleanCarrier.setResult(false);
-            booleanCarrier.setMessage("");
+            booleanCarrier.setMessage("key.genKeyError");
             return booleanCarrier;
         }
     }
@@ -120,15 +119,15 @@ public class KeyServiceImpl implements KeyService {
             key.setLength(keyById.getLength());
             FSecretKey fSecretKey = null;
             if ("random".equalsIgnoreCase(key.getMode())) {
-                fSecretKey = cryptoInstance.generateKey(key.getKeyAlg(), key.getLength());
+                fSecretKey = keyGenService.generateRandomKey(key.getKeyAlg(), key.getLength());
             } else if ("derive".equalsIgnoreCase(key.getMode())) {
                 Key rootKey = keyDao.getRootKey();
-                fSecretKey = cryptoInstance.deriveKey(rootKey, key.getDeriveParam());
+                fSecretKey = keyGenService.deriveKey(rootKey, key.getDeriveParam());
             } else if ("compose".equalsIgnoreCase(key.getMode())) {
-                fSecretKey = cryptoInstance.composeKey(key.getComposes(), key.getKeyAlg());
+                fSecretKey = keyGenService.composeKey(key.getComposes(), key.getKeyAlg());
             } else {
                 booleanCarrier.setResult(false);
-                booleanCarrier.setMessage("");
+                booleanCarrier.setMessage("key.noMode");
                 return booleanCarrier;
             }
             key.setCheckValue(new String(Hex.encode(fSecretKey.getCheckValue())));
@@ -139,7 +138,7 @@ public class KeyServiceImpl implements KeyService {
         } catch (Exception e) {
             e.printStackTrace();
             booleanCarrier.setResult(false);
-            booleanCarrier.setMessage("");
+            booleanCarrier.setMessage("key.genKeyError");
             return booleanCarrier;
         }
     }

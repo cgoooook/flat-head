@@ -57,5 +57,10 @@ public class ConfigDaoImpl implements ConfigDao {
         return logConfig;
     }
 
+    @Override
+    public String getDMK() {
+        return "280e053b16f2e4e618a6bb7a70952f65";
+    }
+
 
 }

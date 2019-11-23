@@ -8,7 +8,6 @@ import java.util.List;
 public interface ConfigDao {
     List<LogConfig> getLogConfig();
 
-
     void editLogLevel(String logLevel);
 
     void editLogDays(String logDays);
@@ -22,4 +21,6 @@ public interface ConfigDao {
     SysLogo getUiInfo();
 
     LogConfig getCopyright();
+
+    String getDMK();
 }
