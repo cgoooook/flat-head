@@ -109,26 +109,35 @@ public class DevServiceImpl implements DevService {
 
     @Override
     public BooleanCarrier addDev(Device dev) {
-        Device devById = devServiceDao.getDevById(dev.getDeviceId());
-        Device devByName = devServiceDao.getDevByName(dev.getDeviceName());
+        boolean result = true;
         BooleanCarrier b = new BooleanCarrier();
-        if (null != devById) {
+        try {
+            Device devById = devServiceDao.getDevById(dev.getDeviceId());
+            Device devByName = devServiceDao.getDevByName(dev.getDeviceName());
+            if (null != devById) {
+                b.setResult(false);
+                b.setMessage("dev.codeIsRepeat");
+                return b;
+            }
+            if (null != devByName) {
+                b.setResult(false);
+                b.setMessage("dev.nameIsRepeat");
+                return b;
+            }
+            dev.setDeviceId(UUID.randomUUID().toString());
+            int num = devServiceDao.addDev(dev);
+            if (num != 1) {
+                b.setMessage("common.addError");
+                b.setResult(false);
+            } else {
+                b.setResult(true);
+            }
+        } catch (Exception e) {
             b.setResult(false);
-            b.setMessage("dev.codeIsRepeat");
-            return b;
-        }
-        if (null != devByName) {
-            b.setResult(false);
-            b.setMessage("dev.nameIsRepeat");
-            return b;
-        }
-        dev.setDeviceId(UUID.randomUUID().toString());
-        int num = devServiceDao.addDev(dev);
-        if (num != 1) {
-            b.setMessage("common.addError");
-            b.setResult(false);
-        } else {
-            b.setResult(true);
+            result = false;
+            logger.error("add device error", e);
+        } finally {
+            logDao.addLog(LoggerBuilder.builder(OperateType.addDevice, result, "add device name is" + dev.getDeviceName()));
         }
 
         return b;

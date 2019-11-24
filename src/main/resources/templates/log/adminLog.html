@@ -46,11 +46,38 @@
                                     <th>
                                         <select name="order_status" class="form-control form-filter input-sm"
                                                 id="operationType">
-                                            <option value="">Select...</option>
-                                            <option value="pending">Pending</option>
-                                            <option value="closed">Closed</option>
-                                            <option value="hold">On Hold</option>
-                                            <option value="fraud">Fraud</option>
+                                            <option value="" th:text="#{common.pleaseSelect}"></option>
+                                            <option value="addUser" th:text="#{log.addUser}"></option>
+                                            <option value="updateUser" th:text="#{log.updateUser}"></option>
+                                            <option value="deleteUser" th:text="#{log.deleteUser}"></option>
+                                            <option value="addOrg" th:text="#{log.addOrg}"></option>
+                                            <option value="updateOrg" th:text="#{log.updateOrg}"></option>
+                                            <option value="deleteOrg" th:text="#{log.deleteOrg}"></option>
+                                            <option value="exportOrg" th:text="#{log.exportOrg}"></option>
+                                            <option value="addTemplate" th:text="#{log.addTemplate}"></option>
+                                            <option value="updateTemplate" th:text="#{log.updateTemplate}"></option>
+                                            <option value="deleteTemplate" th:text="#{log.deleteTemplate}"></option>
+                                            <option value="addKey" th:text="#{log.addKey}"></option>
+                                            <option value="updateKey" th:text="#{log.updateKey}"></option>
+                                            <option value="archiveKey" th:text="#{log.archiveKey}"></option>
+                                            <option value="enableKey" th:text="#{log.enableKey}"></option>
+                                            <option value="disableKey" th:text="#{log.disableKey}"></option>
+                                            <option value="deleteKey" th:text="#{log.deleteKey}"></option>
+                                            <option value="importKey" th:text="#{log.importKey}"></option>
+                                            <option value="addCollection" th:text="#{log.addCollection}"></option>
+                                            <option value="updateCollection" th:text="#{log.updateCollection}"></option>
+                                            <option value="deleteCollection" th:text="#{log.deleteCollection}"></option>
+                                            <option value="addDevice" th:text="#{log.addDevice}"></option>
+                                            <option value="updateDevice" th:text="#{log.updateDevice}"></option>
+                                            <option value="deleteDevice" th:text="#{log.deleteDevice}"></option>
+                                            <option value="jdbcConfig" th:text="#{log.jdbcConfig}"></option>
+                                            <option value="logConfig" th:text="#{log.logConfig}"></option>
+                                            <option value="uiConfig" th:text="#{log.uiConfig}"></option>
+                                            <option value="mailConfig" th:text="#{log.mailConfig}"></option>
+                                            <option value="addTask" th:text="#{log.addTask}"></option>
+                                            <option value="updateTask" th:text="#{log.updateTask}"></option>
+                                            <option value="deleteTask" th:text="#{log.deleteTask}"></option>
+
                                         </select>
                                     </th>
                                     <th></th>
