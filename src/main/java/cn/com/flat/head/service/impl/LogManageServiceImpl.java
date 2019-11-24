@@ -24,4 +24,13 @@ public class LogManageServiceImpl implements LogManageService {
         List<OperateArchiveLog> operateArchiveLogs = logManageDao.getOperateArchiveLogs(oal);
         return operateArchiveLogs;
     }
+
+    @Override
+    public boolean auditLog(String logId) {
+        int i = logManageDao.auditLog(logId);
+        if(i==1){
+            return true;
+        }
+        return false;
+    }
 }

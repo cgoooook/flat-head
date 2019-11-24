@@ -38,7 +38,10 @@
 
     </select>
 
+    <update id="auditLog">
+    update  kms_operate_log set audit_flag = 1 where log_id =#{logId}
 
+    </update>
 
 
 

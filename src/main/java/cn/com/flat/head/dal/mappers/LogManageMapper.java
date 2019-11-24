@@ -7,4 +7,6 @@ import java.util.List;
 @RepositoryImpl
 public interface LogManageMapper {
     List<OperateArchiveLog> getOperateArchiveLogs(OperateArchiveLog oal) ;
+
+    int auditLog(String logId);
 }

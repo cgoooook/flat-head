@@ -10,6 +10,7 @@
         <result column="current_quantity" property="currentQuantity" />
         <result column="status" property="status" />
         <result column="length" property="length"/>
+        <result column="audit_flag" property="auditFlag"/>
     </resultMap>
 
 
@@ -26,7 +27,7 @@
 
     <insert id="addTask">
 
-      insert  into kms_a_task (task_name, algorithm, planned_quantity, current_quantity, status,length) value (#{taskName},#{algorithm},#{plannedQuantity},#{currentQuantity},#{status},#{length})
+      insert  into kms_a_task (task_name, algorithm, planned_quantity, current_quantity, status,length,audit_flag) value (#{taskName},#{algorithm},#{plannedQuantity},#{currentQuantity},#{status},#{length},#{auditFlag})
 
     </insert>
 

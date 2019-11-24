@@ -12,6 +12,7 @@ public class Task {
     private String currentQuantity;
     private int length;
     private String status;
+    private int auditFlag;
 
 
 }

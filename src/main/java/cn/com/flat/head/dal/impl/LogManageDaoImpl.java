@@ -15,4 +15,9 @@ public class LogManageDaoImpl implements LogManageDao {
     public List<OperateArchiveLog> getOperateArchiveLogs(OperateArchiveLog oal) {
         return logManageMapper.getOperateArchiveLogs(oal);
     }
+
+    @Override
+    public int auditLog(String logId) {
+        return logManageMapper.auditLog(logId);
+    }
 }

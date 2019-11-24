@@ -34,33 +34,46 @@ var audit = function () {
                     {data: 'operateContent', orderable: true},
                     {data: 'operate', orderable: false,
                         render: function (data, type, full) {
+                        console.log(full);
                             return template("actionBtn", {data: data, type: type, full: full});
                         }}
                 ]
             }
         });
+
+        $table.on('click', 'a.audit', function () {
+            var $this = $(this);
+            var $row = $table.DataTable().row($this.parents('tr')[0]);
+            var logId = $row.data().logId;
+            alert(logId);
+            $.ajax({
+                url: " /log/audit/audit",
+                dataType: "json",
+                type: "POST",
+                data: {
+                    logId: logId
+                }
+            }).done(function (data) {
+                if (flat.ajaxCallback(data)) {
+                    grid.reload();
+                }
+            })
+
+        });
+
+
+
     };
     Date.prototype.toLocaleString = function() {
         return this.getFullYear() + "/" + (this.getMonth() + 1) + "/" + this.getDate() + "/ " + this.getHours() + ":" + this.getMinutes() + ":" + this.getSeconds();
     };
 
-    function initDatePicker() {
-        $("input.datepicker").datetimepicker({
-            isRTL: App.isRTL(),
-            language: DATETIME_PICKER,
-            format: "yyyy-mm-dd HH:mm:ss",
-            autoclose: true,
-            todayBtn: true,
-            pickerPosition: (App.isRTL() ? "bottom-right" : "bottom-left"),
-            minuteStep: 10
-        });
-    }
 
 
     return {
         init: function () {
             handleTables();
-            initDatePicker();
+
 
         }
     }

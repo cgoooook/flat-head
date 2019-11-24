@@ -55,7 +55,13 @@
 <script type="text/javascript" th:src="@{/plugins/ztree/js/jquery.ztree.all.min.js}"></script>
 <script type="text/javascript" th:src="@{/global/js/orgTree.js}"></script>
 <script id="actionBtn" type="text/html">
-    <a class="edit btn btn-outline default btn-xs purple" deviceId="{{full.logId}}"><i class="fa fa-edit"></i>{{i18n('common.audit')}}</a>
+
+    {{if  full.auditFlag==0}}
+    <a class="audit btn btn-outline default btn-xs purple" log="{{full.logId}}"><i class="fa fa-edit"></i>{{i18n('common.audit')}}</a>
+    {{else}}
+    <a class="audited btn btn-outline default btn-xs red" log="{{full.logId}}"><i class="fa fa-edit"></i>{{i18n('common.Audited')}}</a>
+    {{/if}}
+
 
 
 </script>
