@@ -10,6 +10,7 @@ import org.springframework.core.io.FileUrlResource;
 import org.springframework.core.io.Resource;
 import org.springframework.mail.SimpleMailMessage;
 import org.springframework.mail.javamail.JavaMailSender;
+import org.springframework.mail.javamail.JavaMailSenderImpl;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -26,8 +27,7 @@ public class ConfigServiceImpl implements ConfigService {
     public static final String  PREFIX="jdbc.";
     @Autowired
     ConfigDao configDao;
-    @Autowired
-    private JavaMailSender mailSender;
+
     @Override
     public BooleanCarrier  updateJdbcConfig(Jdbc jdbc) {
 
@@ -180,6 +180,16 @@ public class ConfigServiceImpl implements ConfigService {
     @Override
     public void sendMail(Mail mail) {
 
+        JavaMailSender mailSender = new JavaMailSenderImpl();
+        ((JavaMailSenderImpl) mailSender).setHost(mail.getAddr());
+        ((JavaMailSenderImpl) mailSender).setPort(mail.getPort());
+        ((JavaMailSenderImpl) mailSender).setUsername(mail.getSendMailbox());
+        ((JavaMailSenderImpl) mailSender).setPassword(mail.getPassword());
+        Properties javaMailProperties = new Properties();
+        javaMailProperties.put("mail.smtp.auth", true);
+        javaMailProperties.put("mail.smtp.starttls.enable", true);
+        javaMailProperties.put("mail.smtp.timeout", mail.getTimeOut());
+        ((JavaMailSenderImpl) mailSender).setJavaMailProperties(javaMailProperties);
         SimpleMailMessage simpleMailMessage = new SimpleMailMessage();
         simpleMailMessage.setFrom(mail.getSendMailbox());
         simpleMailMessage.setTo(mail.getReceivingMailbox());
