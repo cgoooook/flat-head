@@ -3,21 +3,21 @@ var mailConfig = function () {
 
     var handleConfig = function () {
 
-       /* $.ajax({
-            type: "put",
-            url: "/mail/config/jdbc",
+        $.ajax({
+            type: "GET",
+            url: "/mail/config/mailConfig",
             dataType: "json",
             success: function(result){
-                $("#url").val(result.url);
-                $("#username").val(result.username);
+                $("#addr").val(result.addr);
+                $("#port").val(result.port);
+                $("#timeOut").val(result.timeOut);
+                $("#sendMailbox").val(result.sendMailbox);
                 $("#password").val(result.password);
-                $("#driver").val(result.driver);
-                $("#maxIdle").val(result.maxIdle);
-                $("#maxActive").val(result.maxActive);
+                $("#receivingMailbox").val(result.receivingMailbox);
 
             }
 
-        });*/
+        });
 
         $("#test").on('click', function () {
             var data =JSON.stringify({
@@ -49,16 +49,16 @@ var mailConfig = function () {
 
         $("#save").on('click', function () {
             var data =JSON.stringify({
-                url : $("#url").val(),
-                username : $("#username").val(),
+                addr : $("#addr").val(),
+                port : $("#port").val(),
+                timeOut : $("#timeOut").val(),
+                sendMailbox : $("#sendMailbox").val(),
                 password : $("#password").val(),
-                driver : $("#driver").val(),
-                maxIdle : $("#maxIdle").val(),
-                maxActive : $("#maxActive").val()
+                receivingMailbox : $("#receivingMailbox").val()
             });
             $.ajax({
                 type: "POST",
-                url: "/db/config/jdbc",
+                url: "/mail/config/save",
                 dataType: "json",
                 contentType: "application/json; charset=utf-8",
                 data:data,

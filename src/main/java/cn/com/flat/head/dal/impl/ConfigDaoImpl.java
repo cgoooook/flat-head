@@ -2,7 +2,9 @@ package cn.com.flat.head.dal.impl;
 
 import cn.com.flat.head.dal.ConfigDao;
 import cn.com.flat.head.dal.mappers.LogConfigMapper;
+import cn.com.flat.head.dal.mappers.MailConfigMapper;
 import cn.com.flat.head.pojo.LogConfig;
+import cn.com.flat.head.pojo.Mail;
 import cn.com.flat.head.pojo.SysLogo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
@@ -12,6 +14,8 @@ import java.util.List;
 public class ConfigDaoImpl implements ConfigDao {
     @Autowired
     LogConfigMapper logConfigMapper;
+    @Autowired
+    MailConfigMapper mailConfigMapper;
     @Override
     public List<LogConfig> getLogConfig() {
         return logConfigMapper.getLogConfig();
@@ -55,6 +59,22 @@ public class ConfigDaoImpl implements ConfigDao {
     public LogConfig getCopyright() {
         LogConfig logConfig = logConfigMapper.getCopyright();
         return logConfig;
+    }
+
+    @Override
+    public void saveMail(Mail mail) {
+        Mail result = mailConfigMapper.getMail();
+        if(result==null){
+            mailConfigMapper.saveMail(mail);
+        }else{
+            mailConfigMapper.update(mail);
+        }
+
+    }
+
+    @Override
+    public Mail getMail() {
+       return mailConfigMapper.getMail();
     }
 
 

@@ -4,6 +4,7 @@ import lombok.Data;
 
 @Data
 public class Mail {
+    private int id;
     private String addr;
     private int port;
     private int timeOut;

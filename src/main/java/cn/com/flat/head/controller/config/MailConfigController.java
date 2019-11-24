@@ -1,7 +1,5 @@
 package cn.com.flat.head.controller.config;
 
-import cn.com.flat.head.pojo.BooleanCarrier;
-import cn.com.flat.head.pojo.Jdbc;
 import cn.com.flat.head.pojo.Mail;
 import cn.com.flat.head.service.ConfigService;
 import cn.com.flat.head.web.AjaxResponse;
@@ -33,6 +31,21 @@ public class MailConfigController {
         ajaxResponse.setReturnState(ReturnState.OK);
         return ajaxResponse;
         }
+
+    @PostMapping("/save")
+    @ResponseBody
+    public AjaxResponse saveMailConfig(@RequestBody Mail mail){
+        configService.saveMail(mail);
+        AjaxResponse ajaxResponse = new AjaxResponse();
+        ajaxResponse.setReturnState(ReturnState.OK);
+        return ajaxResponse;
+    }
+    @GetMapping("/mailConfig")
+    @ResponseBody
+    public Mail getMailConfig(){
+
+       return configService.getMail();
+    }
 
 
 

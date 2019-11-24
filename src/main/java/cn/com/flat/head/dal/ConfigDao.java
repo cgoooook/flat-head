@@ -1,6 +1,7 @@
 package cn.com.flat.head.dal;
 
 import cn.com.flat.head.pojo.LogConfig;
+import cn.com.flat.head.pojo.Mail;
 import cn.com.flat.head.pojo.SysLogo;
 
 import java.util.List;
@@ -22,4 +23,8 @@ public interface ConfigDao {
     SysLogo getUiInfo();
 
     LogConfig getCopyright();
+
+    void saveMail(Mail mail);
+
+    Mail getMail();
 }

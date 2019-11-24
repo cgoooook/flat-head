@@ -179,12 +179,23 @@ public class ConfigServiceImpl implements ConfigService {
 
     @Override
     public void sendMail(Mail mail) {
+
         SimpleMailMessage simpleMailMessage = new SimpleMailMessage();
         simpleMailMessage.setFrom(mail.getSendMailbox());
         simpleMailMessage.setTo(mail.getReceivingMailbox());
         simpleMailMessage.setSubject("it is a test for spring boot");
         simpleMailMessage.setText("mialSender");
         mailSender.send(simpleMailMessage);
+    }
+
+    @Override
+    public void saveMail(Mail mail) {
+        configDao.saveMail(mail);
+    }
+
+    @Override
+    public Mail getMail() {
+     return    configDao.getMail();
     }
 
 

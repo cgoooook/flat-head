@@ -23,4 +23,7 @@ public interface ConfigService {
 
 
     void sendMail(Mail mail);
+
+    void saveMail(Mail mail);
+    Mail getMail();
 }
