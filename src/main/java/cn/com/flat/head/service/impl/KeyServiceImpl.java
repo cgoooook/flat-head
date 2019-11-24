@@ -4,13 +4,18 @@ import cn.com.flat.head.crypto.CryptoInstance;
 import cn.com.flat.head.crypto.FSecretKey;
 import cn.com.flat.head.dal.KeyDao;
 import cn.com.flat.head.dal.KeyTemplateDao;
+import cn.com.flat.head.dal.LogDao;
 import cn.com.flat.head.dal.OrgDao;
+import cn.com.flat.head.log.LoggerBuilder;
+import cn.com.flat.head.log.OperateType;
 import cn.com.flat.head.mybatis.interceptor.PageableInterceptor;
 import cn.com.flat.head.mybatis.model.Pageable;
 import cn.com.flat.head.pojo.*;
 import cn.com.flat.head.service.KeyGenServiceBC;
 import cn.com.flat.head.service.KeyService;
 import org.apache.shiro.codec.Hex;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -23,11 +28,18 @@ import java.util.List;
 @Service
 public class KeyServiceImpl implements KeyService {
 
+    private static Logger logger = LoggerFactory.getLogger(KeyServiceImpl.class);
+
+    @Autowired
+    private LogDao logDao;
+
     @Autowired
     private KeyDao keyDao;
 
     @Autowired
     private OrgDao orgDao;
+
+
 
     @Autowired
     private KeyGenServiceBC keyGenService;
@@ -69,6 +81,7 @@ public class KeyServiceImpl implements KeyService {
     @Override
     public BooleanCarrier addKey(Key key) {
         BooleanCarrier booleanCarrier = new BooleanCarrier();
+        boolean result = true;
         try {
             FSecretKey fSecretKey;
             if ("random".equalsIgnoreCase(key.getMode())) {
@@ -89,15 +102,45 @@ public class KeyServiceImpl implements KeyService {
             booleanCarrier.setResult(i >= 1);
             return booleanCarrier;
         } catch (Exception e) {
+            logger.error("add key error", e);
+            result = false;
             booleanCarrier.setResult(false);
             booleanCarrier.setMessage("key.genKeyError");
             return booleanCarrier;
+        } finally {
+            logDao.addLog(LoggerBuilder.builder(OperateType.addKey, result, "add key key key name is:" + key.getKeyName()));
         }
     }
 
     @Override
     public boolean updateKeyStatus(String keyId, int status) {
-        return keyDao.updateKeyStatus(keyId, status) >= 1;
+        boolean result = true;
+        try {
+            result = keyDao.updateKeyStatus(keyId, status) >= 1;
+        } catch (Exception e) {
+            logger.error("update key status error", e);
+            result = false;
+        } finally {
+            String opType = "";
+            switch (status) {
+                case 2:
+                    opType = OperateType.enableKey;
+                    break;
+                case 3:
+                    opType = OperateType.disableKey;
+                    break;
+                case 4:
+                    opType = OperateType.archiveKey;
+                    break;
+                case 5:
+                    opType = OperateType.deleteKey;
+                    break;
+            }
+            logDao.addLog(LoggerBuilder.builder(opType, result, "update key status"));
+        }
+
+        return result;
+
     }
 
     @Override
@@ -113,6 +156,7 @@ public class KeyServiceImpl implements KeyService {
     @Override
     public BooleanCarrier updateKey(Key key) {
         BooleanCarrier booleanCarrier = new BooleanCarrier();
+        boolean result = true;
         try {
             Key keyById = keyDao.getKeyById(key.getKeyId());
             key.setKeyAlg(keyById.getKeyAlg());
@@ -136,10 +180,13 @@ public class KeyServiceImpl implements KeyService {
             booleanCarrier.setResult(ret);
             return booleanCarrier;
         } catch (Exception e) {
-            e.printStackTrace();
+            logger.error("update key error", e);
+            result = false;
             booleanCarrier.setResult(false);
             booleanCarrier.setMessage("key.genKeyError");
             return booleanCarrier;
+        } finally {
+            logDao.addLog(LoggerBuilder.builder(OperateType.updateKey, result, "updateKey keyname is" + key.getKeyName()));
         }
     }
 

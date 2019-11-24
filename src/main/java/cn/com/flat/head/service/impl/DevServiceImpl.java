@@ -1,12 +1,16 @@
 package cn.com.flat.head.service.impl;
 
 import cn.com.flat.head.dal.DevServiceDao;
+import cn.com.flat.head.dal.LogDao;
+import cn.com.flat.head.log.LoggerBuilder;
+import cn.com.flat.head.log.OperateType;
 import cn.com.flat.head.mybatis.interceptor.PageableInterceptor;
 import cn.com.flat.head.mybatis.model.Pageable;
 import cn.com.flat.head.pojo.BooleanCarrier;
 import cn.com.flat.head.pojo.Device;
-import cn.com.flat.head.pojo.Organization;
 import cn.com.flat.head.service.DevService;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -15,8 +19,15 @@ import java.util.UUID;
 
 @Service
 public class DevServiceImpl implements DevService {
+
+    private static Logger logger = LoggerFactory.getLogger(DevServiceImpl.class);
+
+    @Autowired
+    private LogDao logDao;
+
     @Autowired
     private DevServiceDao devServiceDao;
+
     @Override
     public List<Device> getDevListPage(Device dev, Pageable pageable) {
         PageableInterceptor.startPage(pageable);
@@ -42,46 +53,58 @@ public class DevServiceImpl implements DevService {
 
     @Override
     public BooleanCarrier editDev(Device dev) {
+        boolean result = true;
         BooleanCarrier b = new BooleanCarrier();
-        b.setResult(true);
-        String devId =dev.getDeviceId();
-        String devName = dev.getDeviceName();
-        String deviceCode = dev.getDeviceCode();
+        try {
+            b.setResult(true);
+            String devId = dev.getDeviceId();
+            String devName = dev.getDeviceName();
+            String deviceCode = dev.getDeviceCode();
 
-        Device devById = devServiceDao.getDevById(devId);
+            Device devById = devServiceDao.getDevById(devId);
 
-        Device devByName = devServiceDao.getDevByName(devName);
-        Device devByDevCode = devServiceDao.getDevByDevCode(deviceCode);
+            Device devByName = devServiceDao.getDevByName(devName);
+            Device devByDevCode = devServiceDao.getDevByDevCode(deviceCode);
 
-        if(devByName!=null){
+            if (devByName != null) {
 
-            if((!devId.equalsIgnoreCase(devByName.getDeviceId()))&&devByName.equals(devByName.getDeviceName())){
-                b.setResult(false);
-                b.setMessage("dev.nameIsRepeat");
-                return b;
-
+                if ((!devId.equalsIgnoreCase(devByName.getDeviceId())) && devByName.equals(devByName.getDeviceName())) {
+                    b.setResult(false);
+                    b.setMessage("dev.nameIsRepeat");
+                    return b;
+                }
             }
-        }
 
-        if(devByDevCode!=null){
-            if((!devId.equalsIgnoreCase(devByDevCode.getDeviceId()))&&deviceCode.equals(devById.getDeviceId())){
-                b.setResult(false);
-                b.setMessage("dev.codeIsRepeat");
-                return b;
+            if (devByDevCode != null) {
+                if ((!devId.equalsIgnoreCase(devByDevCode.getDeviceId())) && deviceCode.equals(devById.getDeviceId())) {
+                    b.setResult(false);
+                    b.setMessage("dev.codeIsRepeat");
+                    return b;
+                }
             }
+            devServiceDao.editOrg(dev);
+        } catch (Exception e) {
+            result = false;
+            b.setResult(false);
+            logger.error("delete device error", e);
+        } finally {
+            logDao.addLog(LoggerBuilder.builder(OperateType.updateDevice, result, "update device devicename is" + dev.getDeviceName()));
         }
-
-
-
-
-
-        devServiceDao.editOrg(dev);
         return b;
     }
 
     @Override
     public boolean deleteDevById(String id) {
-        return   devServiceDao.deleteDevgById(id);
+        boolean result = true;
+        try {
+            result = devServiceDao.deleteDevgById(id);
+        } catch (Exception e) {
+            result = false;
+            logger.error("delete device error", e);
+        } finally {
+            logDao.addLog(LoggerBuilder.builder(OperateType.deleteDevice, result, "delete device id is " + id));
+        }
+        return result;
     }
 
     @Override
@@ -89,22 +112,22 @@ public class DevServiceImpl implements DevService {
         Device devById = devServiceDao.getDevById(dev.getDeviceId());
         Device devByName = devServiceDao.getDevByName(dev.getDeviceName());
         BooleanCarrier b = new BooleanCarrier();
-        if(null != devById){
+        if (null != devById) {
             b.setResult(false);
             b.setMessage("dev.codeIsRepeat");
             return b;
         }
-        if(null != devByName){
+        if (null != devByName) {
             b.setResult(false);
             b.setMessage("dev.nameIsRepeat");
             return b;
         }
         dev.setDeviceId(UUID.randomUUID().toString());
         int num = devServiceDao.addDev(dev);
-        if(num!=1){
+        if (num != 1) {
             b.setMessage("common.addError");
             b.setResult(false);
-        }else {
+        } else {
             b.setResult(true);
         }
 
