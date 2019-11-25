@@ -22,6 +22,8 @@
         <druid.version>1.1.20</druid.version>
         <shiro.version>1.4.1</shiro.version>
         <jna.version>3.0.9</jna.version>
+        <resteasy.version>3.9.3.Final</resteasy.version>
+        <fastjson.provider>0.1.0</fastjson.provider>
     </properties>
 
     <dependencies>
@@ -124,6 +126,25 @@
             <artifactId>commons-io</artifactId>
             <version>2.6</version>
         </dependency>
+
+        <dependency>
+            <groupId>org.jboss.resteasy</groupId>
+            <artifactId>resteasy-jaxrs</artifactId>
+            <version>3.9.3.Final</version>
+        </dependency>
+
+        <dependency>
+            <groupId>org.jboss.resteasy</groupId>
+            <artifactId>resteasy-netty</artifactId>
+            <version>3.9.3.Final</version>
+        </dependency>
+
+        <dependency>
+            <groupId>com.colobu</groupId>
+            <artifactId>fastjson-jaxrs-json-provider</artifactId>
+            <version>${fastjson.provider}</version>
+        </dependency>
+
 
     </dependencies>
 

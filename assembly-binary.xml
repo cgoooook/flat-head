@@ -26,22 +26,6 @@
 				<exclude>.project</exclude>
 			</excludes>
 		</fileSet>
-	
-
-
-
-
-		<fileSet>
-			<directory>${basedir}</directory>
-			<outputDirectory>/</outputDirectory>
-			<!-- 排除根目录文件夹内容 -->
-			<excludes>
-				<exclude>target/**</exclude>
-				<exclude>.settings/**</exclude>
-				<exclude>.classpath</exclude>
-				<exclude>.project</exclude>
-			</excludes>
-		</fileSet>
 
 		<fileSet>
 			<directory>${basedir}/target</directory>
