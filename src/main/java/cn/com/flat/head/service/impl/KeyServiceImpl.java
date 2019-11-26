@@ -42,7 +42,7 @@ public class KeyServiceImpl implements KeyService {
 
 
     @Autowired
-    private KeyGenServiceBC keyGenService;
+    private KeyGenService keyGenService;
 
     @Autowired
     private KeyTemplateDao keyTemplateDao;
