@@ -11,7 +11,7 @@ import cn.com.flat.head.log.OperateType;
 import cn.com.flat.head.mybatis.interceptor.PageableInterceptor;
 import cn.com.flat.head.mybatis.model.Pageable;
 import cn.com.flat.head.pojo.*;
-import cn.com.flat.head.service.KeyGenServiceBC;
+import cn.com.flat.head.service.KeyGenService;
 import cn.com.flat.head.service.KeyService;
 import org.apache.shiro.codec.Hex;
 import org.slf4j.Logger;

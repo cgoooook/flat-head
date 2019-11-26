@@ -1,10 +1,12 @@
 package cn.com.flat.head.service.impl;
 
 import cn.com.flat.head.crypto.CryptoException;
+import cn.com.flat.head.crypto.FKeyPair;
 import cn.com.flat.head.crypto.FSecretKey;
 import cn.com.flat.head.dal.ConfigDao;
 import cn.com.flat.head.sdf.util.Arrays;
-import cn.com.flat.head.service.KeyGenServiceBC;
+import cn.com.flat.head.service.KeyGenService;
+import org.bouncycastle.jcajce.provider.asymmetric.rsa.BCRSAPrivateCrtKey;
 import org.bouncycastle.util.encoders.Hex;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -13,9 +15,9 @@ import org.springframework.stereotype.Service;
 
 import javax.crypto.Cipher;
 import javax.crypto.spec.SecretKeySpec;
-import java.security.Key;
-import java.security.MessageDigest;
-import java.security.SecureRandom;
+import java.math.BigInteger;
+import java.security.*;
+import java.security.spec.ECGenParameterSpec;
 import java.util.List;
 import java.util.Random;
 
@@ -23,14 +25,14 @@ import java.util.Random;
  * Created by panzhuowen on 2019/11/23.
  */
 @Service
-public class KeyGenServiceImpl implements KeyGenServiceBC {
+public class KeyGenServiceImpl implements KeyGenService {
 
     private static Logger logger = LoggerFactory.getLogger(KeyGenServiceImpl.class);
 
     @Autowired
     private ConfigDao configDao;
 
-    @Override
+    
     public FSecretKey generateRandomKey(String alg, int length) throws Exception {
         Random random = new SecureRandom();
         int keyLength = length / 8;
@@ -43,7 +45,7 @@ public class KeyGenServiceImpl implements KeyGenServiceBC {
         return fSecretKey;
     }
 
-    @Override
+    
     public FSecretKey deriveKey(cn.com.flat.head.pojo.Key rootKey, String deriveParams) throws Exception {
         byte[] plainKey = getPlainKey(Hex.decode(rootKey.getKeyValue()));
         byte[] deriveCompent = getDeriveCompent(deriveParams);
@@ -61,7 +63,7 @@ public class KeyGenServiceImpl implements KeyGenServiceBC {
 
     }
 
-    @Override
+    
     public FSecretKey composeKey(List<String> composes, String algorithm) throws Exception {
         FSecretKey fSecretKey = new FSecretKey();
         byte[] tempKey = new byte[16];
@@ -75,6 +77,14 @@ public class KeyGenServiceImpl implements KeyGenServiceBC {
         fSecretKey.setCheckValue(checkValue);
         fSecretKey.setKey(getEncKey(tempKey));
         return fSecretKey;
+    }
+
+    public FKeyPair genKeyPair(String algorithm, int keyLength) throws Exception {
+        if (algorithm.equalsIgnoreCase("RSA")) {
+            return genRSAKeyPair(keyLength);
+        } else {
+            return genSM2Key();
+        }
     }
 
     private void or(byte[] temp, byte[] compose) {
@@ -109,7 +119,7 @@ public class KeyGenServiceImpl implements KeyGenServiceBC {
         try {
             String dmk = configDao.getDMK();
             byte[] plainDMK = getPlainDMK(dmk);
-            Cipher cipher = Cipher.getInstance("SM4/ECB/NoPadding", "BC");
+            Cipher cipher = Cipher.getInstance("SM4/ECB/PKCS7Padding", "BC");
             Key keySpec = new SecretKeySpec(plainDMK, "SM4");
             cipher.init(Cipher.ENCRYPT_MODE, keySpec);
             return cipher.doFinal(key);
@@ -149,6 +159,41 @@ public class KeyGenServiceImpl implements KeyGenServiceBC {
             throw e;
         }
 
+    }
+
+    private FKeyPair genRSAKeyPair(int size)  throws Exception {
+        try {
+            KeyPairGenerator keyPairGenerator = KeyPairGenerator.getInstance("RSA", "BC");
+            keyPairGenerator.initialize(size);
+            KeyPair keyPair = keyPairGenerator.generateKeyPair();
+            PrivateKey aPrivate = keyPair.getPrivate();
+            FKeyPair fKeyPair = new FKeyPair();
+            fKeyPair.setAlgorithm("RSA");
+            fKeyPair.setPrivateKey(getEncKey(aPrivate.getEncoded()));
+            fKeyPair.setPublicKey(keyPair.getPublic().getEncoded());
+            return fKeyPair;
+        } catch (Exception e) {
+            logger.error("generate rsa error", e);
+            throw e;
+        }
+    }
+
+    private FKeyPair genSM2Key() throws Exception {
+        try {
+            final ECGenParameterSpec sm2Spec = new ECGenParameterSpec("sm2p256v1");
+            KeyPairGenerator keyPairGenerator = KeyPairGenerator.getInstance("EC", "BC");
+            keyPairGenerator.initialize(sm2Spec);
+            KeyPair keyPair = keyPairGenerator.generateKeyPair();
+            PrivateKey aPrivate = keyPair.getPrivate();
+            FKeyPair fKeyPair = new FKeyPair();
+            fKeyPair.setAlgorithm("SM2");
+            fKeyPair.setPrivateKey(getEncKey(aPrivate.getEncoded()));
+            fKeyPair.setPublicKey(keyPair.getPublic().getEncoded());
+            return fKeyPair;
+        } catch (Exception e) {
+            logger.error("generate rsa error", e);
+            throw e;
+        }
     }
 
 
