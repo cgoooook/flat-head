@@ -62,6 +62,11 @@ public class ConfigDaoImpl implements ConfigDao {
     }
 
     @Override
+    public String getDMK() {
+        return "280e053b16f2e4e618a6bb7a70952f65";
+    }
+
+    @Override
     public void saveMail(Mail mail) {
         Mail result = mailConfigMapper.getMail();
         if(result==null){

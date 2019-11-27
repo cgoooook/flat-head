@@ -2,11 +2,16 @@ package cn.com.flat.head.service.impl;
 
 import cn.com.flat.head.dal.DevServiceDao;
 import cn.com.flat.head.dal.KeyCollectionDao;
+import cn.com.flat.head.dal.LogDao;
+import cn.com.flat.head.log.LoggerBuilder;
+import cn.com.flat.head.log.OperateType;
 import cn.com.flat.head.mybatis.interceptor.PageableInterceptor;
 import cn.com.flat.head.mybatis.model.Pageable;
 import cn.com.flat.head.pojo.BooleanCarrier;
 import cn.com.flat.head.pojo.KeyCollection;
 import cn.com.flat.head.service.KeyCollectionService;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -17,6 +22,11 @@ import java.util.List;
  */
 @Service
 public class KeyCollectionServiceImpl implements KeyCollectionService {
+
+    private static Logger logger = LoggerFactory.getLogger(KeyCollectionServiceImpl.class);
+
+    @Autowired
+    private LogDao logDao;
 
     @Autowired
     private KeyCollectionDao keyCollectionDao;
@@ -32,31 +42,48 @@ public class KeyCollectionServiceImpl implements KeyCollectionService {
 
     @Override
     public BooleanCarrier addCollection(KeyCollection collection) {
-        int collectionByCollectionName = keyCollectionDao.getCollectionByCollectionName(collection.getCollectionName());
         BooleanCarrier booleanCarrier = new BooleanCarrier();
-        if (collectionByCollectionName > 0) {
+        boolean result = true;
+        try {
+            int collectionByCollectionName = keyCollectionDao.getCollectionByCollectionName(collection.getCollectionName());
+            if (collectionByCollectionName > 0) {
+                booleanCarrier.setResult(false);
+                booleanCarrier.setMessage("keyCollection.nameExits");
+                return booleanCarrier;
+            } else {
+                booleanCarrier.setResult(keyCollectionDao.addCollection(collection) == 1);
+            }
+        } catch (Exception e) {
+            logger.error("add key collection error", e);
+            result = false;
             booleanCarrier.setResult(false);
-            booleanCarrier.setMessage("keyCollection.nameExits");
-            return booleanCarrier;
-        } else {
-            booleanCarrier.setResult(keyCollectionDao.addCollection(collection) == 1);
+        } finally {
+            logDao.addLog(LoggerBuilder.builder(OperateType.addCollection, result, "add collection name is" + collection.getCollectionName()));
         }
-
         return booleanCarrier;
     }
 
     @Override
     public BooleanCarrier deleteKeyCollection(String collectionId) {
+        boolean result = true;
         BooleanCarrier booleanCarrier = new BooleanCarrier();
-        int collectionCountByCollectionId = devServiceDao.getCollectionCountByCollectionId(collectionId);
-        if (collectionCountByCollectionId > 0) {
+        try {
+            int collectionCountByCollectionId = devServiceDao.getCollectionCountByCollectionId(collectionId);
+            if (collectionCountByCollectionId > 0) {
+                booleanCarrier.setResult(false);
+                booleanCarrier.setMessage("keyCollection.collectionInUse");
+                return booleanCarrier;
+            }
+            int i = keyCollectionDao.deleteCollection(collectionId);
+            keyCollectionDao.deleteCollectionKeys(collectionId);
+            booleanCarrier.setResult(i == 1);
+        } catch (Exception e) {
             booleanCarrier.setResult(false);
-            booleanCarrier.setMessage("keyCollection.collectionInUse");
-            return booleanCarrier;
+            logger.error("delete collection error", e);
+            result = false;
+        } finally {
+            logDao.addLog(LoggerBuilder.builder(OperateType.deleteCollection, result, "delete collection id is" + collectionId));
         }
-        int i = keyCollectionDao.deleteCollection(collectionId);
-        keyCollectionDao.deleteCollectionKeys(collectionId);
-        booleanCarrier.setResult(i == 1);
         return booleanCarrier;
     }
 
@@ -72,18 +99,27 @@ public class KeyCollectionServiceImpl implements KeyCollectionService {
 
     @Override
     public BooleanCarrier updateCollection(KeyCollection collection) {
+        boolean result = true;
         BooleanCarrier booleanCarrier = new BooleanCarrier();
-        KeyCollection collectionById = keyCollectionDao.getCollectionById(collection.getCollectionId());
-        if (!collectionById.getCollectionName().equals(collection.getCollectionName())) {
-            int collectionByCollectionName = keyCollectionDao.getCollectionByCollectionName(collection.getCollectionName());
-            if (collectionByCollectionName > 0) {
-                booleanCarrier.setResult(false);
-                booleanCarrier.setMessage("keyCollection.collectionInUse");
-                return booleanCarrier;
+        try {
+            KeyCollection collectionById = keyCollectionDao.getCollectionById(collection.getCollectionId());
+            if (!collectionById.getCollectionName().equals(collection.getCollectionName())) {
+                int collectionByCollectionName = keyCollectionDao.getCollectionByCollectionName(collection.getCollectionName());
+                if (collectionByCollectionName > 0) {
+                    booleanCarrier.setResult(false);
+                    booleanCarrier.setMessage("keyCollection.collectionInUse");
+                    return booleanCarrier;
+                }
             }
+            int i = keyCollectionDao.updateCollection(collection);
+            booleanCarrier.setResult(i == 1);
+        } catch (Exception e) {
+            booleanCarrier.setResult(false);
+            result = false;
+            logger.error("update collection error", e);
+        } finally {
+            logDao.addLog(LoggerBuilder.builder(OperateType.updateCollection, result, "update collection name is" + collection.getCollectionName()));
         }
-        int i = keyCollectionDao.updateCollection(collection);
-        booleanCarrier.setResult(i == 1);
         return booleanCarrier;
     }
 

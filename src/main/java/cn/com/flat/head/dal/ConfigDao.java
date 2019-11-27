@@ -1,14 +1,12 @@
 package cn.com.flat.head.dal;
 
 import cn.com.flat.head.pojo.LogConfig;
-import cn.com.flat.head.pojo.Mail;
 import cn.com.flat.head.pojo.SysLogo;
 
 import java.util.List;
 
 public interface ConfigDao {
     List<LogConfig> getLogConfig();
-
 
     void editLogLevel(String logLevel);
 
@@ -23,6 +21,8 @@ public interface ConfigDao {
     SysLogo getUiInfo();
 
     LogConfig getCopyright();
+
+    String getDMK();
 
     void saveMail(Mail mail);
 
