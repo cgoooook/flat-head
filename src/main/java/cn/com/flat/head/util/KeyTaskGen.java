@@ -47,6 +47,7 @@ public class KeyTaskGen implements Runnable {
                 keyPairDao.addKeyPair(deviceKeyPair);
             } catch (Exception e) {
                 ex = true;
+                e.printStackTrace();
             }
         }
     }
