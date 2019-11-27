@@ -61,9 +61,12 @@
     <a class="enable btn btn-outline default btn-xs green"><i class="fa fa-eye"></i>{{i18n('template.status1')}}</a>
     {{else}}
     <a class="disable btn btn-outline default btn-xs yellow"><i class="fa fa-eye-slash"></i>{{i18n('template.status0')}}</a>
+    <a class="run btn btn-outline default btn-xs yellow"><i class="fa fa-eye-slash"></i>{{i18n('task.run')}}</a>
     {{/if}}
 
     <a class="delete btn btn-outline default btn-xs red" taskId="{{full.id}}"><i class="fa fa-times"></i>{{i18n('common.delete')}}</a>
+
+    <a class="log btn btn-outline default btn-xs yellow"><i class="fa fa-eye-slash"></i>{{i18n('task.log')}}</a>
 
 </script>
 <script th:src="@{/pages/scripts/config/taskConfig.js}" type="text/javascript"></script>

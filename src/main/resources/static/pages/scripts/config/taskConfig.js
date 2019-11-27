@@ -17,7 +17,11 @@ var task = function () {
                     {data: 'algorithm', orderable: true},
                     {data: 'plannedQuantity', orderable: true},
                     {data: 'currentQuantity', orderable: true},
-                    {data: 'status', orderable: true},
+                    {data: 'status', orderable: true,
+                        render: function (data, type, full) {
+                            return flat.i18n('template.status' + data)
+                        }
+                    },
                     {
                         data: 'operate', orderable: false,
                         render: function (data, type, full) {
@@ -41,6 +45,26 @@ var task = function () {
                 }).done(function (data) {
                     if (flat.ajaxCallback(data)) {
                         grid.reload();
+                        $("#confirmDialog").modal("hide");
+                    }
+                })
+            })
+        });
+
+        $table.on('click', "a.run", function () {
+            var $this = $(this);
+            flat.showConfirm({
+                confirmContent: flat.i18n("task.runTips"),
+                confirmBtn: flat.i18n("task.run")
+            });
+            $("#confirmBtn").off("click").on("click", function () {
+                var $row = $table.DataTable().row($this.parents('tr')[0]);
+                $.ajax({
+                    url: "/task/config/run/" + $row.data().id,
+                    dataType: "json",
+                    type: "POST"
+                }).done(function (data) {
+                    if (flat.ajaxCallback(data)) {
                         $("#confirmDialog").modal("hide");
                     }
                 })
@@ -105,12 +129,27 @@ var task = function () {
                     var htmlTemplate = flat.remoteTemplate("/template/task/addTask.html",
                         "");
                     $("#modalDialog").html(htmlTemplate).modal('show');
+                    initAlgorithmSelect();
                     initSaveBtn();
                 } else {
                     flat.ajaxCallback(data);
                 }
             })
         });
+
+        function initAlgorithmSelect() {
+            var keyLengthDiv = $("#keyLength");
+            $("#alg").on('change', function () {
+                var $this = $(this);
+                if ($this.val() === "RSA") {
+                    var htmlTemplate = flat.remoteTemplate("/template/task/keyLength.html",
+                        "");
+                    keyLengthDiv.html(htmlTemplate);
+                } else {
+                    keyLengthDiv.html("");
+                }
+            })
+        }
 
         $table.on('click', 'a.edit', function () {
             var $this = $(this);
@@ -156,7 +195,6 @@ var task = function () {
 
             });
             $("#editBtn").on('click', function () {
-                alert($("#taskId").val());
                 if ($('#dialogForm').validate().form()) {
                     $.ajax({
                         url: "/task/config/edit",

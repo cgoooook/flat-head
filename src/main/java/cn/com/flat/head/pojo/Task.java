@@ -14,5 +14,7 @@ public class Task {
     private String status;
     private int auditFlag;
 
+    private String attr;
+
 
 }

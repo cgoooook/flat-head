@@ -26,4 +26,7 @@
     <select id="getKeyPairNum" resultType="java.lang.Integer">
         select count(*) from kms_key_pair where alg=#{alg}
     </select>
+    <select id="getKeyPairNumAndLength" resultType="java.lang.Integer">
+        select count(*) from kms_key_pair where alg=#{alg} and attr=#{length}
+    </select>
 </mapper>
