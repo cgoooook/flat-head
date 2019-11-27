@@ -17,7 +17,7 @@ public class DeviceKeyPairRest {
     @Path("/apply")
     @POST
     @Produces(MediaType.APPLICATION_JSON)
-    public Map apply() {
+    public Map apply(@QueryParam("type") String type, @QueryParam("token") String token) {
         Map<String, String> result = new HashMap<>();
         result.put("seuccess", "true");
         return result;
@@ -26,8 +26,8 @@ public class DeviceKeyPairRest {
     @Path("/apply")
     @GET
     @Produces(MediaType.APPLICATION_JSON)
-    public Map getApply() {
-        return apply();
+    public Map getApply(@QueryParam("type") String type, @QueryParam("token") String token) {
+        return apply(type, token);
     }
 
 }
