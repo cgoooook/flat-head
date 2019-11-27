@@ -7,6 +7,10 @@ import cn.com.flat.head.dal.ConfigDao;
 import cn.com.flat.head.sdf.util.Arrays;
 import cn.com.flat.head.service.KeyGenService;
 import org.bouncycastle.jcajce.provider.asymmetric.rsa.BCRSAPrivateCrtKey;
+import cn.com.flat.head.crypto.FSecretKey;
+import cn.com.flat.head.dal.ConfigDao;
+import cn.com.flat.head.sdf.util.Arrays;
+import cn.com.flat.head.service.KeyGenServiceBC;
 import org.bouncycastle.util.encoders.Hex;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -18,6 +22,9 @@ import javax.crypto.spec.SecretKeySpec;
 import java.math.BigInteger;
 import java.security.*;
 import java.security.spec.ECGenParameterSpec;
+import java.security.Key;
+import java.security.MessageDigest;
+import java.security.SecureRandom;
 import java.util.List;
 import java.util.Random;
 
@@ -32,7 +39,7 @@ public class KeyGenServiceImpl implements KeyGenService {
     @Autowired
     private ConfigDao configDao;
 
-    
+
     public FSecretKey generateRandomKey(String alg, int length) throws Exception {
         Random random = new SecureRandom();
         int keyLength = length / 8;
@@ -45,7 +52,7 @@ public class KeyGenServiceImpl implements KeyGenService {
         return fSecretKey;
     }
 
-    
+
     public FSecretKey deriveKey(cn.com.flat.head.pojo.Key rootKey, String deriveParams) throws Exception {
         byte[] plainKey = getPlainKey(Hex.decode(rootKey.getKeyValue()));
         byte[] deriveCompent = getDeriveCompent(deriveParams);
@@ -63,7 +70,7 @@ public class KeyGenServiceImpl implements KeyGenService {
 
     }
 
-    
+
     public FSecretKey composeKey(List<String> composes, String algorithm) throws Exception {
         FSecretKey fSecretKey = new FSecretKey();
         byte[] tempKey = new byte[16];

@@ -124,6 +124,7 @@ public class KeyServiceImpl implements KeyService {
             String opType = "";
             switch (status) {
                 case 2:
+
                     opType = OperateType.enableKey;
                     break;
                 case 3:
