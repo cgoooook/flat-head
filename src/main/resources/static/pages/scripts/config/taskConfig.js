@@ -105,12 +105,27 @@ var task = function () {
                     var htmlTemplate = flat.remoteTemplate("/template/task/addTask.html",
                         "");
                     $("#modalDialog").html(htmlTemplate).modal('show');
+                    initAlgorithmSelect();
                     initSaveBtn();
                 } else {
                     flat.ajaxCallback(data);
                 }
             })
         });
+
+        function initAlgorithmSelect() {
+            var keyLengthDiv = $("#keyLength");
+            $("#alg").on('change', function () {
+                var $this = $(this);
+                if ($this.val() === "RSA") {
+                    var htmlTemplate = flat.remoteTemplate("/template/task/keyLength.html",
+                        "");
+                    keyLengthDiv.html(htmlTemplate);
+                } else {
+                    keyLengthDiv.html("");
+                }
+            })
+        }
 
         $table.on('click', 'a.edit', function () {
             var $this = $(this);
@@ -156,7 +171,6 @@ var task = function () {
 
             });
             $("#editBtn").on('click', function () {
-                alert($("#taskId").val());
                 if ($('#dialogForm').validate().form()) {
                     $.ajax({
                         url: "/task/config/edit",
