@@ -21,4 +21,9 @@ public class RoleDaoImpl implements RoleDao {
     public List<Role> getRoleListForUser() {
         return roleMapper.getRoleListForUser();
     }
+
+    @Override
+    public List<Role> getRoleListPage(Role role) {
+        return roleMapper.getRoleListPage(role);
+    }
 }

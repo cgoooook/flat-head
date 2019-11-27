@@ -13,4 +13,6 @@ public interface RoleMapper {
 
     List<Role> getRoleListForUser();
 
+    List<Role> getRoleListPage(Role role);
+
 }

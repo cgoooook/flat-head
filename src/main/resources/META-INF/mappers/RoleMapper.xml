@@ -10,6 +10,9 @@
     <select id="getRoleListForUser" resultMap="RoleMap">
         select * from sys_acl_role
     </select>
+    <select id="getRoleListPage" resultMap="RoleMap">
+        select * from sys_acl_role
+    </select>
 
 
 </mapper>

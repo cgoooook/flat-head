@@ -21,7 +21,6 @@ public class MenuServiceImpl implements MenuService {
     @Autowired
     private MenuDao menuDao;
 
-    @Override
     public Map<String, Object> initMenuData() {
         List<Menu> level0List = new ArrayList<>(128);
         for (Menu menu : menuDao.getLevelMenuList(0)) {
@@ -44,6 +43,10 @@ public class MenuServiceImpl implements MenuService {
         map.put("level2Map", level2Map);
         map.put("level3Map", level3Map);
         return map;
+    }
+
+    public List<Menu> getMenuList() {
+        return menuDao.getEnableMenuList();
     }
 
     private Menu menuUrlHandle(Menu menu) {

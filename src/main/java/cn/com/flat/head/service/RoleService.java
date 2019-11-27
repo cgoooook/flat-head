@@ -1,5 +1,6 @@
 package cn.com.flat.head.service;
 
+import cn.com.flat.head.mybatis.model.Pageable;
 import cn.com.flat.head.pojo.Role;
 
 import java.util.List;
@@ -10,5 +11,7 @@ import java.util.List;
 public interface RoleService {
 
     List<Role> getRoleListForUser();
+
+    List<Role> getRoleListPage(Pageable pageable, Role role);
 
 }

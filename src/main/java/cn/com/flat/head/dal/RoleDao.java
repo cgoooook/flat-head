@@ -11,4 +11,6 @@ public interface RoleDao {
 
     List<Role> getRoleListForUser();
 
+    List<Role> getRoleListPage(Role role);
+
 }
