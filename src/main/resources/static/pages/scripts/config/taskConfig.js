@@ -17,7 +17,11 @@ var task = function () {
                     {data: 'algorithm', orderable: true},
                     {data: 'plannedQuantity', orderable: true},
                     {data: 'currentQuantity', orderable: true},
-                    {data: 'status', orderable: true},
+                    {data: 'status', orderable: true,
+                        render: function (data, type, full) {
+                            return flat.i18n('template.status' + data)
+                        }
+                    },
                     {
                         data: 'operate', orderable: false,
                         render: function (data, type, full) {
@@ -41,6 +45,26 @@ var task = function () {
                 }).done(function (data) {
                     if (flat.ajaxCallback(data)) {
                         grid.reload();
+                        $("#confirmDialog").modal("hide");
+                    }
+                })
+            })
+        });
+
+        $table.on('click', "a.run", function () {
+            var $this = $(this);
+            flat.showConfirm({
+                confirmContent: flat.i18n("task.runTips"),
+                confirmBtn: flat.i18n("task.run")
+            });
+            $("#confirmBtn").off("click").on("click", function () {
+                var $row = $table.DataTable().row($this.parents('tr')[0]);
+                $.ajax({
+                    url: "/task/config/run/" + $row.data().id,
+                    dataType: "json",
+                    type: "POST"
+                }).done(function (data) {
+                    if (flat.ajaxCallback(data)) {
                         $("#confirmDialog").modal("hide");
                     }
                 })

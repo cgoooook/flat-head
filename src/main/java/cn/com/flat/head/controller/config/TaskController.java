@@ -20,6 +20,8 @@ import java.util.List;
 public class TaskController {
     @Autowired
     TaskService taskService;
+
+
     @RequestMapping
     public String getTaskUrl(){
 
@@ -56,6 +58,16 @@ public class TaskController {
         return ajaxResponse;
     }
 
+    @PostMapping("/run/{id}")
+    @ResponseBody
+    public AjaxResponse runTask(@PathVariable("id") String id) {
+        AjaxResponse ajaxResponse = new AjaxResponse();
+        BooleanCarrier booleanCarrier = taskService.runTaskById(id);
+        if (!booleanCarrier.getResult()) {
+            ajaxResponse.setReturnState(ReturnState.ERROR);
+        }
+        return ajaxResponse;
+    }
 
     @DeleteMapping("/{id}")
     @ResponseBody

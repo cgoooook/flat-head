@@ -18,4 +18,6 @@ public interface TaskService {
     BooleanCarrier editTask(Task task);
 
     boolean updateTaskStatus(String id, int status);
+
+    BooleanCarrier runTaskById(String id);
 }
