@@ -4,6 +4,8 @@
     <meta charset="UTF-8">
     <title th:text="${menu.menuName}"></title>
     <th:block th:include="includes/header :: styles"/>
+    <link rel="stylesheet" th:href="@{/plugins/ztree/css/zTreeStyle/zTreeStyle.css}" type="text/css">
+    <link rel="stylesheet" th:href="@{/global/css/ztree_custom.css}" type="text/css">
 </head>
 <body class="page-header-fixed page-sidebar-closed-hide-logo page-content-white">
 <th:block th:include="includes/top :: top"/>
@@ -53,6 +55,7 @@
     <a class="edit btn btn-outline default btn-xs purple"><i class="fa fa-edit"></i>{{i18n('common.edit')}}</a>
     <a class="delete btn btn-outline default btn-xs red"><i class="fa fa-times"></i>{{i18n('common.delete')}}</a>
 </script>
+<script type="text/javascript" th:src="@{/plugins/ztree/js/jquery.ztree.all.min.js}"></script>
 <script type="text/javascript" th:src="@{/plugins/md5/md5.min.js}"></script>
 <script th:src="@{/pages/scripts/role/role.js}" type="text/javascript"></script>
 <script type="text/javascript">

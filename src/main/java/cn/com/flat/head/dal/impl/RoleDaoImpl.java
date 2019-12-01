@@ -26,4 +26,53 @@ public class RoleDaoImpl implements RoleDao {
     public List<Role> getRoleListPage(Role role) {
         return roleMapper.getRoleListPage(role);
     }
+
+    @Override
+    public int getRoleCountByRoleName(String roleName) {
+        return roleMapper.getRoleCountByRoleName(roleName);
+    }
+
+    @Override
+    public boolean addRole(Role role) {
+        roleMapper.addRole(role);
+        return true;
+    }
+
+    @Override
+    public boolean addRolePermission(Role role) {
+        roleMapper.addRolePermission(role);
+        return true;
+    }
+
+    @Override
+    public Role getRoleById(String roleId) {
+        return roleMapper.getRoleById(roleId);
+    }
+
+    @Override
+    public List<String> gerRolePermToken(String roleId) {
+        return roleMapper.getRolePermToken(roleId);
+    }
+
+    @Override
+    public int updateRole(Role role) {
+        return roleMapper.updateRole(role);
+    }
+
+    @Override
+    public boolean deleteRolePermToken(String roleId) {
+        return roleMapper.deleteRolePermToeken(roleId) >= 0;
+    }
+
+    @Override
+    public boolean deleteRoleById(String roleId) {
+         roleMapper.deleteRoleById(roleId);
+         roleMapper.deleteRolePermToeken(roleId);
+         return true;
+    }
+
+    @Override
+    public int getRoleUsersByRoleId(String roleId) {
+        return roleMapper.getRoleUsersByRoleId(roleId);
+    }
 }

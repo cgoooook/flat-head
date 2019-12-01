@@ -23,7 +23,67 @@ var Role = function () {
                 ]
             }
         });
+
+        $table.on('click', 'a.edit', function () {
+            var $this = $(this);
+            var $row = $table.DataTable().row($this.parents('tr')[0]);
+            $.get("/sys/role/" + $row.data().roleId, function (data) {
+                if (data.ok) {
+                    var role = data.data.role;
+                    var menu = data.data.menu;
+                    var htmlTemplate = flat.remoteTemplate("/template/security/editRole.html", {role: role});
+                    $("#modalDialog").html(htmlTemplate).modal('show');
+                    menuTreeInit(menu);
+                    initUpdateBtn();
+                } else {
+                    flat.ajaxCallback(data);
+                }
+            });
+        });
+
+        $table.on('click', 'a.delete', function () {
+            var $this = $(this);
+            flat.showConfirm();
+            $("#confirmBtn").off("click").on("click", function () {
+                var $row = $table.DataTable().row($this.parents('tr')[0]);
+                $.ajax({
+                    url: "/sys/role/" + $row.data().roleId,
+                    dataType: "json",
+                    type: "DELETE"
+                }).done(function (data) {
+                    if (flat.ajaxCallback(data)) {
+                        grid.reload();
+                        $("#confirmDialog").modal("hide");
+                    }
+                })
+            })
+        });
     };
+
+    function initUpdateBtn() {
+        $("#updateBtn").on('click', function () {
+            if ($("#dialogForm").validate().form()) {
+                var role = {
+                    roleId: $("#roleId").val(),
+                    roleName: $("#roleName").val(),
+                    roleDescription: $("#description").val(),
+                    permTokens: getPermTokens()
+                };
+                $.ajax({
+                    url: "/sys/role/updateRole",
+                    data: JSON.stringify(role),
+                    type: "post",
+                    contentType: "application/json; charset=utf-8",
+                    dataType: "json"
+                }).done(function (data) {
+                    if (flat.ajaxCallback(data)) {
+                        $table.DataTable().draw();
+                        $("#modalDialog").modal('hide');
+                    }
+                })
+            }
+        })
+    }
 
     var handleEvents = function () {
         $("#addRole").on('click', function () {
@@ -31,9 +91,34 @@ var Role = function () {
             $("#modalDialog").html(htmlTemplate).modal("show");
             $.get("/sys/role/getMenuList", function (data) {
                 menuTreeInit(data.data);
-            })
+            });
+            initAddBtnInit();
         })
     };
+
+    function initAddBtnInit() {
+        $("#addBtn").on('click', function () {
+            if ($("#dialogForm").validate().form()) {
+                var role = {
+                    roleName: $("#roleName").val(),
+                    roleDescription: $("#description").val(),
+                    permTokens: getPermTokens()
+                };
+                $.ajax({
+                    url: "/sys/role",
+                    data: JSON.stringify(role),
+                    type: "put",
+                    contentType: "application/json; charset=utf-8",
+                    dataType: "json"
+                }).done(function (data) {
+                    if (flat.ajaxCallback(data)) {
+                        grid.reload();
+                        $("#modalDialog").modal('hide');
+                    }
+                })
+            }
+        })
+    }
 
     var setting = {
         view: {
