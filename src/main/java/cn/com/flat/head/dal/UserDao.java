@@ -25,7 +25,7 @@ public interface UserDao {
 
     int addUserRole(User user);
 
-    int updateUserRole(String userId, int roleId);
+    int updateUserRole(String userId, String roleId);
 
     int updateUser(User user);
 }

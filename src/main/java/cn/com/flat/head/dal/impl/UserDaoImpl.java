@@ -59,7 +59,7 @@ public class UserDaoImpl implements UserDao {
     }
 
     @Override
-    public int updateUserRole(String userId, int roleId) {
+    public int updateUserRole(String userId, String roleId) {
         return userMapper.updateUserRole(userId, roleId);
     }
 

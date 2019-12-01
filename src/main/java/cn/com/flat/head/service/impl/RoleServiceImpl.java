@@ -41,17 +41,24 @@ public class RoleServiceImpl implements RoleService {
     public BooleanCarrier addRole(Role role) {
         BooleanCarrier booleanCarrier = new BooleanCarrier();
         try {
-            role.setRoleId(UUID.randomUUID().toString());
-            roleDao.addRole(role);
-            List<String> permTokens = role.getPermTokens();
-            List<String> permIds = new ArrayList<>();
-            permTokens.forEach(token -> {
-                String permTokenIdByPermToken = permissionDao.getPermTokenIdByPermToken(token);
-                permIds.add(permTokenIdByPermToken);
-            });
-            role.setPermIds(permIds);
-            roleDao.addRolePermission(role);
-            booleanCarrier.setResult(true);
+            int roleCountByRoleName = roleDao.getRoleCountByRoleName(role.getRoleName());
+            if (roleCountByRoleName > 0) {
+                booleanCarrier.setResult(false);
+                booleanCarrier.setMessage("role.roleNameExits");
+            } else {
+                role.setRoleId(UUID.randomUUID().toString());
+                roleDao.addRole(role);
+                List<String> permTokens = role.getPermTokens();
+                List<String> permIds = new ArrayList<>();
+                permTokens.forEach(token -> {
+                    String permTokenIdByPermToken = permissionDao.getPermTokenIdByPermToken(token);
+                    permIds.add(permTokenIdByPermToken);
+                });
+                role.setPermIds(permIds);
+                roleDao.addRolePermission(role);
+                booleanCarrier.setResult(true);
+            }
+
         } catch (Exception e) {
             booleanCarrier.setResult(false);
         }
@@ -70,6 +77,15 @@ public class RoleServiceImpl implements RoleService {
     public BooleanCarrier updateRole(Role role) {
         BooleanCarrier booleanCarrier = new BooleanCarrier();
         try {
+            Role roleById = roleDao.getRoleById(role.getRoleId());
+            if (!roleById.getRoleName().equalsIgnoreCase(role.getRoleName())) {
+                int roleCountByRoleName = roleDao.getRoleCountByRoleName(role.getRoleName());
+                if (roleCountByRoleName > 0) {
+                    booleanCarrier.setResult(false);
+                    booleanCarrier.setMessage("role.roleNameExits");
+                    return booleanCarrier;
+                }
+            }
             roleDao.updateRole(role);
             roleDao.deleteRolePermToken(role.getRoleId());
             List<String> permTokens = role.getPermTokens();

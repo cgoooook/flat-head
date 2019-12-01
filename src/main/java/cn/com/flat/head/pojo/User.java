@@ -24,7 +24,7 @@ public class User {
 
     private String remember;
 
-    private int roleId;
+    private String roleId;
 
 
 

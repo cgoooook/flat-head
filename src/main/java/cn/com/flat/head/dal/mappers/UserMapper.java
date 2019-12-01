@@ -30,7 +30,7 @@ public interface UserMapper {
 
     int addUserRole(User user);
 
-    int updateUserRole(@Param("userId") String userId, @Param("roleId") int roleId);
+    int updateUserRole(@Param("userId") String userId, @Param("roleId") String roleId);
 
     int updateUser(User user);
 }
