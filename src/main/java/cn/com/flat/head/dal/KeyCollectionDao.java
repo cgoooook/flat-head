@@ -33,4 +33,6 @@ public interface KeyCollectionDao {
 
     int getCollectionKeyNum(String collectionId);
 
+    List<String> getCollectionKeys(String collectionId);
+
 }

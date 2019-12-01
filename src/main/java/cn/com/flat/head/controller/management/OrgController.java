@@ -2,15 +2,25 @@ package cn.com.flat.head.controller.management;
 
 import cn.com.flat.head.mybatis.model.Pageable;
 import cn.com.flat.head.pojo.BooleanCarrier;
+import cn.com.flat.head.pojo.DataTransport;
 import cn.com.flat.head.pojo.Organization;
+import cn.com.flat.head.service.DataTransportService;
 import cn.com.flat.head.service.OrgService;
 import cn.com.flat.head.web.AjaxResponse;
 import cn.com.flat.head.web.DataTablesResponse;
 import cn.com.flat.head.web.ReturnState;
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import java.util.List;
 
@@ -20,6 +30,9 @@ public class OrgController {
 
     @Autowired
     private OrgService orgService;
+
+    @Autowired
+    private DataTransportService dataTransportService;
 
     @GetMapping
     public String orgPage() {
@@ -101,6 +114,18 @@ public class OrgController {
         List<Organization> treeList = orgService.getTreeList();
         ajaxResponse.setData(treeList);
         return ajaxResponse;
+    }
+
+    @GetMapping("/export")
+    public ResponseEntity<byte[]> export(String orgId, HttpServletRequest request, HttpServletResponse response) throws JsonProcessingException {
+        HttpHeaders headers = new HttpHeaders();
+        DataTransport dataTransport = dataTransportService.exportData(orgId);
+        ObjectMapper objectMapper = new ObjectMapper();
+        byte[] bytes = objectMapper.writeValueAsBytes(dataTransport);
+        headers.setContentType(MediaType.APPLICATION_OCTET_STREAM);
+        headers.setContentDispositionFormData("attachment", "keyBack.dat");
+        return new ResponseEntity<byte[]>(bytes,
+                headers, HttpStatus.CREATED);
     }
 
 

@@ -10,11 +10,9 @@ import java.util.List;
 @Data
 public class DataTransport {
 
-    private Organization organization;
+    private List<Organization> organizationList;
 
     private List<Key> keyList;
-
-    private List<KeyHistory> keyHistoryList;
 
     private List<KeyTemplate> templateList;
 

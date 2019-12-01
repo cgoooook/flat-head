@@ -48,4 +48,6 @@ public class Key {
 
     private String deriveParam;
 
+    private List<KeyHistory> keyHistories;
+
 }

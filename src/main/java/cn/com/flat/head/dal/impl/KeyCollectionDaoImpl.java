@@ -85,4 +85,9 @@ public class KeyCollectionDaoImpl implements KeyCollectionDao {
     public int getCollectionKeyNum(String collectionId) {
         return keyCollectionMapper.getKeyCollectionKeyNum(collectionId);
     }
+
+    @Override
+    public List<String> getCollectionKeys(String collectionId) {
+        return collectionKeysMapper.getCollectionKeyIds(collectionId);
+    }
 }
