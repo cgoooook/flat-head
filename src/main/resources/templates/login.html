@@ -56,5 +56,11 @@
 <script type="text/javascript" th:src="@{/plugins/jquery-validation/js/additional-methods.min.js}"></script>
 <script type="text/javascript" th:src="@{/plugins/md5/md5.min.js}"></script>
 <script type="text/javascript" th:src="@{/pages/scripts/login.js}"></script>
+<script th:inline="javascript">
+    var loginError = [[${#httpServletRequest.getAttribute('message')}]];
+    if (loginError) {
+        toast.error(loginError)
+    }
+</script>
 </body>
 </html>

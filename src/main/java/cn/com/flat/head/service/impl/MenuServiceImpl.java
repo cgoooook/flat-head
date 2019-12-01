@@ -4,6 +4,8 @@ import cn.com.flat.head.dal.MenuDao;
 import cn.com.flat.head.pojo.Menu;
 import cn.com.flat.head.service.MenuService;
 import org.apache.commons.lang3.StringUtils;
+import org.apache.shiro.SecurityUtils;
+import org.apache.shiro.subject.Subject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -22,9 +24,10 @@ public class MenuServiceImpl implements MenuService {
     private MenuDao menuDao;
 
     public Map<String, Object> initMenuData() {
+        Subject currentUser = SecurityUtils.getSubject();
         List<Menu> level0List = new ArrayList<>(128);
         for (Menu menu : menuDao.getLevelMenuList(0)) {
-            if (!StringUtils.isBlank(menu.getPermToken())) {
+            if (!StringUtils.isBlank(menu.getPermToken()) && currentUser.isPermitted(menu.getPermToken())) {
                 level0List.add(menuUrlHandle(menu));
             }
         }
@@ -58,14 +61,18 @@ public class MenuServiceImpl implements MenuService {
     }
 
     private Map<String, List<Menu>> groupMenuList(List<Menu> menuList) {
+        Subject currentUser = SecurityUtils.getSubject();
         Map<String, List<Menu>> map = new HashMap<>();
         for (Menu menu : menuList) {
-            if (!map.containsKey(menu.getParentId())) {
-                map.put(menu.getParentId(), new ArrayList<>());
+            if (currentUser.isPermitted(menu.getPermToken())) {
+                if (!map.containsKey(menu.getParentId())) {
+                    map.put(menu.getParentId(), new ArrayList<>());
+                }
+                if (!"".equals(menu.getPermToken())) {
+                    map.get(menu.getParentId()).add(menuUrlHandle(menu));
+                }
             }
-            if (!"".equals(menu.getPermToken())) {
-                map.get(menu.getParentId()).add(menuUrlHandle(menu));
-            }
+
         }
         return map;
     }
