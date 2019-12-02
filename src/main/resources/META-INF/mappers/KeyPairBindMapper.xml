@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="cn.com.flat.head.dal.mappers.KeyPairBindMapper">
+
+
+    <insert id="addDeviceKeyPair">
+        insert into kms_device_key_pair (device_id, alg, attr, pub_key, pri_key, cert_content, key_pair_id) VALUES
+            (#{deviceId}, #{alg}, #{attr}, #{pubKey}, #{priKey}, #{certContent}, #{keyPairId})
+    </insert>
+    <update id="revokeKey">
+        update kms_device_key_pair set status=0, reason=#{reason} where key_pair_id=#{keyPairId}
+    </update>
+    <select id="getKeyPairIdByPubKey" resultType="java.lang.String">
+        select key_pair_id from kms_device_key_pair where pub_key=#{pubKey}
+    </select>
+</mapper>
