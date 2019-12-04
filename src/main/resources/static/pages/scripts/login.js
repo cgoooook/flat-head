@@ -45,6 +45,7 @@ var Login = function () {
             },
 
             submitHandler: function (form) {
+                dealPassword();
                 form.submit();
             }
         });
@@ -52,11 +53,16 @@ var Login = function () {
         $('.login-form input').keypress(function (e) {
             if (e.which === 13) {
                 if ($('.login-form').validate().form()) {
+                    dealPassword();
                     $('.login-form').submit();
                 }
                 return false;
             }
         });
+
+        function dealPassword() {
+            $("#password").val(md5($("#password").val()))
+        }
 
         $("#language").on('change', function () {
 			var lang = $(this).val();

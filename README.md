@@ -9,7 +9,7 @@
 接口需要授权才能访问，授权及验证规则如下:
 
   * 定义一个客户端CID(一个32字节的随机数据), 告知客户端
-  * 定义一个会话验证密钥KEY(SM4), 告知客户端
+  * 定义一个会话验证密钥KEY+IV(SM4), 告知客户端
   * 客户端用CID,KEY来计算TOKEN,服务器进行验证
   * 服务器对客户端IP的验证是可选项，生产环节验证，测试开发环节不验证
 
@@ -17,7 +17,7 @@ TOKEN 分为两部分组成，及数据部分||验证部分。
 
   1. 客户端请求服务器进行连接,服务器返回16字节的随机数据 RData, 服务器缓存 RData, 与 CID 关联
   2. 客户端计算数据部分=SM4_CBC(RData, KEY)
-  3. 客户端计算验证数据=SM3(Data||CID)
+  3. 客户端计算验证数据=SM3(RData||CID)
   4. TOKEN = 数据部分||验证部分, hexdecial编码后使用
   5. 客户端每次请求的数据都需要提供Token, 服务器端进行验证后执行相应的服务
 
@@ -25,8 +25,16 @@ TOKEN 分为两部分组成，及数据部分||验证部分。
 
 * URL: http://hosts:port/api_path/access
 * METHOD: POST
-* 参数: CID=
-* 返回: 16字节的随机数
+* 参数: cid={CID}
+* 返回:
+
+```json
+{
+  "success": true,
+  "message": "成功时为32字节的 hexadecimal 字符串, 失败时则为提示的错误信息",
+  "retcode": 0,  // 0 表示成功，其它表示返回的错误码
+}
+```
 
 ### 扩展的对称非对称密钥管理接口
 
@@ -42,7 +50,7 @@ TOKEN 分为两部分组成，及数据部分||验证部分。
   "success": true,
   "message": "操作结果说明,失败时可以提示错误信息",
   "retcode": 0,   # 可以用于返回码错误码
-  "type": "SM2"， # 或者 RSA 配置请求时输入的type
+  "type": "SM2"，
   "public": "公钥, (X32+Y32)的hexdecial编码显示",
   "value": "私钥, 被预值保护密钥加密, 最后进行hexdicial编码"
 }
@@ -54,7 +62,7 @@ TOKEN 分为两部分组成，及数据部分||验证部分。
 
 * URL: http://hosts:port/api_path/keys/bind
 * METHOD: POST
-* 参数: public={public} & certificate={certficate} & serial={serialNumber} & token = {安全令牌}
+* 参数: public={public} & certificate={certficate} & id ={deviceid} & token = {安全令牌}
 * 返回:
 
 ```json
@@ -86,7 +94,7 @@ TOKEN中的Data为随机数
 
 * 请求: http://hosts:port/api_paths/org/info
 * METHOD: POST
-* 参数: token={安全令牌}&OrgID={机构编码}
+* 参数: token={安全令牌}&orgid={机构编码}
 * 返回:
 
 ```json
@@ -94,8 +102,8 @@ TOKEN中的Data为随机数
   "success": true,
   "message": "操作结果说明,失败时可以提示错误信息",
   "retcode": 0,   # 可以用于返回码错误码
-  "keySets:" {"上位机密钥集":{[密钥1,...,密钥n]}, "控制器密钥集":{[密钥1,...,密钥n]}},
-  "properties": {自定义信息}
+  "keySets:" {"上位机密钥集":[密钥1,...,密钥n], "控制器密钥集":[密钥1,...,密钥n]},
+  "properties": {'host':'上位机密钥集','controler':'控制器密钥集',PK2:'32字节随机数'}
 ```
 
 其中的密钥为一个JSON对象，内容如 `{id:ID,name:name,value:密钥密文,code:"校验值", version:x}`
@@ -103,9 +111,9 @@ TOKEN中的Data为随机数
 
 ### 机构下的设备注册接口
 
-* 请求: http://posts:port/api_path/org/{orgid}/device/add
+* 请求: http://posts:port/api_path/org/device/add
 * METHOD: POST
-* 参数: token={安全令牌}&ID={设备ID}&Name={设备名称}&IP={设备IP}&kSet={密钥集编号}
+* 参数: token={安全令牌}&id={设备ID}&name={设备名称}&ip={设备IP}&kset={密钥集编号}&orgid={orgid}
 * 返回:
 
 ```json
@@ -115,3 +123,32 @@ TOKEN中的Data为随机数
   "retcode": 0,   # 可以用于返回码错误码
 }
 ```
+
+### 提取某个对称密钥的指定版本的密钥值
+
+* 请求: http://posts:port/api_path/org/key
+* METHOD: POST
+* 参数: token={安全令牌}&id={密钥ID}&name={密钥名称}&orgid={orgid}&version=n
+* 返回:
+
+```json
+{
+  "success": true,
+  "message": "成功时为32字节的 hexadecimal 字符串:8个字节的密钥验证码hexadecimal, 失败时则为提示的错误信息",
+  "retcode": 0,  // 0 表示成功，其它表示返回的错误码
+}
+```
+
+_注_:  id,name 至少存在一个作搜索条件，version不存在则用最后版本,应该是0个或一个结果.
+
+
+## 使用流程
+
+1. 通过`Token 生成接口`获取随机数，客户端计算生成token.
+2. 通过`结构信息及密钥提取接口` 获取特定结构的信息.
+3. 通过`申请新的非对称密钥的接口` 获得一个SM2密钥.
+4. 客户端使用刚申请的密钥到CA系统申请证书。
+5. 通过`机构下的设备注册接口`向KMS系统注册一个设备。
+6. 通过`密钥绑定关系接口`，绑定设备、密钥与证书。
+7. 通过`密钥停用的接口`，将密钥置为禁用状态，不在使用。
+

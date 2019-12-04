@@ -62,6 +62,9 @@
 
 
     </select>
+    <select id="getDeviceListByOrgId" resultMap="devMap">
+        select * from kms_device where org_id=#{orgId}
+    </select>
 
 
     <update id="editDev">

@@ -11,6 +11,9 @@
     <delete id="deleteByCollectionId">
         delete from kms_collection_key where collection_id=#{collectionId}
     </delete>
+    <select id="getCollectionKeyIds" resultType="java.lang.String">
+        select key_id from kms_collection_key where collection_id=#{collectionId}
+    </select>
 
 
 </mapper>

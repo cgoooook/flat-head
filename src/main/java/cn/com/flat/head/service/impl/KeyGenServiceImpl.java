@@ -6,6 +6,8 @@ import cn.com.flat.head.crypto.FSecretKey;
 import cn.com.flat.head.dal.ConfigDao;
 import cn.com.flat.head.sdf.util.Arrays;
 import cn.com.flat.head.service.KeyGenService;
+import org.bouncycastle.jcajce.provider.asymmetric.ec.BCECPrivateKey;
+import org.bouncycastle.jcajce.provider.asymmetric.ec.BCECPublicKey;
 import org.bouncycastle.jcajce.provider.asymmetric.rsa.BCRSAPrivateCrtKey;
 import cn.com.flat.head.crypto.FSecretKey;
 import cn.com.flat.head.dal.ConfigDao;
@@ -194,8 +196,15 @@ public class KeyGenServiceImpl implements KeyGenService {
             PrivateKey aPrivate = keyPair.getPrivate();
             FKeyPair fKeyPair = new FKeyPair();
             fKeyPair.setAlgorithm("SM2");
-            fKeyPair.setPrivateKey(getEncKey(aPrivate.getEncoded()));
-            fKeyPair.setPublicKey(keyPair.getPublic().getEncoded());
+            BCECPublicKey publicKey = (BCECPublicKey) keyPair.getPublic();
+            BCECPrivateKey privateKey = (BCECPrivateKey) aPrivate;
+            fKeyPair.setPrivateKey(getEncKey(privateKey.getS().toByteArray()));
+            byte[] x = publicKey.getW().getAffineX().toByteArray();
+            byte[] y = publicKey.getW().getAffineY().toByteArray();
+            byte[] pubKeyBytes = new byte[x.length + y.length];
+            System.arraycopy(x, 0, pubKeyBytes, 0, x.length);
+            System.arraycopy(y, 0, pubKeyBytes, x.length, y.length);
+            fKeyPair.setPublicKey(pubKeyBytes);
             return fKeyPair;
         } catch (Exception e) {
             logger.error("generate rsa error", e);

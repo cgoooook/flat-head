@@ -23,4 +23,6 @@ public interface DevMapper {
     Device getDevByDevCode(String deviceCode);
 
     void editDev(Device dev);
+
+    List<Device> getDeviceListByOrgId(String orgId);
 }

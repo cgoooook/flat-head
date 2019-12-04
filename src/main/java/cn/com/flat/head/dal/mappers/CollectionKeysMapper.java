@@ -15,4 +15,7 @@ public interface CollectionKeysMapper {
 
     int deleteByCollectionId(String collectionId);
 
+    List<String> getCollectionKeyIds(String collectionId);
+
+
 }

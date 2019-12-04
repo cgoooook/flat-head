@@ -39,17 +39,32 @@ public class UserDaoImpl implements UserDao {
     }
 
     @Override
-    public boolean deleteUserById(int userId) {
-        return false;
+    public boolean deleteUserById(String userId) {
+        return userMapper.deleteUserById(userId) >= 1;
     }
 
     @Override
-    public User addUser(User user) {
-        return null;
+    public int addUser(User user) {
+        return userMapper.addUser(user);
     }
 
     @Override
     public User getUserById(String userId) {
         return userMapper.getUserById(userId);
+    }
+
+    @Override
+    public int addUserRole(User user) {
+        return userMapper.addUserRole(user);
+    }
+
+    @Override
+    public int updateUserRole(String userId, String roleId) {
+        return userMapper.updateUserRole(userId, roleId);
+    }
+
+    @Override
+    public int updateUser(User user) {
+        return userMapper.updateUser(user);
     }
 }

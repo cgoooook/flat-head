@@ -50,6 +50,11 @@ public class DevServiceDaoImpl implements DevServiceDao {
     }
 
     @Override
+    public List<Device> getDeviceListByOrgId(String orgId) {
+        return devMapper.getDeviceListByOrgId(orgId);
+    }
+
+    @Override
     public int getCollectionCountByCollectionId(String collectionId) {
         return devMapper.getCollectionCountByCollectionId(collectionId);
     }

@@ -32,4 +32,5 @@ public interface KeyDao {
 
     List<Key> getKeyListByCollectionId(String collection);
 
+    List<Key> getKeyByOrgId(String orgId);
 }

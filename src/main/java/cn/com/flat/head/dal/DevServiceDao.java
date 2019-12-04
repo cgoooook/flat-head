@@ -1,7 +1,6 @@
 package cn.com.flat.head.dal;
 
 
-import cn.com.flat.head.pojo.BooleanCarrier;
 import cn.com.flat.head.pojo.Device;
 
 import java.util.List;
@@ -23,4 +22,6 @@ public interface DevServiceDao {
     Device getDevByDevCode(String deviceCode);
 
     void editOrg(Device dev);
+
+    List<Device> getDeviceListByOrgId(String orgId);
 }

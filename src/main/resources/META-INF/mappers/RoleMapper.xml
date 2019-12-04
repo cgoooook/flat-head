@@ -7,8 +7,43 @@
         <result column="role_name" property="roleName" />
         <result column="role_description" property="roleDescription" />
     </resultMap>
+    <insert id="addRole">
+        insert into sys_acl_role (role_id, role_name, role_description) values
+        (#{roleId}, #{roleName}, #{roleDescription})
+    </insert>
+    <insert id="addRolePermission">
+        insert into sys_acl_role_permission (role_id, perm_id) values
+        <foreach collection="permIds" item="permTokenId" separator=",">
+            (#{roleId}, #{permTokenId})
+        </foreach>
+    </insert>
+    <update id="updateRole">
+        update sys_acl_role set role_name=#{roleName}, role_description=#{roleDescription} where role_id=#{roleId}
+    </update>
+    <delete id="deleteRolePermToeken">
+        delete from sys_acl_role_permission where role_id=#{roleId}
+    </delete>
+    <delete id="deleteRoleById">
+        delete from sys_acl_role where role_id=#{roleId}
+    </delete>
     <select id="getRoleListForUser" resultMap="RoleMap">
         select * from sys_acl_role
+    </select>
+    <select id="getRoleListPage" resultMap="RoleMap">
+        select * from sys_acl_role
+    </select>
+    <select id="getRoleCountByRoleName" resultType="java.lang.Integer">
+        select count(*) from sys_acl_role where role_name=#{roleName}
+    </select>
+    <select id="getRoleById" resultMap="RoleMap">
+        select * from sys_acl_role where role_id=#{roleId}
+    </select>
+    <select id="getRolePermToken" resultType="java.lang.String">
+        select sap.perm_token from sys_acl_role sar, sys_acl_role_permission sarp, sys_acl_permission sap where sar.role_id=sarp.role_id
+        and sarp.perm_id=sap.permission_id and sar.role_id=#{roleId}
+    </select>
+    <select id="getRoleUsersByRoleId" resultType="java.lang.Integer">
+        select count(*) from sys_acl_user_role where role_id=#{roleId}
     </select>
 
 

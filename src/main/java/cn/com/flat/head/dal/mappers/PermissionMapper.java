@@ -7,4 +7,7 @@ import cn.com.flat.head.mybatis.RepositoryImpl;
  */
 @RepositoryImpl
 public interface PermissionMapper {
+
+    String getPermTokenIdByToken(String token);
+
 }

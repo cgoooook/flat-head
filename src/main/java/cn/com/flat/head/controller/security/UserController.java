@@ -1,6 +1,7 @@
 package cn.com.flat.head.controller.security;
 
 import cn.com.flat.head.mybatis.model.Pageable;
+import cn.com.flat.head.pojo.BooleanCarrier;
 import cn.com.flat.head.pojo.Role;
 import cn.com.flat.head.pojo.User;
 import cn.com.flat.head.service.RoleService;
@@ -64,8 +65,13 @@ public class UserController {
     @PutMapping
     @ResponseBody
     public AjaxResponse adUser(@RequestBody User user, HttpSession httpSession) {
-        boolean b = userService.addUser(user);
-        return AjaxResponse.getInstanceByResult(b, httpSession);
+        AjaxResponse ajaxResponse = new AjaxResponse();
+        BooleanCarrier b = userService.addUser(user);
+        if (!b.getResult()) {
+            ajaxResponse.setReturnState(ReturnState.ERROR);
+            ajaxResponse.setMsg(b.getMessage());
+        }
+        return ajaxResponse;
     }
 
     @GetMapping("/{id}")
@@ -79,6 +85,18 @@ public class UserController {
         data.put("roleList", roleListForUser);
         ajaxResponse.setReturnState(ReturnState.OK);
         ajaxResponse.setData(data);
+        return ajaxResponse;
+    }
+
+    @PostMapping
+    @ResponseBody
+    public AjaxResponse updateUser(User user, HttpSession session) {
+        AjaxResponse ajaxResponse = new AjaxResponse();
+        BooleanCarrier booleanCarrier = userService.updateUser(user);
+        if (!booleanCarrier.getResult()) {
+            ajaxResponse.setReturnState(ReturnState.ERROR);
+            ajaxResponse.setMsg(booleanCarrier.getMessage());
+        }
         return ajaxResponse;
     }
 }

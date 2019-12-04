@@ -46,7 +46,19 @@ var Org = function () {
 
 
 
-
+        $table.on('click', 'a.export', function () {
+            var $this = $(this);
+            flat.showConfirm(
+                {
+                    confirmContent: flat.i18n("org.exportTips"),
+                    confirmBtn: flat.i18n("common.export")
+                }
+            );
+            $("#confirmBtn").off("click").on("click", function () {
+                var $row = $table.DataTable().row($this.parents('tr')[0]);
+                window.location.href = "/sys/org/export?orgId=" + $row.data().orgId;
+            })
+        });
 
 
 
