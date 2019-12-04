@@ -38,6 +38,7 @@ public class KeyPairApplyServiceImpl implements KeyPairApplyService {
             booleanCarrier.setMessage("can not find device by code");
             return booleanCarrier;
         }
+        pubKey = pubKey.toLowerCase();
         DeviceKeyPair deviceApplyKey = keyPairApplyDao.getDeviceApplyKey(pubKey);
         if (deviceApplyKey == null) {
             booleanCarrier.setResult(false);
@@ -61,6 +62,7 @@ public class KeyPairApplyServiceImpl implements KeyPairApplyService {
     @Override
     public BooleanCarrier revokeKey(String pubKey, String reason) {
         BooleanCarrier booleanCarrier = new BooleanCarrier();
+        pubKey = pubKey.toLowerCase();
         String keyPairId = keyPairApplyDao.getKeyPairId(pubKey);
         if (StringUtils.isBlank(keyPairId)) {
             booleanCarrier.setResult(false);

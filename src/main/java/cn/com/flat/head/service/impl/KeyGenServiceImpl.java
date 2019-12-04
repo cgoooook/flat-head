@@ -129,7 +129,7 @@ public class KeyGenServiceImpl implements KeyGenService {
         try {
             String dmk = configDao.getDMK();
             byte[] plainDMK = getPlainDMK(dmk);
-            Cipher cipher = Cipher.getInstance("SM4/ECB/PKCS7Padding", "BC");
+            Cipher cipher = Cipher.getInstance("SM4/ECB/NoPadding", "BC");
             Key keySpec = new SecretKeySpec(plainDMK, "SM4");
             cipher.init(Cipher.ENCRYPT_MODE, keySpec);
             return cipher.doFinal(key);
@@ -203,7 +203,6 @@ public class KeyGenServiceImpl implements KeyGenService {
                 BCECPublicKey publicKey = (BCECPublicKey) keyPair.getPublic();
                 BCECPrivateKey privateKey = (BCECPrivateKey) keyPair.getPrivate();
                 byte[] D = privateKey.getD().toByteArray();
-                fKeyPair.setPrivateKey(getEncKey(D));
 
                 ECPoint pnt = publicKey.getQ();
                 byte[] x = pnt.getAffineXCoord().toBigInteger().toByteArray();
@@ -212,11 +211,15 @@ public class KeyGenServiceImpl implements KeyGenService {
 
                 System.arraycopy(x, 0, pubKeyBytes, 0, x.length);
                 System.arraycopy(y, 0, pubKeyBytes, x.length, y.length);
-                fKeyPair.setPublicKey(pubKeyBytes);
+                //会有个别密钥不符和规则，直接过滤掉
                 if(pubKeyBytes.length==64 && D.length==32)
+                {
+                    fKeyPair.setPrivateKey(getEncKey(D));
                     gen = false;
+                    fKeyPair.setPublicKey(pubKeyBytes);
+                }
                 else
-                  System.out.println("***"+pubKeyBytes.length+" "+ D.length==32 + " regen");
+                  System.out.println("***"+pubKeyBytes.length+" "+ D.length + " regen");
             }
             return fKeyPair;
         } catch (Exception e) {

@@ -55,7 +55,7 @@ public class DeviceKeyPairRest {
     @Consumes(MediaType.APPLICATION_FORM_URLENCODED)
     @Produces(MediaType.APPLICATION_JSON)
     public Map bind(@FormParam("public") String pubKey, @FormParam("certificate") String cert,
-                    @FormParam("serial") String deviceCode, @FormParam("token") String token) {
+                    @FormParam("id") String deviceCode, @FormParam("token") String token) {
         Map<String, Object> result = new HashMap<>();
         try {
             BooleanCarrier booleanCarrier = keyPairApplyService.bindKey(pubKey, cert, deviceCode);
