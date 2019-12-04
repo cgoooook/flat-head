@@ -23,7 +23,7 @@ TOKEN 分为两部分组成，及数据部分||验证部分。
 
 #### Token 生成接口
 
-* URL: http://hosts:port/api_path/access
+* URL: http://hosts:port/api/access
 * METHOD: POST
 * 参数: cid={CID}
 * 返回:
@@ -40,7 +40,7 @@ TOKEN 分为两部分组成，及数据部分||验证部分。
 
 #### 1. 申请新的非对称密钥的接口
 
-* URL: http://hosts:port/api_path/keys/apply
+* URL: http://hosts:port/api/keys/apply
 * METHOD: POST
 * 参数: type=SM2&token=安全令牌
 * 返回: 
@@ -60,7 +60,7 @@ TOKEN 分为两部分组成，及数据部分||验证部分。
 
 #### 2. 密钥绑定关系接口
 
-* URL: http://hosts:port/api_path/keys/bind
+* URL: http://hosts:port/api/keys/bind
 * METHOD: POST
 * 参数: public={public} & certificate={certficate} & id ={deviceid} & token = {安全令牌}
 * 返回:
@@ -75,7 +75,7 @@ TOKEN 分为两部分组成，及数据部分||验证部分。
 
 #### 3. 密钥停用的接口
 
-* 请求: http://hosts:port/api_paths/keys/revoke
+* 请求: http://hosts:port/apis/keys/revoke
 * METHOD: POST
 * 参数: public={public}&reason={停用原因}&token = {安全令牌}
 * 返回:
@@ -92,7 +92,7 @@ TOKEN中的Data为随机数
 
 ### 结构信息及密钥提取接口
 
-* 请求: http://hosts:port/api_paths/org/info
+* 请求: http://hosts:port/apis/org/info
 * METHOD: POST
 * 参数: token={安全令牌}&orgid={机构编码}
 * 返回:
@@ -111,7 +111,7 @@ TOKEN中的Data为随机数
 
 ### 机构下的设备注册接口
 
-* 请求: http://posts:port/api_path/org/device/add
+* 请求: http://posts:port/api/org/device/add
 * METHOD: POST
 * 参数: token={安全令牌}&id={设备ID}&name={设备名称}&ip={设备IP}&kset={密钥集编号}&orgid={orgid}
 * 返回:
@@ -126,7 +126,7 @@ TOKEN中的Data为随机数
 
 ### 提取某个对称密钥的指定版本的密钥值
 
-* 请求: http://posts:port/api_path/org/key
+* 请求: http://posts:port/api/org/key
 * METHOD: POST
 * 参数: token={安全令牌}&id={密钥ID}&name={密钥名称}&orgid={orgid}&version=n
 * 返回:
