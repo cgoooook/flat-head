@@ -77,8 +77,10 @@ public class ConfigServiceImpl implements ConfigService {
     @Override
     public Jdbc getJdbcConfig() {
         Properties prop = new Properties();
-        Resource resource = null;
+        Resource resource ;
         Jdbc jdbc = new Jdbc();
+        BooleanCarrier booleanCarrier = new BooleanCarrier();
+        boolean result = true;
         try {
             resource = new FileUrlResource("config/jdbc.properties");
             InputStream inputStream = resource.getInputStream();
@@ -91,16 +93,12 @@ public class ConfigServiceImpl implements ConfigService {
                 Object upValue = jdbc.getClass().getMethod(method, String.class).invoke(jdbc, property);
             }
 
-        } catch (MalformedURLException e) {
-            e.printStackTrace();
-        } catch (IOException e) {
-            e.printStackTrace();
-        } catch (IllegalAccessException e) {
-            e.printStackTrace();
-        } catch (InvocationTargetException e) {
-            e.printStackTrace();
-        } catch (NoSuchMethodException e) {
-            e.printStackTrace();
+        } catch (Exception e) {
+            booleanCarrier.setResult(false);
+            result = false;
+            logger.error("getJdbcConfig error", e);
+        } finally {
+            logDao.addLog(LoggerBuilder.builder(OperateType.jdbcConfig, result, "Error updating database configuration"));
         }
 
         return jdbc;
@@ -171,7 +169,7 @@ public class ConfigServiceImpl implements ConfigService {
             result = false;
             logger.error("editUiConfig", e);
         } finally {
-            logDao.addLog(LoggerBuilder.builder(OperateType.logConfig, result, "Error modifying UI configuration"));
+            logDao.addLog(LoggerBuilder.builder(OperateType.uiConfig, result, "Error modifying UI configuration"));
         }
     }
 
@@ -225,7 +223,7 @@ public class ConfigServiceImpl implements ConfigService {
             result = false;
             logger.error("sendMail error", e);
         } finally {
-            logDao.addLog(LoggerBuilder.builder(OperateType.logConfig, result, "Send mail exception"));
+            logDao.addLog(LoggerBuilder.builder(OperateType.mailConfig, result, "Send mail exception"));
         }
     }
 
@@ -238,7 +236,7 @@ public class ConfigServiceImpl implements ConfigService {
            result = false;
            logger.error("saveMail error", e);
        } finally {
-           logDao.addLog(LoggerBuilder.builder(OperateType.logConfig, result, "Save mailbox configuration"));
+           logDao.addLog(LoggerBuilder.builder(OperateType.mailConfig, result, "Save mailbox configuration"));
        }
     }
 
