@@ -32,12 +32,12 @@
                             <table class="table table-striped table-bordered table-hover " id="taskTables">
                                 <thead>
                                 <tr role="row" class="heading">
-                                    <th> 任务名称</th>
-                                    <th> 密钥算法</th>
-                                    <th> 计划数量</th>
-                                    <th> 当前数量</th>
-                                    <th> 状态</th>
-                                    <th> 操作</th>
+                                    <th th:text="#{task.name}"> </th>
+                                    <th th:text="#{key.alg}"></th>
+                                    <th th:text="#{task.plan.num}"></th>
+                                    <th th:text="#{key.label}"></th>
+                                    <th th:text="#{template.status}"></th>
+                                    <th th:text="#{mail.config.operator}"></th>
                                 </tr>
                                 </thead>
                                 <tbody></tbody>

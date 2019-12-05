@@ -33,10 +33,9 @@ var adminLog = function () {
                         }},
                     {data: 'operateContent', orderable: true},
                     {data: 'operate', orderable: false,
-                    render: function () {
-
-                        return "";
-                    }}
+                        render: function (data, type, full) {
+                            return template("actionBtn", {data: data, type: type, full: full});
+                        }}
                 ]
             }
         });

@@ -30,10 +30,10 @@
                             <table class="table table-striped table-bordered table-hover " id="orgTables">
                                 <thead>
                                 <tr role="row" class="heading">
-                                    <th> 名称</th>
-                                    <th> 编码</th>
-                                    <th> 上级机构</th>
-                                    <th> 操作</th>
+                                    <th th:text="#{org.name}"></th>
+                                    <th th:text="#{org.code}"></th>
+                                    <th th:text="#{org.parentOrg}"></th>
+                                    <th th:text="#{mail.config.operator}"></th>
                                 </tr>
                                 </thead>
                                 <tbody></tbody>
