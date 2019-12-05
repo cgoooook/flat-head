@@ -15,7 +15,7 @@ import java.util.Map;
  * Created by panzhuowen on 2019/11/26.
  */
 @FlatRestService
-@Path("/api_path/keys")
+@Path("/api/keys")
 public class DeviceKeyPairRest {
 
     @Autowired
@@ -25,7 +25,7 @@ public class DeviceKeyPairRest {
     @POST
     @Consumes(MediaType.APPLICATION_FORM_URLENCODED)
     @Produces(MediaType.APPLICATION_JSON)
-    public Map apply(@QueryParam("type") String type, @QueryParam("token") String token) {
+    public Map apply(@FormParam("type") String type, @FormParam("token") String token) {
         Map<String, Object> result = new HashMap<>();
         try {
             DeviceKeyPair deviceKeyPair = keyPairApplyService.applyKeyPair(type);
@@ -46,7 +46,7 @@ public class DeviceKeyPairRest {
     @GET
     @Consumes(MediaType.APPLICATION_FORM_URLENCODED)
     @Produces(MediaType.APPLICATION_JSON)
-    public Map getApply(@QueryParam("type") String type, @QueryParam("token") String token) {
+    public Map getApply(@FormParam("type") String type, @FormParam("token") String token) {
         return apply(type, token);
     }
 
@@ -54,8 +54,8 @@ public class DeviceKeyPairRest {
     @POST
     @Consumes(MediaType.APPLICATION_FORM_URLENCODED)
     @Produces(MediaType.APPLICATION_JSON)
-    public Map bind(@QueryParam("public") String pubKey, @QueryParam("certificate") String cert,
-                    @QueryParam("serial") String deviceCode, @QueryParam("token") String token) {
+    public Map bind(@FormParam("public") String pubKey, @FormParam("certificate") String cert,
+                    @FormParam("id") String deviceCode, @FormParam("token") String token) {
         Map<String, Object> result = new HashMap<>();
         try {
             BooleanCarrier booleanCarrier = keyPairApplyService.bindKey(pubKey, cert, deviceCode);
@@ -79,7 +79,7 @@ public class DeviceKeyPairRest {
     @POST
     @Consumes(MediaType.APPLICATION_FORM_URLENCODED)
     @Produces(MediaType.APPLICATION_JSON)
-    public Map revoke(@QueryParam("public") String pubKey, @QueryParam("reason") String reason,@QueryParam("token") String token) {
+    public Map revoke(@FormParam("public") String pubKey, @FormParam("reason") String reason,@FormParam("token") String token) {
         Map<String, Object> result = new HashMap<>();
         try {
             BooleanCarrier booleanCarrier = keyPairApplyService.revokeKey(pubKey, reason);
