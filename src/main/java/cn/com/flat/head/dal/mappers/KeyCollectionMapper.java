@@ -24,12 +24,14 @@ public interface KeyCollectionMapper {
 
     int deleteKeyCollection(String collectionId);
 
-    int getCollectionByName(String collectionName);
+    int getCollectionByNameCount(String collectionName);
 
     int delSunKey(@Param("collectionId") String collectionId, @Param("keyId") String keyId);
 
     int addSubKeys(@Param("keyIds")List<String> keyIds, @Param("collectionId")String collectionId);
 
     int getKeyCollectionKeyNum(String collectionId);
+
+    KeyCollection getCollectionByName(String name);
 
 }

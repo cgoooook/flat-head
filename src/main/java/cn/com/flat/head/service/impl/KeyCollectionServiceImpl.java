@@ -129,6 +129,11 @@ public class KeyCollectionServiceImpl implements KeyCollectionService {
     }
 
     @Override
+    public KeyCollection getCollectionByName(String name) {
+        return keyCollectionDao.getCollectionByName(name);
+    }
+
+    @Override
     public boolean addSubKeys(List<String> keyIds, String collectionId) {
         return keyCollectionDao.addSubKeys(keyIds, collectionId) >= 1;
     }

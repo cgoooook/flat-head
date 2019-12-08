@@ -1,8 +1,9 @@
 package cn.com.flat.head.integration;
 
-import cn.com.flat.head.pojo.Key;
-import cn.com.flat.head.pojo.KeyHistory;
+import cn.com.flat.head.pojo.*;
 import cn.com.flat.head.rest.annotation.FlatRestService;
+import cn.com.flat.head.service.DevService;
+import cn.com.flat.head.service.KeyCollectionService;
 import cn.com.flat.head.service.KeyService;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -11,6 +12,7 @@ import javax.ws.rs.*;
 import javax.ws.rs.core.MediaType;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.UUID;
 
 /**
  * Created by panzhuowen on 2019/12/8.
@@ -21,6 +23,12 @@ public class OrgDevAndKeyRest {
 
     @Autowired
     private KeyService keyService;
+
+    @Autowired
+    private DevService devService;
+
+    @Autowired
+    private KeyCollectionService keyCollectionService;
 
     @Path("/key")
     @POST
@@ -79,6 +87,72 @@ public class OrgDevAndKeyRest {
             }
         }
         return result;
+    }
+
+    @Path("/device/add")
+    @POST
+    @Consumes(MediaType.APPLICATION_FORM_URLENCODED)
+    @Produces(MediaType.APPLICATION_JSON)
+    public Map<String, Object> deviceAdd(DeviceRegisterVO deviceRegisterVO) {
+        Map<String, Object> ret = new HashMap<>();
+        String result = checkDevInput(deviceRegisterVO);
+        if (result != null) {
+            ret.put("retcode", 102);
+            ret.put("success", false);
+            ret.put("message", result);
+            return ret;
+        }
+        KeyCollection collectionByName = keyCollectionService.getCollectionByName(deviceRegisterVO.getName());
+        if (collectionByName == null) {
+            ret.put("retcode", 104);
+            ret.put("success", false);
+            ret.put("message", "key set can't find");
+            return ret;
+        }
+        if (!StringUtils.equalsIgnoreCase(collectionByName.getOrgId(), deviceRegisterVO.getOrgid())) {
+            ret.put("retcode", 104);
+            ret.put("success", false);
+            ret.put("message", "key set can't find in org");
+            return ret;
+        }
+        Device device = new Device();
+        device.setDeviceId(UUID.randomUUID().toString());
+        device.setDeviceName(deviceRegisterVO.getName());
+        device.setDeviceIp(deviceRegisterVO.getIp());
+        device.setCollectionId(collectionByName.getCollectionId());
+        device.setOrgId(deviceRegisterVO.getOrgid());
+        device.setDeviceCode(deviceRegisterVO.getId());
+        BooleanCarrier booleanCarrier = devService.addDev(device);
+        if (!booleanCarrier.getResult()) {
+            ret.put("retcode", 304);
+            ret.put("success", false);
+            ret.put("message", booleanCarrier.getMessage());
+            return ret;
+        } else {
+            ret.put("retcode", 0);
+            ret.put("success", true);
+            ret.put("message", "");
+            return ret;
+        }
+    }
+
+    private String checkDevInput(DeviceRegisterVO deviceRegisterVO) {
+        if (StringUtils.isBlank(deviceRegisterVO.getId())) {
+            return "id not be null";
+        }
+        if (StringUtils.isBlank(deviceRegisterVO.getOrgid())) {
+            return "orgid not be null";
+        }
+        if (StringUtils.isBlank(deviceRegisterVO.getName())) {
+            return "name not be null";
+        }
+        if (StringUtils.isBlank(deviceRegisterVO.getKset())) {
+            return "kest not be null";
+        }
+        if (StringUtils.isBlank(deviceRegisterVO.getIp())) {
+            return "ip not be null";
+        }
+        return null;
     }
 
 }
