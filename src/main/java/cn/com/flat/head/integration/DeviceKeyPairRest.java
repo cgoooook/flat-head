@@ -4,6 +4,7 @@ import cn.com.flat.head.pojo.BooleanCarrier;
 import cn.com.flat.head.pojo.DeviceKeyPair;
 import cn.com.flat.head.rest.annotation.FlatRestService;
 import cn.com.flat.head.service.KeyPairApplyService;
+import cn.com.flat.head.service.TokenService;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import javax.ws.rs.*;
@@ -21,6 +22,9 @@ public class DeviceKeyPairRest {
     @Autowired
     private KeyPairApplyService keyPairApplyService;
 
+    @Autowired
+    private TokenService tokenService;
+
     @Path("/apply")
     @POST
     @Consumes(MediaType.APPLICATION_FORM_URLENCODED)
@@ -28,6 +32,13 @@ public class DeviceKeyPairRest {
     public Map apply(@FormParam("type") String type, @FormParam("token") String token) {
         Map<String, Object> result = new HashMap<>();
         try {
+            String s = tokenService.checkToken(token);
+            if (s != null) {
+                result.put("success", false);
+                result.put("retcode", 400);
+                result.put("message", s);
+                return result;
+            }
             DeviceKeyPair deviceKeyPair = keyPairApplyService.applyKeyPair(type);
             result.put("public", deviceKeyPair.getPubKey());
             result.put("value", deviceKeyPair.getPriKey());
@@ -58,6 +69,13 @@ public class DeviceKeyPairRest {
                     @FormParam("id") String deviceCode, @FormParam("token") String token) {
         Map<String, Object> result = new HashMap<>();
         try {
+            String s = tokenService.checkToken(token);
+            if (s != null) {
+                result.put("success", false);
+                result.put("retcode", 400);
+                result.put("message", s);
+                return result;
+            }
             BooleanCarrier booleanCarrier = keyPairApplyService.bindKey(pubKey, cert, deviceCode);
             if (!booleanCarrier.getResult()) {
                 result.put("success", false);
@@ -82,6 +100,13 @@ public class DeviceKeyPairRest {
     public Map revoke(@FormParam("public") String pubKey, @FormParam("reason") String reason,@FormParam("token") String token) {
         Map<String, Object> result = new HashMap<>();
         try {
+            String s = tokenService.checkToken(token);
+            if (s != null) {
+                result.put("success", false);
+                result.put("retcode", 400);
+                result.put("message", s);
+                return result;
+            }
             BooleanCarrier booleanCarrier = keyPairApplyService.revokeKey(pubKey, reason);
             if (!booleanCarrier.getResult()) {
                 result.put("success", false);
