@@ -65,6 +65,9 @@
     <select id="getKeyListByOrgIdExport" resultMap="KeyMap">
         select * from kms_a_key where org_id=#{orgId}
     </select>
+    <select id="getKeyByName" resultMap="KeyMap">
+        select * from kms_a_key where key_name = #{name}
+    </select>
 
 
 </mapper>

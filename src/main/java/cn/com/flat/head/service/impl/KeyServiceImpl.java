@@ -150,6 +150,11 @@ public class KeyServiceImpl implements KeyService {
     }
 
     @Override
+    public Key getKeyByName(String name) {
+        return keyDao.getKeyByName(name);
+    }
+
+    @Override
     public List<KeyHistory> getKeyHistory(String keyId) {
         return keyDao.getKeyHistory(keyId);
     }
@@ -199,5 +204,10 @@ public class KeyServiceImpl implements KeyService {
     @Override
     public List<Key> getCollectionKeyByCollectionId(String collectionId) {
         return keyDao.getKeyListByCollectionId(collectionId);
+    }
+
+    @Override
+    public KeyHistory getKeyHistoryByVersion(String id, String version) {
+        return keyDao.getKeyHistoryVersion(id, version);
     }
 }

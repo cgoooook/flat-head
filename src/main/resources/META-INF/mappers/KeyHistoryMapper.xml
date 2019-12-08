@@ -22,4 +22,7 @@
         select *
         from kms_a_key_history where key_id=#{keyId}
     </select>
+    <select id="getHisoryKeyByVersion" resultType="cn.com.flat.head.pojo.KeyHistory">
+        select * from kms_a_key_history where key_id=#{keyId} and version=#{version}
+    </select>
 </mapper>
