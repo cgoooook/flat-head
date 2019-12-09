@@ -16,4 +16,5 @@ public class AccessToken {
 
     private String rData;
 
+    private String token;
 }

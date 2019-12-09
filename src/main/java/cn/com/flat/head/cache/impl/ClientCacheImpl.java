@@ -24,7 +24,7 @@ public class ClientCacheImpl implements ClientCache {
 
     @Override
     public AccessToken getAccessToken(String cid) {
-        return null;
+        return clientMap.get(cid);
     }
 
     @PostConstruct

@@ -41,16 +41,18 @@ public class TokenRest {
             ret.put("message", "can't find client");
             return ret;
         }
-        Random random = new Random();
-        byte[] clientCode = new byte[16];
-        accessToken.setAccessTime(new Date().getTime());
-        random.nextBytes(clientCode);
-        String rData = new String(Hex.encode(clientCode));
-        accessToken.setRData(rData);
-        tokenService.setClientAccessInfo(accessToken);
+        try{
+            tokenService.generateToken(accessToken);
+        }catch(Exception e)
+        {
+            ret.put("retcode", 500);
+            ret.put("success", false);
+            ret.put("message", e.toString());
+            return ret;
+        }
         ret.put("retcode", 0);
         ret.put("success", true);
-        ret.put("message", rData);
+        ret.put("message", accessToken.getRData());
         return ret;
     }
 

@@ -15,6 +15,7 @@ import java.security.MessageDigest;
 import java.util.Arrays;
 import java.util.Date;
 import java.util.concurrent.ConcurrentHashMap;
+import java.util.Random;
 
 /**
  * Created by panzhuowen on 2019/12/8.
@@ -25,59 +26,27 @@ public class TokenServiceImpl implements TokenService {
     @Value("${rest.checkToken}")
     private String checkToken;
 
-    private ConcurrentHashMap<String, AccessToken> cidMap = new ConcurrentHashMap<>();
+    private ConcurrentHashMap<String, AccessToken> tokenMap = new ConcurrentHashMap<>();
 
 
     @Override
-    public String accessToken(String cid) {
+    public String accessToken(String token) {
         return null;
     }
 
     @Override
     public void setClientAccessInfo(AccessToken accessInfo) {
-        cidMap.put(accessInfo.getCid(), accessInfo);
+        tokenMap.put(accessInfo.getToken(), accessInfo);
     }
 
     @Override
     public String checkToken(String token) {
         try {
             if (StringUtils.equalsIgnoreCase("on", checkToken)) {
-                byte[] tokenBytes = Hex.decode(token);
-                if (tokenBytes.length < 32) {
+                AccessToken atoken = tokenMap.get(token);
+                if (atoken==null)
                     return "token check error";
-                }
-                byte[] clientIdBytes = new byte[32];
-                System.arraycopy(tokenBytes, tokenBytes.length - 32, clientIdBytes, 0, 32);
-                String cid = new String(Hex.encode(clientIdBytes));
-                AccessToken accessToken = cidMap.get(cid);
-                if (accessToken == null) {
-                    return "client not access, please access first.";
-                }
-                if (((new Date().getTime() - accessToken.getAccessTime()) / 1000 / 60) > 30) {
-                    return "token out time.";
-                }
-                byte[] tokenDigest = new byte[32];
-                System.arraycopy(tokenBytes, tokenBytes.length - 64, tokenDigest, 0, 32);
-                String rData = accessToken.getRData();
-                byte[] rDataBytes = Hex.decode(rData);
-                byte[] digestSrc = new byte[rDataBytes.length + clientIdBytes.length];
-                System.arraycopy(rDataBytes, 0, digestSrc, 0, rDataBytes.length);
-                System.arraycopy(clientIdBytes, 0, digestSrc, digestSrc.length - rDataBytes.length, clientIdBytes.length);
-                byte[] sm3Digest = getSM3Digest(digestSrc);
-                if (Arrays.equals(sm3Digest, tokenDigest)) {
-                    return "token check error";
-                }
-                byte[] cipherData = new byte[tokenBytes.length - 64];
-                System.arraycopy(tokenBytes, 0, cipherData, 0, cipherData.length);
-                byte[] keyAndIv = Hex.decode(accessToken.getKey());
-                byte[] key = new byte[16];
-                byte[] iv = new byte[16];
-                System.arraycopy(keyAndIv, 0, key, 0, 16);
-                System.arraycopy(keyAndIv, 16, iv, 0, 16);
-                byte[] sm4CBCDecrypt = getSM4CBCDecrypt(cipherData, key, iv);
-                if (Arrays.equals(sm4CBCDecrypt, rDataBytes)) {
-                    return "token check error";
-                }
+
                 return null;
             } else {
                 return null;
@@ -87,16 +56,60 @@ public class TokenServiceImpl implements TokenService {
         }
     }
 
+    @Override
+    public void generateToken(AccessToken token) throws Exception
+    {
+        Random random = new Random();
+        byte[] clientCode = new byte[16];
+        token.setAccessTime(new Date().getTime());
+        random.nextBytes(clientCode);
+        String rData = new String(Hex.encode(clientCode));
+        token.setRData(rData);
+
+        byte[] cid = Hex.decode(token.getCid());
+
+        byte[] tokenDigest = new byte[32];
+        byte[] digestSrc = new byte[clientCode.length + cid.length];
+        //随机数
+        System.arraycopy(clientCode, 0, digestSrc, 0, clientCode.length);
+        //CID
+        System.arraycopy(cid, 0, digestSrc, clientCode.length, cid.length);
+        byte[] sm3Digest = getSM3Digest(digestSrc);
+
+        byte[] keyAndIv = Hex.decode(token.getKey());
+        byte[] key = new byte[16];
+        byte[] iv = new byte[16];
+        System.arraycopy(keyAndIv, 0, key, 0, 16);
+        System.arraycopy(keyAndIv, 16, iv, 0, 16);
+        byte[] sm4CBC = getSM4CBCEncrypt(clientCode, key, iv);
+
+        byte[] bytes = new byte[sm3Digest.length + sm4CBC.length];
+        System.arraycopy(sm3Digest, 0, bytes, 0, sm3Digest.length);
+        System.arraycopy(sm4CBC, 0, bytes, sm3Digest.length, sm4CBC.length);
+
+        token.setToken(new String(Hex.encode(bytes)));
+
+        setClientAccessInfo(token);
+    }
+
+
     private byte[] getSM3Digest(byte[] src) throws Exception {
         MessageDigest messageDigest = MessageDigest.getInstance("SM3", "BC");
         messageDigest.update(src);
         return messageDigest.digest();
     }
 
-    private byte[] getSM4CBCDecrypt(byte[] out, byte[] key, byte[] iv) throws Exception {
+    private byte[] getSM4CBCDecrypt(byte[] dat, byte[] key, byte[] iv) throws Exception {
         Cipher cipher = Cipher.getInstance("SM4/CBC/NoPadding", "BC");
         Key keySpec = new SecretKeySpec(key, "SM4");
         cipher.init(Cipher.DECRYPT_MODE, keySpec, new IvParameterSpec(iv));
-        return cipher.doFinal(out);
+        return cipher.doFinal(dat);
+    }
+
+    private byte[] getSM4CBCEncrypt(byte[] dat, byte[] key, byte[] iv) throws Exception {
+        Cipher cipher = Cipher.getInstance("SM4/CBC/NoPadding", "BC");
+        Key keySpec = new SecretKeySpec(key, "SM4");
+        cipher.init(Cipher.ENCRYPT_MODE, keySpec, new IvParameterSpec(iv));
+        return cipher.doFinal(dat);
     }
 }

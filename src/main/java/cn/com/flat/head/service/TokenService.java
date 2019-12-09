@@ -11,6 +11,8 @@ public interface TokenService {
 
     void setClientAccessInfo(AccessToken accessInfo);
 
+    void generateToken(AccessToken token) throws Exception;
+
     String checkToken(String token);
 
 }
