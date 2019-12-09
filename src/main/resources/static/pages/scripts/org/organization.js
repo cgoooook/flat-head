@@ -102,7 +102,7 @@ var Org = function () {
                         data: JSON.stringify({
                             orgCode: $("#orgCode").val(),
                             orgName: $("#orgName").val(),
-
+                            properties:$("#properties").val()
                         })
                     }).done(function (data) {
                         if (flat.ajaxCallback(data)) {
@@ -123,7 +123,8 @@ var Org = function () {
                         data: JSON.stringify({
                             orgId :$("#orgId").attr("text"),
                             orgCode: $("#orgCode").val(),
-                            orgName: $("#orgName").val()
+                            orgName: $("#orgName").val(),
+                            properties:$("#properties").val()
                         })
                     }).done(function (data) {
                         if (flat.ajaxCallback(data)) {
