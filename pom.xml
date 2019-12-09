@@ -152,18 +152,12 @@
         <plugins>
             <plugin>
                 <groupId>org.springframework.boot</groupId>
-                <artifactId>spring-boot-maven-plugin</artifactId>
-                <configuration>
-                    <fork>true</fork>
-                </configuration>
-            </plugin>
-            <plugin>
-                <groupId>org.springframework.boot</groupId>
                 <!-- http://docs.spring.io/spring-boot/docs/current/maven-plugin/usage.html -->
                 <artifactId>spring-boot-maven-plugin</artifactId>
                 <configuration>
                     <!-- 部署的 fat jar 打包在工程的根目录的 target 下面 -->
                     <!-- <outputDirectory>../../target</outputDirectory> -->
+                    <fork>true</fork>
                     <finalName>kms-services</finalName>
                     <layout>ZIP</layout>
                     <classifier>executable</classifier>
