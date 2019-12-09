@@ -44,11 +44,14 @@
     <select id="getCollectionByOrgId" resultMap="CollectionMap">
         select * from kms_key_collection where org_id=#{orgId}
     </select>
-    <select id="getCollectionByName" resultType="java.lang.Integer">
+    <select id="getCollectionByNameCount" resultType="java.lang.Integer">
         select count(*) from kms_key_collection where collection_name=#{collectionName}
     </select>
     <select id="getKeyCollectionKeyNum" resultType="java.lang.Integer">
         select count(*) from kms_collection_key where collection_id=#{collectionId}
+    </select>
+    <select id="getCollectionByName" resultMap="CollectionMap">
+        select * from kms_key_collection where collection_name=#{name}
     </select>
 
 </mapper>

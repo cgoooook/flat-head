@@ -63,7 +63,7 @@ public class KeyCollectionDaoImpl implements KeyCollectionDao {
 
     @Override
     public int getCollectionByCollectionName(String name) {
-        return keyCollectionMapper.getCollectionByName(name);
+        return keyCollectionMapper.getCollectionByNameCount(name);
     }
 
     @Override
@@ -89,5 +89,10 @@ public class KeyCollectionDaoImpl implements KeyCollectionDao {
     @Override
     public List<String> getCollectionKeys(String collectionId) {
         return collectionKeysMapper.getCollectionKeyIds(collectionId);
+    }
+
+    @Override
+    public KeyCollection getCollectionByName(String name) {
+        return keyCollectionMapper.getCollectionByName(name);
     }
 }

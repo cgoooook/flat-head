@@ -17,4 +17,6 @@ public class Organization {
 
     private int leaf;
 
+    private String properties;
+
 }

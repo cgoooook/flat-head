@@ -25,6 +25,8 @@ public interface KeyCollectionService {
 
     boolean delSubKey(String collectionId, String keyId);
 
+    KeyCollection getCollectionByName(String name);
+
     boolean addSubKeys(List<String> keyIds, String collectionId);
 
 }

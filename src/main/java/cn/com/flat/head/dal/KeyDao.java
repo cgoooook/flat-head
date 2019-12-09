@@ -26,6 +26,10 @@ public interface KeyDao {
 
     Key getRootKey();
 
+    Key getKeyByName(String name);
+
+    KeyHistory getKeyHistoryVersion(String keyId, String version);
+
     List<Key> getKeyListByOrgId(String orgId, String collectionId);
 
     List<Key> getKeyListByOrgIdNotEmpty(String orgId, String collectionId);

@@ -71,6 +71,16 @@ public class KeyDaoImpl implements KeyDao {
     }
 
     @Override
+    public Key getKeyByName(String name) {
+        return keyMapper.getKeyByName(name);
+    }
+
+    @Override
+    public KeyHistory getKeyHistoryVersion(String keyId, String version) {
+        return keyHistoryMapper.getHisoryKeyByVersion(keyId, version);
+    }
+
+    @Override
     public List<Key> getKeyListByOrgId(String orgId, String collectionId) {
         return keyMapper.getKeyListByOrgId(orgId, collectionId);
     }
