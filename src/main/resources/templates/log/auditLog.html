@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <title>index</title>
     <th:block th:include="includes/header :: styles"/>
-    <link rel="stylesheet" th:href="@{/plugins/bootstrap-datetimepicker/css/bootstrap-datetimepicker.min.css}" type="text/css">
+    <link type="text/css" rel="stylesheet" th:href="@{/plugins/bootstrap-daterangepicker/daterangepicker.min.css}">
     <style type="text/css">
         .table .btn {
             margin-right: 0;
@@ -39,6 +39,7 @@
                                     <th width="10%" th:text="#{system.user}"></th>
                                     <th width="30%" th:text="#{mail.config.date}"></th>
                                     <th width="10%" th:text="#{system.result}"></th>
+                                    <th width="10%" th:text="#{common.audit}"></th>
                                     <th width="30%" th:text="#{mail.config.content}"></th>
                                     <th width="10%" th:text="#{mail.config.operator}"></th>
                                 </tr>
@@ -81,23 +82,13 @@
                                     </th>
                                     <th></th>
                                     <th>
-                                        <div class="input-group date date-picker margin-bottom-5"
-                                             data-date-format="dd/mm/yyyy">
-                                            <input type="text" class="form-control form-filter datepicker input-sm" readonly
-                                                   id="beginTime"  name="order_date_from" placeholder="start time">
-                                            <span class="input-group-btn" id="timeBegin">
-                                                                <button class="btn btn-sm default"  type="button">
-                                                                    <i class="fa fa-calendar"></i>
-                                                                </button>
-                                                            </span>
-
-                                            <input type="text" class="form-control form-filter datepicker input-sm" readonly
-                                                   id="endTime"  name="order_date_from" placeholder="End time">
-                                            <span class="input-group-btn" id="timespan">
-                                                                <button class="btn btn-sm default"  type="button">
-                                                                    <i class="fa fa-calendar"></i>
-                                                                </button>
-                                                            </span>
+                                        <div class="input-group" id="defaultrange">
+                                            <input type="text" class="form-control">
+                                            <span class="input-group-btn">
+                                                            <button class="btn default date-range-toggle" type="button">
+                                                                <i class="fa fa-calendar"></i>
+                                                            </button>
+                                                        </span>
                                         </div>
                                     </th>
                                     <th>
@@ -107,6 +98,7 @@
                                             <option value="2" th:text="#{operator.status2}"></option>
                                         </select>
                                     </th>
+                                    <th></th>
                                     <th></th>
                                     <th>
                                         <button class="btn btn-sm green btn-outline filter-submit margin-bottom" >
@@ -132,14 +124,15 @@
 </div>
 <th:block th:include="includes/footer :: footer"/>
 <th:block th:include="includes/scripts :: scripts"/>
-<script type="text/javascript" th:src="@{/plugins/bootstrap-datetimepicker/js/bootstrap-datetimepicker.min.js}"></script>
-<script type="text/javascript" th:src="@{'/plugins/bootstrap-datetimepicker/js/locales/bootstrap-datetimepicker.' + ${#locale.language + '-' + #locale.country} + '.js'}"></script>
+
+<script type="text/javascript" th:src="@{/plugins/bootstrap-daterangepicker/moment.min.js}"></script>
+<script type="text/javascript" th:src="@{/plugins/bootstrap-daterangepicker/daterangepicker.min.js}"></script>
 <script id="actionBtn" type="text/html">
 
-    {{if full.status != 1}}
-    <a class="enable btn btn-outline default btn-xs green"><i class="fa fa-eye"></i>{{i18n('common.Audited')}}</a>
+    {{if full.auditFlag == 1}}
+    <a class=" btn btn-outline default btn-xs green"><i class="fa fa-eye"></i>{{i18n('common.Audited')}}</a>
     {{else}}
-    <a class="run btn btn-outline default btn-xs yellow"><i class="fa fa-eye-slash"></i>{{i18n('common.audit')}}</a>
+    <a class="audit btn btn-outline default btn-xs yellow"><i class="fa fa-eye-slash"></i>{{i18n('common.audit')}}</a>
     {{/if}}
 
 </script>
