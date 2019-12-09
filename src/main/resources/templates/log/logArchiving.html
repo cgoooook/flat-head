@@ -57,9 +57,9 @@
 
                                             <div class="col-md-6">
                                                 <select class="form-control" id="result">
-                                                    <option value="">请选择</option>
-                                                    <option value="1">成功</option>
-                                                    <option value="0">失败</option>
+                                                    <option value="" th:text="#{common.pleaseSelect}"></option>
+                                                    <option value="1" th:text="#{operator.status1}"></option>
+                                                    <option value="2" th:text="#{operator.status2}"></option>
 
                                                 </select>
                                             </div>
@@ -81,10 +81,9 @@
 
                                             <div class="col-md-6">
                                                 <select class="form-control" id="strategy">
-                                                    <option value="">请选择</option>
-                                                    <option value="day">按天</option>
-                                                    <option value="time">按时间</option>
-
+                                                    <option value="" th:text="#{common.pleaseSelect}"></option>
+                                                    <option value="day"  th:text="#{system.bydays}"></option>
+                                                    <option value="time"  th:text="#{system.bytime}"></option>
                                                 </select>
                                             </div>
                                         </div>

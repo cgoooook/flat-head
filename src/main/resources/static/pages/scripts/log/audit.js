@@ -4,19 +4,21 @@ var audit = function () {
     var $table;
 
     var handleTables = function () {
+
         grid = new Datatable();
         $table = $("#ajax_tables");
         grid.init({
             src: $table,
             onQuery:function (data) {
                 data.operateType=$("#operationType option:selected").val();
-                data.operatorResult=$("#operateResultQuery option:selected").val();
+                data.operatorResult= Number($("#operateResultQuery option:selected").val());
                 data.operateTimeBegin=$("#beginTime").val();
                 data.operateTimeEnd=$("#endTime").val();
 
             },
             dataTable: {
                 ajax: {
+                    method:"POST",
                     url: "/log/audit/list"
                 },
                 "columns": [

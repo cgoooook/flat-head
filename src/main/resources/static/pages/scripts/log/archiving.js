@@ -38,7 +38,18 @@ var archiving = function () {
 
 
 
+
     };
+
+    function changeFunc() {
+        $("#strategy").on('change',function(){
+
+            alert($("#strategy option:selected").val());
+
+        });
+    }
+
+
 
     function initDatePicker() {
         $("input.datepicker").datetimepicker({
@@ -57,6 +68,7 @@ var archiving = function () {
         init: function () {
             handleinit();
             initDatePicker();
+            changeFunc();
         }
     }
 

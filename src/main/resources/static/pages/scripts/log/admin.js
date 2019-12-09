@@ -10,13 +10,14 @@ var adminLog = function () {
             src: $table,
             onQuery:function (data) {
                 data.operateType=$("#operationType option:selected").val();
-                data.operatorResult=$("#operateResultQuery option:selected").val();
+                data.operatorResult=Number($("#operateResultQuery option:selected").val());
                 data.operateTimeBegin=$("#beginTime").val();
                 data.operateTimeEnd=$("#endTime").val();
 
             },
             dataTable: {
                 ajax: {
+                    method:"post",
                     url: "/log/manage/list"
                 },
                 "columns": [
