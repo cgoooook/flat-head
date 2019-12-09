@@ -14,7 +14,7 @@ import java.util.*;
  * Created by panzhuowen on 2019/12/8.
  */
 @FlatRestService
-@Path("/apis/org")
+@Path("/api/org")
 public class OrgDevAndKeyRest {
 
     @Autowired
