@@ -1,9 +1,13 @@
 package cn.com.flat.head.service.impl;
 
+import cn.com.flat.head.dal.ConfigDao;
 import cn.com.flat.head.pojo.AccessToken;
 import cn.com.flat.head.service.TokenService;
 import org.apache.commons.lang3.StringUtils;
 import org.bouncycastle.util.encoders.Hex;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
@@ -23,8 +27,13 @@ import java.util.Random;
 @Service
 public class TokenServiceImpl implements TokenService {
 
+    private static Logger logger = LoggerFactory.getLogger(TokenServiceImpl.class);
+
     @Value("${rest.checkToken}")
     private String checkToken;
+
+    @Autowired
+    private ConfigDao configDao;
 
     private ConcurrentHashMap<String, AccessToken> tokenMap = new ConcurrentHashMap<>();
 
@@ -53,6 +62,40 @@ public class TokenServiceImpl implements TokenService {
             }
         } catch (Exception e) {
             return "token check error";
+        }
+    }
+
+    @Override
+    public String convertKeyEnc(String key, String cid) {
+        try {
+            if (StringUtils.isBlank(cid)) {
+                return key;
+            } else {
+                AccessToken accessToken = tokenMap.get(cid);
+                byte[] plainKey = getPlainKey(Hex.decode(key));
+                String sessionKey = accessToken.getKey();
+                byte[] sessionKeyBytes = Hex.decode(sessionKey);
+                byte[] clientKey = new byte[16];
+                byte[] clientIv = new byte[16];
+                System.arraycopy(sessionKeyBytes, 0, clientKey, 0, 16);
+                System.arraycopy(sessionKeyBytes, 16, clientIv, 0, 16);
+                byte[] sm4CBCEncrypt = getSM4CBCEncrypt(plainKey, clientKey, clientIv);
+                return new String(Hex.encode(sm4CBCEncrypt));
+            }
+        } catch (Exception e) {
+            return null;
+        }
+    }
+
+    @Override
+    public String getCid(String token) {
+        if (StringUtils.isBlank(token)) {
+            return null;
+        } else {
+            byte[] decode = Hex.decode(token);
+            byte[] cidBytes = new byte[32];
+            System.arraycopy(decode, decode.length - 32, cidBytes, 0, 32);
+            return new String(Hex.encode(cidBytes));
         }
     }
 
@@ -111,5 +154,20 @@ public class TokenServiceImpl implements TokenService {
         Key keySpec = new SecretKeySpec(key, "SM4");
         cipher.init(Cipher.ENCRYPT_MODE, keySpec, new IvParameterSpec(iv));
         return cipher.doFinal(dat);
+    }
+
+    private byte[] getPlainKey(byte[] key) throws Exception {
+        try {
+            String dmk = configDao.getDMK();
+            byte[] plainDMK = Hex.decode(dmk);
+            Cipher cipher = Cipher.getInstance("SM4/ECB/NoPadding", "BC");
+            Key keySpec = new SecretKeySpec(plainDMK, "SM4");
+            cipher.init(Cipher.DECRYPT_MODE, keySpec);
+            return cipher.doFinal(key);
+        } catch (Exception e) {
+            logger.error("get key plaintext error", e);
+            throw e;
+        }
+
     }
 }

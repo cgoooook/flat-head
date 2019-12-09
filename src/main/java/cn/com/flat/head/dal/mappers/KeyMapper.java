@@ -35,4 +35,6 @@ public interface KeyMapper {
     List<Key> getKeyListByCollectionId(String collectionId);
 
     List<Key> getKeyListByOrgIdExport(String orgId);
+
+    List<Key> getKeyListByOrgIdAndCollectionId(@Param("orgId") String orgId, @Param("collectionId")String collectionId);
 }

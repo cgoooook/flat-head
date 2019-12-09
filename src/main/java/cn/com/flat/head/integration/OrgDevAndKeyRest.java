@@ -4,6 +4,7 @@ import cn.com.flat.head.pojo.*;
 import cn.com.flat.head.rest.annotation.FlatRestService;
 import cn.com.flat.head.service.*;
 import org.apache.commons.lang3.StringUtils;
+import org.jboss.resteasy.annotations.Form;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import javax.ws.rs.*;
@@ -46,6 +47,7 @@ public class OrgDevAndKeyRest {
             result.put("message", s);
             return result;
         }
+        String cid = tokenService.getCid(token);
         if (StringUtils.isBlank(name) && StringUtils.isBlank(id)) {
             result.put("retcode", 101);
             result.put("success", false);
@@ -70,7 +72,14 @@ public class OrgDevAndKeyRest {
             result.put("message", "can't find key by name or id");
             return result;
         }
-        if (!StringUtils.equalsIgnoreCase(key.getOrgId(), orgId)) {
+        Organization orgByOrgCode = orgService.getOrgByOrgCode(orgId);
+        if (orgByOrgCode == null) {
+            result.put("retcode", 104);
+            result.put("success", false);
+            result.put("message", "org  can't find");
+            return result;
+        }
+        if (!StringUtils.equalsIgnoreCase(key.getOrgId(), orgByOrgCode.getOrgId())) {
             result.put("retcode", 103);
             result.put("success", false);
             result.put("message", "can't find key by orgid");
@@ -79,7 +88,7 @@ public class OrgDevAndKeyRest {
         if (StringUtils.isBlank(version) || StringUtils.equalsIgnoreCase("0", version)) {
             result.put("retcode", 0);
             result.put("success", true);
-            result.put("message", "");
+            result.put("message", tokenService.convertKeyEnc(key.getKeyValue(), cid) + ":" + key.getCheckValue());
             return result;
         } else {
             if (!StringUtils.equalsIgnoreCase(version, key.getVersion() + "")) {
@@ -91,7 +100,7 @@ public class OrgDevAndKeyRest {
                 } else {
                     result.put("retcode", 0);
                     result.put("success", true);
-                    result.put("message", "");
+                    result.put("message", tokenService.convertKeyEnc(keyHistoryByVersion.getKeyValue(), cid) + ":" + keyHistoryByVersion.getCheckValue());
                 }
             }
         }
@@ -102,7 +111,7 @@ public class OrgDevAndKeyRest {
     @POST
     @Consumes(MediaType.APPLICATION_FORM_URLENCODED)
     @Produces(MediaType.APPLICATION_JSON)
-    public Map<String, Object> deviceAdd(DeviceRegisterVO deviceRegisterVO) {
+    public Map<String, Object> deviceAdd(@Form DeviceRegisterVO deviceRegisterVO) {
         Map<String, Object> ret = new HashMap<>();
         String s = tokenService.checkToken(deviceRegisterVO.getToken());
         if (s != null) {
@@ -118,14 +127,21 @@ public class OrgDevAndKeyRest {
             ret.put("message", result);
             return ret;
         }
-        KeyCollection collectionByName = keyCollectionService.getCollectionByName(deviceRegisterVO.getName());
+        KeyCollection collectionByName = keyCollectionService.getCollectionByName(deviceRegisterVO.getKset());
         if (collectionByName == null) {
             ret.put("retcode", 104);
             ret.put("success", false);
             ret.put("message", "key set can't find");
             return ret;
         }
-        if (!StringUtils.equalsIgnoreCase(collectionByName.getOrgId(), deviceRegisterVO.getOrgid())) {
+        Organization orgByOrgCode = orgService.getOrgByOrgCode(deviceRegisterVO.getOrgid());
+        if (orgByOrgCode == null) {
+            ret.put("retcode", 104);
+            ret.put("success", false);
+            ret.put("message", "org  can't find");
+            return ret;
+        }
+        if (!StringUtils.equalsIgnoreCase(collectionByName.getOrgId(), orgByOrgCode.getOrgId())) {
             ret.put("retcode", 104);
             ret.put("success", false);
             ret.put("message", "key set can't find in org");
@@ -165,6 +181,7 @@ public class OrgDevAndKeyRest {
             ret.put("message", s);
             return ret;
         }
+        String cid = tokenService.getCid(token);
         Organization orgByOrgCode = orgService.getOrgByOrgCode(orgId);
         if (orgByOrgCode == null) {
             ret.put("success", false);
@@ -175,13 +192,13 @@ public class OrgDevAndKeyRest {
         List<KeyCollection> keyCollectionByOrgId = keyCollectionService.getKeyCollectionByOrgId(orgByOrgCode.getOrgId());
         Map<String, List<OrgKeyVO>> keySets = new HashMap<>();
         for (KeyCollection keyCollection : keyCollectionByOrgId) {
-            List<Key> keyListByOrgId = keyService.getKeyListByOrgId(orgId, keyCollection.getCollectionId());
+            List<Key> keyListByOrgId = keyService.getKeyListByOrgIdForRest(orgByOrgCode.getOrgId(), keyCollection.getCollectionId());
             List<OrgKeyVO> keyVOS = new ArrayList<>();
             keyListByOrgId.forEach(key -> {
                 OrgKeyVO orgKeyVO = new OrgKeyVO();
                 orgKeyVO.setId(key.getKeyId());
                 orgKeyVO.setName(key.getKeyName());
-                orgKeyVO.setValue(key.getKeyValue());
+                orgKeyVO.setValue(tokenService.convertKeyEnc(key.getKeyValue(), cid));
                 orgKeyVO.setCode(key.getCheckValue());
                 orgKeyVO.setVersion(key.getVersion() + "");
                 keyVOS.add(orgKeyVO);

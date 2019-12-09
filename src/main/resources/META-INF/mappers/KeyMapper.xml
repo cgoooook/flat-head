@@ -68,6 +68,10 @@
     <select id="getKeyByName" resultMap="KeyMap">
         select * from kms_a_key where key_name = #{name}
     </select>
+    <select id="getKeyListByOrgIdAndCollectionId" resultMap="KeyMap">
+        select kak.* from kms_a_key kak , kms_collection_key kck where kak.org_id=#{orgId}  and kak.status=2
+            and kak.key_id = kck.key_id and kck.collection_id=#{collectionId}
+    </select>
 
 
 </mapper>
