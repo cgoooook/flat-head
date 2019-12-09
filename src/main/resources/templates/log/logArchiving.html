@@ -4,6 +4,7 @@
     <meta charset="UTF-8">
     <title>index</title>
     <th:block th:include="includes/header :: styles"/>
+    <link type="text/css" rel="stylesheet" th:href="@{/plugins/bootstrap-daterangepicker/daterangepicker.min.css}">
 </head>
 <body class="page-header-fixed page-sidebar-closed-hide-logo page-content-white">
 <th:block th:include="includes/top :: top"/>
@@ -33,11 +34,37 @@
 
                                             <div class="col-sm-6">
                                                 <select class="form-control" id="type">
-                                                    <option value="">请选择</option>
-                                                    <option value="logIn">登录系统</option>
-                                                    <option value="createKey">生成密钥</option>
-                                                    <option value="createUser">创建用户</option>
-
+                                                    <option value="" th:text="#{common.pleaseSelect}"></option>
+                                                    <option value="addUser" th:text="#{log.addUser}"></option>
+                                                    <option value="updateUser" th:text="#{log.updateUser}"></option>
+                                                    <option value="deleteUser" th:text="#{log.deleteUser}"></option>
+                                                    <option value="addOrg" th:text="#{log.addOrg}"></option>
+                                                    <option value="updateOrg" th:text="#{log.updateOrg}"></option>
+                                                    <option value="deleteOrg" th:text="#{log.deleteOrg}"></option>
+                                                    <option value="exportOrg" th:text="#{log.exportOrg}"></option>
+                                                    <option value="addTemplate" th:text="#{log.addTemplate}"></option>
+                                                    <option value="updateTemplate" th:text="#{log.updateTemplate}"></option>
+                                                    <option value="deleteTemplate" th:text="#{log.deleteTemplate}"></option>
+                                                    <option value="addKey" th:text="#{log.addKey}"></option>
+                                                    <option value="updateKey" th:text="#{log.updateKey}"></option>
+                                                    <option value="archiveKey" th:text="#{log.archiveKey}"></option>
+                                                    <option value="enableKey" th:text="#{log.enableKey}"></option>
+                                                    <option value="disableKey" th:text="#{log.disableKey}"></option>
+                                                    <option value="deleteKey" th:text="#{log.deleteKey}"></option>
+                                                    <option value="importKey" th:text="#{log.importKey}"></option>
+                                                    <option value="addCollection" th:text="#{log.addCollection}"></option>
+                                                    <option value="updateCollection" th:text="#{log.updateCollection}"></option>
+                                                    <option value="deleteCollection" th:text="#{log.deleteCollection}"></option>
+                                                    <option value="addDevice" th:text="#{log.addDevice}"></option>
+                                                    <option value="updateDevice" th:text="#{log.updateDevice}"></option>
+                                                    <option value="deleteDevice" th:text="#{log.deleteDevice}"></option>
+                                                    <option value="jdbcConfig" th:text="#{log.jdbcConfig}"></option>
+                                                    <option value="logConfig" th:text="#{log.logConfig}"></option>
+                                                    <option value="uiConfig" th:text="#{log.uiConfig}"></option>
+                                                    <option value="mailConfig" th:text="#{log.mailConfig}"></option>
+                                                    <option value="addTask" th:text="#{log.addTask}"></option>
+                                                    <option value="updateTask" th:text="#{log.updateTask}"></option>
+                                                    <option value="deleteTask" th:text="#{log.deleteTask}"></option>
                                                 </select>
                                             </div>
                                         </div>
@@ -53,7 +80,6 @@
                                                     th:text="#{mail.config.result}"></span>
                                                 <span class="required" aria-required="true">* </span>
                                             </label>
-
 
                                             <div class="col-md-6">
                                                 <select class="form-control" id="result">
@@ -93,38 +119,25 @@
                             </div>
 
                             <div class="row">
-                                <div class="col-md-12">
+                                <div class="col-md-12" id="timeArchive" style="display: none">
                                     <div class="col-md-10">
                                         <div class="form-group">
                                             <label class="control-label col-md-4">
                                                 <span th:text="#{common.selectTime}"></span>
                                                 <span class="required" aria-required="true">* </span>
                                             </label>
-                                            <div class="input-group date date-picker col-md-6"
-                                                 data-date-format="dd/mm/yyyy">
-                                                <input type="text" class="form-control form-filter datepicker input-sm"
-                                                       readonly
-                                                       id="beginTime" name="order_date_from" placeholder="start time">
-                                                <span class="input-group-btn" id="timeBegin">
-                                                                <button class="btn btn-sm default" type="button">
-                                                                    <i class="fa fa-calendar"></i>
-                                                                </button>
-                                                            </span>
-
-                                                <input type="text" class="form-control form-filter datepicker input-sm"
-                                                       readonly
-                                                       id="endTime" name="order_date_from" placeholder="End time">
-                                                <span class="input-group-btn" id="timespan">
-                                                                <button class="btn btn-sm default" type="button">
-                                                                    <i class="fa fa-calendar"></i>
-                                                                </button>
-                                                            </span>
+                                            <div class="col-md-6">
+                                                <div id="reportrange" class="btn default">
+                                                    <i class="fa fa-calendar"></i> &nbsp;
+                                                    <span> </span>
+                                                    <b class="fa fa-angle-down"></b>
+                                                </div>
                                             </div>
                                         </div>
                                     </div>
                                 </div>
                             </div>
-                            <div class="row">
+                            <div class="row" id="dayArchive" style="display: none">
                                 <div class="col-md-12">
                                     <div class="col-md-10">
                                         <div class="form-group">
@@ -162,9 +175,9 @@
 <th:block th:include="includes/scripts :: scripts"/>
 
 
+<script type="text/javascript" th:src="@{/plugins/bootstrap-daterangepicker/moment.min.js}"></script>
+<script type="text/javascript" th:src="@{/plugins/bootstrap-daterangepicker/daterangepicker.min.js}"></script>
 
-<script type="text/javascript" th:src="@{/plugins/bootstrap-datetimepicker/js/bootstrap-datetimepicker.min.js}"></script>
-<script type="text/javascript" th:src="@{'/plugins/bootstrap-datetimepicker/js/locales/bootstrap-datetimepicker.' + ${#locale.language + '-' + #locale.country} + '.js'}"></script>
 <script th:src="@{/pages/scripts/log/archiving.js}" type="text/javascript"></script>
 <script type="text/javascript">
     $(function () {

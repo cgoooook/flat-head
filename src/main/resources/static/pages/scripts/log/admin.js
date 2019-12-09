@@ -21,7 +21,11 @@ var adminLog = function () {
                     url: "/log/manage/list"
                 },
                 "columns": [
-                    {data: 'operateType', orderable: true},
+                    {data: 'operateType', orderable: true,
+                        render: function (data, type, full) {
+                            return flat.i18n("log." + data);
+                        }
+                    },
                     {data: 'operateUser', orderable: true},
                     {data: 'operateTime', orderable: true,render: function (data, type, full) {
                             var unixTimestamp = new Date( data) ;
@@ -35,7 +39,7 @@ var adminLog = function () {
                     {data: 'operateContent', orderable: true},
                     {data: 'operate', orderable: false,
                         render: function (data, type, full) {
-                            return template("actionBtn", {data: data, type: type, full: full});
+                            return "";
                         }}
                 ]
             }

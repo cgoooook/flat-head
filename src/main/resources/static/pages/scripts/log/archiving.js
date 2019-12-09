@@ -1,23 +1,17 @@
 var archiving = function () {
 
     var handleinit= function () {
-        $("input.datepicker").datetimepicker({
-            isRTL: App.isRTL(),
-            language: DATETIME_PICKER,
-            format: "yyyy-mm-dd HH:mm:ss",
-            autoclose: true,
-            todayBtn: true,
-            pickerPosition: (App.isRTL() ? "bottom-right" : "bottom-left"),
-            minuteStep: 10
-        });
 
         $("#archiving").on('click', function () {
+            var operationTime = $("#reportrange span").html();
+            var ationTime = operationTime.split(" - ")[0];
+            var endTime = operationTime.split(" - ")[1];
             var data =JSON.stringify({
                 operateType : $("#type option:selected").val(),
                 operatorResult : $("#result option:selected").val(),
                 strategy : $("#strategy option:selected").val(),
-                operateTimeBegin :$("#beginTime").val(),
-                operateTimeEnd :$("#endTime").val(),
+                operateTimeBegin :ationTime,
+                operateTimeEnd :endTime,
                 maxActive :$("#maxActive").val()
             });
             console.log(data);
@@ -43,24 +37,62 @@ var archiving = function () {
 
     function changeFunc() {
         $("#strategy").on('change',function(){
-
-            alert($("#strategy option:selected").val());
-
+            var $this = $(this);
+            var star = $this.val();
+            if (star === 'day') {
+                $("#dayArchive").css("display", "block");
+                $("#timeArchive").css("display", "none");
+            } else {
+                $("#dayArchive").css("display", "none");
+                $("#timeArchive").css("display", "block");
+            }
         });
     }
 
 
 
     function initDatePicker() {
-        $("input.datepicker").datetimepicker({
-            isRTL: App.isRTL(),
-            language: DATETIME_PICKER,
-            format: "yyyy-mm-dd HH:mm:ss",
-            autoclose: true,
-            todayBtn: true,
-            pickerPosition: (App.isRTL() ? "bottom-right" : "bottom-left"),
-            minuteStep: 10
-        });
+        $('#reportrange').daterangepicker({
+                opens: (App.isRTL() ? 'left' : 'right'),
+                startDate: moment().subtract('', 29),
+                endDate: moment(),
+                dateLimit: {
+                    days: 60
+                },
+                showDropdowns: true,
+                showWeekNumbers: false,
+                timePicker: true,
+                timePickerIncrement: 2,
+                timePicker12Hour: true,
+                ranges: {
+                    '今天': [moment(), moment()],
+                    '昨天': [moment().subtract('days', 1), moment().subtract('days', 1)],
+                    '最近7天': [moment().subtract('days', 6), moment()],
+                    '最近30天': [moment().subtract('days', 29), moment()],
+                    '这个月': [moment().startOf('month'), moment().endOf('month')],
+                    '上个月': [moment().subtract('month', 1).startOf('month'), moment().subtract('month', 1).endOf('month')]
+                },
+                buttonClasses: ['btn'],
+                applyClass: 'green',
+                cancelClass: 'default',
+                separator: ' 至 ',
+                locale: {
+                    format: "YYYY-MM-DD HH:mm:ss",
+                    applyLabel: '确认',
+                    cancelLabel: '清除',
+                    fromLabel: '从',
+                    toLabel: '至',
+                    customRangeLabel: '自定义范围',
+                    daysOfWeek: ['日', '一', '二', '三', '四', '五', '六'],
+                    monthNames: ['一月', '二月', '三月', '四月', '五月', '六月', '七月', '八月', '九月', '十月', '十一月', '十二月'],
+                    firstDay: 1
+                }
+            },
+            function (start, end) {
+                $('#reportrange span').html(start.format('YYYY-MM-DD HH:mm:ss') + ' - ' + end.format('YYYY-MM-DD HH:mm:ss'));
+            }
+        );
+        $('#reportrange span').html(moment().subtract('days', 29).format('YYYY-MM-DD HH:mm:ss') + ' - ' + moment().format('YYYY-MM-DD HH:mm:ss'));
     }
 
 
