@@ -15,7 +15,7 @@ public interface TokenService {
 
     String checkToken(String token);
 
-    String convertKeyEnc(String key, String cid);
+    String convertKeyEnc(String key, String token);
 
     String getCid(String token);
 

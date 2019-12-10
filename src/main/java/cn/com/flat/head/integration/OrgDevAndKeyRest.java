@@ -181,7 +181,6 @@ public class OrgDevAndKeyRest {
             ret.put("message", s);
             return ret;
         }
-        String cid = tokenService.getCid(token);
         Organization orgByOrgCode = orgService.getOrgByOrgCode(orgId);
         if (orgByOrgCode == null) {
             ret.put("success", false);
@@ -198,7 +197,7 @@ public class OrgDevAndKeyRest {
                 OrgKeyVO orgKeyVO = new OrgKeyVO();
                 orgKeyVO.setId(key.getKeyId());
                 orgKeyVO.setName(key.getKeyName());
-                orgKeyVO.setValue(tokenService.convertKeyEnc(key.getKeyValue(), cid));
+                orgKeyVO.setValue(tokenService.convertKeyEnc(key.getKeyValue(), token));
                 orgKeyVO.setCode(key.getCheckValue());
                 orgKeyVO.setVersion(key.getVersion() + "");
                 keyVOS.add(orgKeyVO);

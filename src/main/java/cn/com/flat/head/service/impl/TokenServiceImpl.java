@@ -66,12 +66,13 @@ public class TokenServiceImpl implements TokenService {
     }
 
     @Override
-    public String convertKeyEnc(String key, String cid) {
+    public String convertKeyEnc(String key, String token) {
         try {
-            if (StringUtils.isBlank(cid)) {
+            if (StringUtils.isBlank(token)) {
                 return key;
             } else {
-                AccessToken accessToken = tokenMap.get(cid);
+            	token = token.toLowerCase();
+                AccessToken accessToken = tokenMap.get(token);
                 byte[] plainKey = getPlainKey(Hex.decode(key));
                 String sessionKey = accessToken.getKey();
                 byte[] sessionKeyBytes = Hex.decode(sessionKey);
@@ -110,25 +111,23 @@ public class TokenServiceImpl implements TokenService {
         token.setRData(rData);
 
         byte[] cid = Hex.decode(token.getCid());
-
-        byte[] tokenDigest = new byte[32];
         byte[] digestSrc = new byte[clientCode.length + cid.length];
         //随机数
         System.arraycopy(clientCode, 0, digestSrc, 0, clientCode.length);
         //CID
         System.arraycopy(cid, 0, digestSrc, clientCode.length, cid.length);
         byte[] sm3Digest = getSM3Digest(digestSrc);
-
+        
         byte[] keyAndIv = Hex.decode(token.getKey());
         byte[] key = new byte[16];
         byte[] iv = new byte[16];
         System.arraycopy(keyAndIv, 0, key, 0, 16);
         System.arraycopy(keyAndIv, 16, iv, 0, 16);
         byte[] sm4CBC = getSM4CBCEncrypt(clientCode, key, iv);
-
+        
         byte[] bytes = new byte[sm3Digest.length + sm4CBC.length];
-        System.arraycopy(sm3Digest, 0, bytes, 0, sm3Digest.length);
-        System.arraycopy(sm4CBC, 0, bytes, sm3Digest.length, sm4CBC.length);
+        System.arraycopy(sm4CBC, 0, bytes, 0, sm4CBC.length);
+        System.arraycopy(sm3Digest, 0, bytes, sm4CBC.length, sm3Digest.length);
 
         token.setToken(new String(Hex.encode(bytes)));
 
