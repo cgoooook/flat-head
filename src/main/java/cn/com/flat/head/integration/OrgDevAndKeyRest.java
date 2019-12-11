@@ -147,12 +147,13 @@ public class OrgDevAndKeyRest {
             ret.put("message", "key set can't find in org");
             return ret;
         }
+
         Device device = new Device();
         device.setDeviceId(UUID.randomUUID().toString());
         device.setDeviceName(deviceRegisterVO.getName());
         device.setDeviceIp(deviceRegisterVO.getIp());
         device.setCollectionId(collectionByName.getCollectionId());
-        device.setOrgId(deviceRegisterVO.getOrgid());
+        device.setOrgId(orgByOrgCode.getOrgId());
         device.setDeviceCode(deviceRegisterVO.getId());
         BooleanCarrier booleanCarrier = devService.addDev(device);
         if (!booleanCarrier.getResult()) {
