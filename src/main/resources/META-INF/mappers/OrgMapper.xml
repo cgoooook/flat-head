@@ -9,6 +9,7 @@
         <result column="parent_id" property="parentId" />
         <result column="parent_name" property="parentName" />
         <result column="leaf" property="leaf" />
+        <result column="properties" property="properties" />
     </resultMap>
 
     <resultMap id="OrgTreeMap" type="cn.com.flat.head.pojo.OrgTreeBo">
@@ -49,12 +50,13 @@
             org_name,
             org_code,
             parent_id,
-            leaf
-        ) value (#{orgId},#{orgName},#{orgCode},#{parentId},#{leaf})
+            leaf,
+            properties
+        ) value (#{orgId},#{orgName},#{orgCode},#{parentId},#{leaf}, #{properties})
     </insert>
 
     <update id="editOrg">
-        update kms_org set org_name =#{orgName},org_code=#{orgCode}
+        update kms_org set org_name =#{orgName},org_code=#{orgCode}, properties=#{properties}
         where org_id =#{orgId}
     </update>
 

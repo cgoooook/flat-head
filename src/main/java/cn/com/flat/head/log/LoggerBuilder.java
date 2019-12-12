@@ -12,8 +12,14 @@ import java.util.Date;
 public class LoggerBuilder {
 
     public static Log builder(String opType, boolean optResult, String optContent) {
-        Subject currentUser = SecurityUtils.getSubject();
-        String principal = (String) currentUser.getPrincipal();
+        String principal;
+        try {
+            Subject currentUser = SecurityUtils.getSubject();
+            principal = (String) currentUser.getPrincipal();
+        } catch (Exception ignore) {
+            principal = "restOrNone";
+        }
+
         return new Log(opType, principal, new Date(), optResult ? 1 : 0, optContent);
     }
 

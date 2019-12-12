@@ -210,4 +210,9 @@ public class KeyServiceImpl implements KeyService {
     public KeyHistory getKeyHistoryByVersion(String id, String version) {
         return keyDao.getKeyHistoryVersion(id, version);
     }
+
+    @Override
+    public List<Key> getKeyListByOrgIdForRest(String orgId, String collectionId) {
+        return keyDao.getKeyByOrgIdAndCollectionId(orgId, collectionId);
+    }
 }

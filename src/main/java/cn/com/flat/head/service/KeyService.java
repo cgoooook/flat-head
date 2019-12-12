@@ -35,4 +35,6 @@ public interface KeyService {
     List<Key> getCollectionKeyByCollectionId(String collectionId);
 
     KeyHistory getKeyHistoryByVersion(String id, String version);
+
+    List<Key> getKeyListByOrgIdForRest(String orgId, String collectionId);
 }
