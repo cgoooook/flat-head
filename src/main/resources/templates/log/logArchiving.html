@@ -103,53 +103,13 @@
                                                     th:text="#{archiving.strategy}"></span>
                                                 <span class="required" aria-required="true">* </span>
                                             </label>
-
-
-                                            <div class="col-md-6">
-                                                <select class="form-control" id="strategy">
-                                                    <option value="" th:text="#{common.pleaseSelect}"></option>
-                                                    <option value="day"  th:text="#{system.bydays}"></option>
-                                                    <option value="time"  th:text="#{system.bytime}"></option>
-                                                </select>
-                                            </div>
-                                        </div>
-                                    </div>
-
-                                </div>
-                            </div>
-
-                            <div class="row">
-                                <div class="col-md-12" id="timeArchive" style="display: none">
-                                    <div class="col-md-10">
-                                        <div class="form-group">
-                                            <label class="control-label col-md-4">
-                                                <span th:text="#{common.selectTime}"></span>
-                                                <span class="required" aria-required="true">* </span>
-                                            </label>
-                                            <div class="col-md-6">
-                                                <div id="reportrange" class="btn default">
-                                                    <i class="fa fa-calendar"></i> &nbsp;
-                                                    <span> </span>
-                                                    <b class="fa fa-angle-down"></b>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="row" id="dayArchive" style="display: none">
-                                <div class="col-md-12">
-                                    <div class="col-md-10">
-                                        <div class="form-group">
-                                            <label class="control-label col-md-4"><span
-                                                    th:text="#{archiving.save.days}"></span>
-                                                <span class="required" aria-required="true">* </span>
-                                            </label>
-                                            <div class="col-md-6">
-                                                <input type="text" class="form-control" id="maxActive"
-                                                       name="maxActive" th:placeholder="#{archiving.save.days}"
-                                                       required
-                                                       value=""/>
+                                            <div class="input-group col-md-6" id="defaultrange">
+                                                <input type="text" class="form-control">
+                                                <span class="input-group-btn">
+                                                            <button class="btn default date-range-toggle" type="button">
+                                                                <i class="fa fa-calendar"></i>
+                                                            </button>
+                                                        </span>
                                             </div>
                                         </div>
                                     </div>

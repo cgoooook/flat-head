@@ -52,18 +52,11 @@ var archiving = function () {
 
 
     function initDatePicker() {
-        $('#reportrange').daterangepicker({
+        $('#defaultrange').daterangepicker({
                 opens: (App.isRTL() ? 'left' : 'right'),
-                startDate: moment().subtract('', 29),
+                separator: ' 至 ',
+                startDate: moment().subtract('days', 29),
                 endDate: moment(),
-                dateLimit: {
-                    days: 60
-                },
-                showDropdowns: true,
-                showWeekNumbers: false,
-                timePicker: true,
-                timePickerIncrement: 2,
-                timePicker12Hour: true,
                 ranges: {
                     '今天': [moment(), moment()],
                     '昨天': [moment().subtract('days', 1), moment().subtract('days', 1)],
@@ -72,10 +65,6 @@ var archiving = function () {
                     '这个月': [moment().startOf('month'), moment().endOf('month')],
                     '上个月': [moment().subtract('month', 1).startOf('month'), moment().subtract('month', 1).endOf('month')]
                 },
-                buttonClasses: ['btn'],
-                applyClass: 'green',
-                cancelClass: 'default',
-                separator: ' 至 ',
                 locale: {
                     format: "YYYY-MM-DD HH:mm:ss",
                     applyLabel: '确认',
@@ -86,21 +75,22 @@ var archiving = function () {
                     daysOfWeek: ['日', '一', '二', '三', '四', '五', '六'],
                     monthNames: ['一月', '二月', '三月', '四月', '五月', '六月', '七月', '八月', '九月', '十月', '十一月', '十二月'],
                     firstDay: 1
-                }
+                },
             },
             function (start, end) {
-                $('#reportrange span').html(start.format('YYYY-MM-DD HH:mm:ss') + ' - ' + end.format('YYYY-MM-DD HH:mm:ss'));
+                $('#defaultrange input').val(start.format('YYYY-MM-DD HH:mm:ss') + ' - ' + end.format('YYYY-MM-DD HH:mm:ss'));
             }
         );
-        $('#reportrange span').html(moment().subtract('days', 29).format('YYYY-MM-DD HH:mm:ss') + ' - ' + moment().format('YYYY-MM-DD HH:mm:ss'));
+        $('#defaultrange input').val(moment().subtract('days', 29).format('YYYY-MM-DD HH:mm:ss') + ' - ' + moment().format('YYYY-MM-DD HH:mm:ss'));
     }
+
 
 
     return {
         init: function () {
             handleinit();
             initDatePicker();
-            changeFunc();
+
         }
     }
 
