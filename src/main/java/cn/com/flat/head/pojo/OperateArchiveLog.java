@@ -16,6 +16,5 @@ public class OperateArchiveLog {
     private int auditFlag;
     private String operateTimeBegin;
     private String operateTimeEnd;
-    private String strategy;
-    private String maxActive;
+
 }

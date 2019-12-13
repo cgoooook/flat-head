@@ -12,4 +12,6 @@ public interface LogManageService {
     List<OperateArchiveLog> getOperatorLogListPage(OperateArchiveLog oal, Pageable pageable);
 
     boolean auditLog(String logId);
+
+    void archiving(OperateArchiveLog operateArchiveLog);
 }

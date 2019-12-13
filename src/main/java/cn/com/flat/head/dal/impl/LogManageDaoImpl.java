@@ -20,4 +20,11 @@ public class LogManageDaoImpl implements LogManageDao {
     public int auditLog(String logId) {
         return logManageMapper.auditLog(logId);
     }
+
+    @Override
+    public void archiving(OperateArchiveLog operateArchiveLog) {
+        logManageMapper.archiving(operateArchiveLog);
+    }
+
+
 }

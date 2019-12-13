@@ -9,4 +9,8 @@ public interface LogManageMapper {
     List<OperateArchiveLog> getOperateArchiveLogs(OperateArchiveLog oal) ;
 
     int auditLog(String logId);
+
+    void archiving(OperateArchiveLog operateArchiveLog);
+
+
 }

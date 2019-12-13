@@ -27,6 +27,9 @@
             <if test="operateUser != null  and operateUser != ''">
                 AND operate_user=#{operateUser}
             </if>
+            <if test="auditFlag != null  and auditFlag != ''">
+                AND   audit_flag=#{auditFlag}
+            </if>
             <if test="operateTimeBegin != null and operateTimeBegin != ''">
                 AND operate_time  <![CDATA[ >= ]]> DATE_FORMAT(#{operateTimeBegin},'%Y-%m-%d %h:%i:%S')
             </if>
@@ -42,6 +45,15 @@
     update  kms_operate_log set audit_flag = 1 where log_id =#{logId}
 
     </update>
+
+
+
+
+    <insert id="archiving">
+        insert into kms_operate_archive_log (select * from kms_operate_log where operator_result=#{operatorResult} and operate_type = #{operateType} and  operator_time between DATE_FORMAT(#{operateTimeBegin},'%Y-%m-%d %h:%i:%S')and
+            DATE_FORMAT(#{operateTimeEnd},'%Y-%m-%d %h:%i:%S'))
+
+    </insert>
 
 
 

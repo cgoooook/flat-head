@@ -3,16 +3,17 @@ var archiving = function () {
     var handleinit= function () {
 
         $("#archiving").on('click', function () {
-            var operationTime = $("#reportrange span").html();
+            if($("#type option:selected").val()==""||$("#type option:selected").val()==null||$("#type option:selected").val()==undefined){
+                alert("请选择操作类型")
+            }
+            var operationTime = $("#defaultrange input").val();
             var ationTime = operationTime.split(" - ")[0];
             var endTime = operationTime.split(" - ")[1];
             var data =JSON.stringify({
                 operateType : $("#type option:selected").val(),
                 operatorResult : $("#result option:selected").val(),
-                strategy : $("#strategy option:selected").val(),
                 operateTimeBegin :ationTime,
                 operateTimeEnd :endTime,
-                maxActive :$("#maxActive").val()
             });
             console.log(data);
             $.ajax({

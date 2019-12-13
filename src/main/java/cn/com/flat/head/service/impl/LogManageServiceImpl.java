@@ -33,4 +33,11 @@ public class LogManageServiceImpl implements LogManageService {
         }
         return false;
     }
+
+    @Override
+    public void archiving(OperateArchiveLog operateArchiveLog) {
+
+        List<OperateArchiveLog> archiving = logManageDao.getOperateArchiveLogs(operateArchiveLog);
+     /*   logManageDao.archiving(operateArchiveLog);*/
+    }
 }
