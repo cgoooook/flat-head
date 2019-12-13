@@ -46,6 +46,27 @@ var archiving = function () {
                 $("#dayArchive").css("display", "none");
                 $("#timeArchive").css("display", "block");
             }
+            if($("#strategy option:selected").val()=="day"){
+                $("#beginTime").removeAttr("name");
+                $("#endTime").removeAttr("name");
+                if($("#maxActive").attr("name")==""||$("#maxActive").attr("name")==null||$("#maxActive").attr("name")==undefined){
+
+                    $("#maxActive").attr("name","day")
+                }
+
+
+            }else if($("#strategy option:selected").val()=="time"){
+                $("#maxActive").removeAttr("name");
+
+                $("#endTime").removeAttr("name");
+                if($("#beginTime").attr("name")==""||$("#beginTime").attr("name")==null||$("#beginTime").attr("name")==undefined){
+
+                    $("#maxActive").attr("name","day")
+                }
+
+            }
+
+
         });
     }
 
