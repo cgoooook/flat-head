@@ -47,7 +47,6 @@ public class OrgDevAndKeyRest {
             result.put("message", s);
             return result;
         }
-        String cid = tokenService.getCid(token);
         if (StringUtils.isBlank(name) && StringUtils.isBlank(id)) {
             result.put("retcode", 101);
             result.put("success", false);
@@ -88,7 +87,7 @@ public class OrgDevAndKeyRest {
         if (StringUtils.isBlank(version) || StringUtils.equalsIgnoreCase("0", version)) {
             result.put("retcode", 0);
             result.put("success", true);
-            result.put("message", tokenService.convertKeyEnc(key.getKeyValue(), cid) + ":" + key.getCheckValue());
+            result.put("message", tokenService.convertKeyEnc(key.getKeyValue(), token) + ":" + key.getCheckValue());
             return result;
         } else {
             if (!StringUtils.equalsIgnoreCase(version, key.getVersion() + "")) {
@@ -100,8 +99,13 @@ public class OrgDevAndKeyRest {
                 } else {
                     result.put("retcode", 0);
                     result.put("success", true);
-                    result.put("message", tokenService.convertKeyEnc(keyHistoryByVersion.getKeyValue(), cid) + ":" + keyHistoryByVersion.getCheckValue());
+                    result.put("message", tokenService.convertKeyEnc(keyHistoryByVersion.getKeyValue(), token) + ":" + keyHistoryByVersion.getCheckValue());
                 }
+            }else{
+                result.put("retcode", 0);
+                result.put("success", true);
+                result.put("message", tokenService.convertKeyEnc(key.getKeyValue(), token) + ":" + key.getCheckValue());
+                return result;
             }
         }
         return result;
