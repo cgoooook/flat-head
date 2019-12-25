@@ -37,6 +37,27 @@
                                     <th th:text="#{template.status}"></th>
                                     <th th:text="#{common.operation}"></th>
                                 </tr>
+                                <tr>
+                                    <td>
+                                        <input type="text" class="form-control" id="templateNameQuery">
+                                    </td>
+                                    <td></td>
+                                    <td>
+                                        <select name="templateNodeQuery" class="form-control form-filter input-sm"
+                                                id="templateNodeQuery">
+                                            <option value="0" th:text="#{common.pleaseSelect}"></option>
+                                            <option value="1" th:text="#{template.node1}"></option>
+                                            <option value="2" th:text="#{template.node2}"></option>
+                                            <option value="3" th:text="#{template.node3}"></option>
+                                        </select>
+                                    </td>
+                                    <td></td>
+                                    <td>
+                                        <button class="btn btn-sm green btn-outline filter-submit margin-bottom" >
+                                            <i class="fa fa-search"></i> Search
+                                        </button>
+                                    </td>
+                                </tr>
                                 </thead>
                                 <tbody></tbody>
                             </table>

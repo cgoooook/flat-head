@@ -9,6 +9,10 @@ var Template = function () {
         $table = $("#datatables_ajax");
         grid.init({
             src: $table,
+            onQuery: function(data) {
+                data.templateName = $("#templateNameQuery").val();
+                data.node = $("#templateNodeQuery").val();
+            },
             dataTable: {
                 "ajax": {
                     "url": "/key/template/list"
