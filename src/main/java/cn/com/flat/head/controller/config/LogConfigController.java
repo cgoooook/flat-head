@@ -29,7 +29,7 @@ public class LogConfigController {
     @ResponseBody
     public Map getLogConfig() {
         List<LogConfig> config = configService.getLogConfig();
-        Map<String, String> map = new HashMap();
+        Map<String, String> map = new HashMap<String, String>();
         for (LogConfig logConfg : config) {
             if ("log_level".equalsIgnoreCase(logConfg.getConfigName())) {
                 map.put("log_level", logConfg.getConfigValue());
