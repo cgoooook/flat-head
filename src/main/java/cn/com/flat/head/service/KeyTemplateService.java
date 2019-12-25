@@ -18,7 +18,7 @@ public interface KeyTemplateService {
 
     BooleanCarrier addTemplate(KeyTemplate template) throws KMSException;
 
-    boolean deleteTemplate(String templateId) throws KMSException;
+    BooleanCarrier deleteTemplate(String templateId) throws KMSException;
 
     KeyTemplate getKeyTemplate(String keyTemplate) throws KMSException;
 
