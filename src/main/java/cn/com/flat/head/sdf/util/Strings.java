@@ -319,7 +319,7 @@ public final class Strings
 
     public static String[] split(String input, char delimiter)
     {
-        Vector v = new Vector();
+        Vector<String> v = new Vector<String>();
         boolean moreTokens = true;
         String subString;
 
@@ -343,7 +343,7 @@ public final class Strings
 
         for (int i = 0; i != res.length; i++)
         {
-            res[i] = (String)v.elementAt(i);
+            res[i] = v.elementAt(i);
         }
         return res;
     }
