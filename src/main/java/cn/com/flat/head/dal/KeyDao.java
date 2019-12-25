@@ -39,4 +39,6 @@ public interface KeyDao {
     List<Key> getKeyByOrgId(String orgId);
 
     List<Key> getKeyByOrgIdAndCollectionId(String orgId, String collectionId);
+
+    int geyKeyCountByTemplateId(String templateId);
 }

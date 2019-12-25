@@ -73,6 +73,9 @@
         and kak.key_id = kck.key_id and kck.collection_id=#{collectionId}
         order by key_name;
     </select>
+    <select id="getKeyCountByTemplateId" resultType="java.lang.Integer">
+        select count(*) from kms_a_key where template_id=#{templateId}
+    </select>
 
 
 </mapper>
