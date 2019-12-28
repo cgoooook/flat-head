@@ -24,4 +24,9 @@ public class ApiLogServiceImpl implements ApiLogService {
         PageableInterceptor.startPage(pageable);
         return apiLogDao.getApiLogListPage(apiLog);
     }
+
+    @Override
+    public void addApiLog(ApiLog apiLog) {
+        apiLogDao.addApiLog(apiLog);
+    }
 }

@@ -11,4 +11,5 @@ public interface ApiLogDao {
 
     List<ApiLog> getApiLogListPage(ApiLog apiLog);
 
+    void addApiLog(ApiLog apiLog);
 }

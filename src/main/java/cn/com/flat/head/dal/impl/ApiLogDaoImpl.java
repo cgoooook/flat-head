@@ -22,4 +22,9 @@ public class ApiLogDaoImpl implements ApiLogDao {
     public List<ApiLog> getApiLogListPage(ApiLog apiLog) {
         return apiLogMapper.getApiLogListPage(apiLog);
     }
+
+    @Override
+    public void addApiLog(ApiLog apiLog) {
+        apiLogMapper.addApiLog(apiLog);
+    }
 }

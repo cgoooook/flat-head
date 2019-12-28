@@ -12,4 +12,6 @@ public interface ApiLogService {
 
     List<ApiLog> getApiLogListPage(Pageable pageable, ApiLog apiLog);
 
+    void  addApiLog(ApiLog apiLog);
+
 }

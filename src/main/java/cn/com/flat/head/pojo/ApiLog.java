@@ -10,11 +10,19 @@ import java.util.Date;
 @Data
 public class ApiLog {
 
+    public ApiLog(String logId, String url, String result, String momo, Date accessTime) {
+        this.logId = logId;
+        this.url = url;
+        this.result = result;
+        this.momo = momo;
+        this.accessTime = accessTime;
+    }
+
     private String logId;
 
     private String url;
 
-    private int result;
+    private String result;
 
     private String momo;
 
