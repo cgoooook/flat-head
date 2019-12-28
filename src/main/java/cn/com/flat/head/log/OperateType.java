@@ -9,6 +9,7 @@ public interface OperateType {
      * 登陆
      */
     String login = "login";
+    String logout = "logout";
 
     /**
      * 添加用户
