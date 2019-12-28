@@ -18,14 +18,18 @@ public class LogArchivingController {
         return "log/logArchiving.html";
     }
     @PostMapping("/archiving")
+    @ResponseBody
     public AjaxResponse logArchiving(@RequestBody OperateArchiveLog operateArchiveLog){
 
-        logManageService.archiving(operateArchiveLog);
+        int archiving = logManageService.archiving(operateArchiveLog);
 
         AjaxResponse ajaxResponse = new AjaxResponse();
         ajaxResponse.setReturnState(ReturnState.OK);
-
-
+        if(archiving>0){
+            ajaxResponse.setMsg("ok");
+        }else {
+            ajaxResponse.setMsg("null");
+        }
 
         return ajaxResponse;
     }

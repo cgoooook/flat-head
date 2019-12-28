@@ -35,10 +35,16 @@ public class LogManageServiceImpl implements LogManageService {
     }
 
     @Override
-    public void archiving(OperateArchiveLog operateArchiveLog) {
+    public int archiving(OperateArchiveLog operateArchiveLog) {
 
         List<OperateArchiveLog> archiving = logManageDao.getOperateArchiveLogs(operateArchiveLog);
-        logManageDao.insertOperateArchiveLogs(archiving);
-        logManageDao.deleteOperatorLog(archiving);
+        if(archiving.size()==0){
+            return 0;
+        }else {
+            logManageDao.insertOperateArchiveLogs(archiving);
+            logManageDao.deleteOperatorLog(archiving);
+            return archiving.size();
+        }
+
     }
 }
