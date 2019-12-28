@@ -29,7 +29,7 @@
 
 		<fileSet>
 			<directory>${basedir}/target</directory>
-			<outputDirectory>/</outputDirectory>
+			<outputDirectory></outputDirectory>
 			<includes>
 				<include>kms-services-executable.jar</include>
 			</includes>

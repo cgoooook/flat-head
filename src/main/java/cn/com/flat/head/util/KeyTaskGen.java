@@ -22,11 +22,14 @@ public class KeyTaskGen implements Runnable {
 
     private int generateNum;
 
-    public KeyTaskGen(KeyPairDao keyPairDao, KeyGenService keyGenService, Task task, int generateNum) {
+    private String taskName;
+
+    public KeyTaskGen(KeyPairDao keyPairDao, KeyGenService keyGenService, Task task, int generateNum, String taskName) {
         this.keyPairDao = keyPairDao;
         this.keyGenService = keyGenService;
         this.task = task;
         this.generateNum = generateNum;
+        this.taskName = taskName;
     }
 
     @Override
@@ -50,5 +53,9 @@ public class KeyTaskGen implements Runnable {
                 e.printStackTrace();
             }
         }
+    }
+
+    public String getTaskName() {
+        return taskName;
     }
 }

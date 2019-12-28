@@ -21,9 +21,16 @@ public class LogManageDaoImpl implements LogManageDao {
         return logManageMapper.auditLog(logId);
     }
 
+
+
     @Override
-    public void archiving(OperateArchiveLog operateArchiveLog) {
-        logManageMapper.archiving(operateArchiveLog);
+    public void insertOperateArchiveLogs(List<OperateArchiveLog> archiving) {
+        logManageMapper.insertOperateArchiveLogs(archiving);
+    }
+
+    @Override
+    public void deleteOperatorLog(List<OperateArchiveLog> archiving) {
+        logManageMapper.deleteOperatorLog(archiving);
     }
 
 

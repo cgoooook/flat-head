@@ -38,7 +38,7 @@ public class WebMvcConfiguration implements WebMvcConfigurer {
         mappingJackson2HttpMessageConverter.setObjectMapper(objectMapper);
         //设置中文编码格式
         List<MediaType> list = new ArrayList<>();
-        list.add(MediaType.APPLICATION_JSON_UTF8);
+        list.add(MediaType.APPLICATION_JSON);
         mappingJackson2HttpMessageConverter.setSupportedMediaTypes(list);
         return mappingJackson2HttpMessageConverter;
     }

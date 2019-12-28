@@ -112,7 +112,7 @@ public class DevServiceImpl implements DevService {
         boolean result = true;
         BooleanCarrier b = new BooleanCarrier();
         try {
-            Device devById = devServiceDao.getDevById(dev.getDeviceId());
+            Device devById = devServiceDao.getDevByDevCode(dev.getDeviceCode());
             Device devByName = devServiceDao.getDevByName(dev.getDeviceName());
             if (null != devById) {
                 b.setResult(false);

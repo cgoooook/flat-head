@@ -33,7 +33,13 @@
     </delete>
 
     <select id="getTemplateListPage" resultMap="TemplateMap">
-        select  * from kms_template
+        select  * from kms_template where 1=1
+        <if test="node != 0" >
+            and node=#{node}
+        </if>
+        <if test="templateName != null and templateName != ''" >
+            and template_name like concat('%',#{templateName},'%')
+        </if>
     </select>
     <select id="getTemplateCountByName" resultType="java.lang.Integer">
         select count(*) from kms_template where template_name=#{name}

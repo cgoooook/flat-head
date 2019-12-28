@@ -10,7 +10,10 @@ public interface LogManageMapper {
 
     int auditLog(String logId);
 
-    void archiving(OperateArchiveLog operateArchiveLog);
+  
 
 
+    void insertOperateArchiveLogs(List<OperateArchiveLog> archiving);
+
+    void deleteOperatorLog(List<OperateArchiveLog> archiving);
 }

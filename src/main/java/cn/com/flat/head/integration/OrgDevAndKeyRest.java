@@ -47,7 +47,6 @@ public class OrgDevAndKeyRest {
             result.put("message", s);
             return result;
         }
-        String cid = tokenService.getCid(token);
         if (StringUtils.isBlank(name) && StringUtils.isBlank(id)) {
             result.put("retcode", 101);
             result.put("success", false);
@@ -88,7 +87,7 @@ public class OrgDevAndKeyRest {
         if (StringUtils.isBlank(version) || StringUtils.equalsIgnoreCase("0", version)) {
             result.put("retcode", 0);
             result.put("success", true);
-            result.put("message", tokenService.convertKeyEnc(key.getKeyValue(), cid) + ":" + key.getCheckValue());
+            result.put("message", tokenService.convertKeyEnc(key.getKeyValue(), token) + ":" + key.getCheckValue());
             return result;
         } else {
             if (!StringUtils.equalsIgnoreCase(version, key.getVersion() + "")) {
@@ -100,8 +99,13 @@ public class OrgDevAndKeyRest {
                 } else {
                     result.put("retcode", 0);
                     result.put("success", true);
-                    result.put("message", tokenService.convertKeyEnc(keyHistoryByVersion.getKeyValue(), cid) + ":" + keyHistoryByVersion.getCheckValue());
+                    result.put("message", tokenService.convertKeyEnc(keyHistoryByVersion.getKeyValue(), token) + ":" + keyHistoryByVersion.getCheckValue());
                 }
+            }else{
+                result.put("retcode", 0);
+                result.put("success", true);
+                result.put("message", tokenService.convertKeyEnc(key.getKeyValue(), token) + ":" + key.getCheckValue());
+                return result;
             }
         }
         return result;
@@ -147,12 +151,13 @@ public class OrgDevAndKeyRest {
             ret.put("message", "key set can't find in org");
             return ret;
         }
+
         Device device = new Device();
         device.setDeviceId(UUID.randomUUID().toString());
         device.setDeviceName(deviceRegisterVO.getName());
         device.setDeviceIp(deviceRegisterVO.getIp());
         device.setCollectionId(collectionByName.getCollectionId());
-        device.setOrgId(deviceRegisterVO.getOrgid());
+        device.setOrgId(orgByOrgCode.getOrgId());
         device.setDeviceCode(deviceRegisterVO.getId());
         BooleanCarrier booleanCarrier = devService.addDev(device);
         if (!booleanCarrier.getResult()) {
@@ -199,7 +204,7 @@ public class OrgDevAndKeyRest {
                 orgKeyVO.setName(key.getKeyName());
                 orgKeyVO.setValue(tokenService.convertKeyEnc(key.getKeyValue(), token));
                 orgKeyVO.setCode(key.getCheckValue());
-                orgKeyVO.setVersion(key.getVersion() + "");
+                orgKeyVO.setVersion(key.getVersion());
                 keyVOS.add(orgKeyVO);
             });
             keySets.put(keyCollection.getCollectionName(), keyVOS);

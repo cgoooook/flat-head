@@ -105,6 +105,11 @@ public class KeyDaoImpl implements KeyDao {
         return keyMapper.getKeyListByOrgIdAndCollectionId(orgId, collectionId);
     }
 
+    @Override
+    public int geyKeyCountByTemplateId(String templateId) {
+        return keyMapper.getKeyCountByTemplateId(templateId);
+    }
+
     private KeyHistory convertKeyToHistory(Key key) {
         KeyHistory keyHistory = new KeyHistory();
         keyHistory.setKeyHistoryId(UUID.randomUUID().toString());

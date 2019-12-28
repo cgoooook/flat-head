@@ -18,6 +18,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.concurrent.ExecutorService;
+
 @Service
 public class TaskServiceImpl implements TaskService {
 
@@ -28,6 +30,9 @@ public class TaskServiceImpl implements TaskService {
     private KeyPairDao keyPairDao;
     @Autowired
     private LogDao logDao;
+
+    @Autowired
+    private ExecutorService executorService;
     @Autowired
     private KeyGenService keyGenService;
     private static Logger logger = LoggerFactory.getLogger(TaskServiceImpl.class);
@@ -113,9 +118,9 @@ public class TaskServiceImpl implements TaskService {
         Task taskById = taskDao.getTaskById(id);
         int keyPairNum = keyPairDao.getKeyPairNum(taskById.getAlgorithm(), taskById.getLength() + "");
         if (Integer.parseInt(taskById.getPlannedQuantity()) > keyPairNum) {
-            new Thread(new KeyTaskGen(keyPairDao,
+            executorService.submit(new KeyTaskGen(keyPairDao,
                     keyGenService, taskById,
-                    Integer.parseInt(taskById.getPlannedQuantity()) - keyPairNum)).start();
+                    Integer.parseInt(taskById.getPlannedQuantity()) - keyPairNum, taskById.getTaskName()));
         }
         booleanCarrier.setResult(true);
         return booleanCarrier;

@@ -25,10 +25,14 @@ public class MailConfigController {
 
     @PostMapping("/test")
     @ResponseBody
-    public AjaxResponse testMail(@RequestBody Mail mail, HttpSession httpSession){
-        configService.sendMail(mail);
+    public AjaxResponse testMail(@RequestBody Mail mail){
+        boolean b = configService.sendMail(mail);
         AjaxResponse ajaxResponse = new AjaxResponse();
-        ajaxResponse.setReturnState(ReturnState.OK);
+        if(b){
+            ajaxResponse.setReturnState(ReturnState.OK);
+        }else {
+            ajaxResponse.setReturnState(ReturnState.ERROR);
+        }
         return ajaxResponse;
         }
 
@@ -42,9 +46,17 @@ public class MailConfigController {
     }
     @GetMapping("/mailConfig")
     @ResponseBody
-    public Mail getMailConfig(){
+    public AjaxResponse getMailConfig(){
+        AjaxResponse ajaxResponse = new AjaxResponse();
+        Mail mail = configService.getMail();
+        if(mail==null){
+            ajaxResponse.setReturnState(ReturnState.ERROR);
 
-       return configService.getMail();
+        }else {
+            ajaxResponse.setData(mail);
+            ajaxResponse.setReturnState(ReturnState.OK);
+        }
+        return ajaxResponse;
     }
 
 

@@ -8,13 +8,15 @@ var mailConfig = function () {
             url: "/mail/config/mailConfig",
             dataType: "json",
             success: function(result){
-                $("#addr").val(result.addr);
-                $("#port").val(result.port);
-                $("#timeOut").val(result.timeOut);
-                $("#sendMailbox").val(result.sendMailbox);
-                $("#password").val(result.password);
-                $("#receivingMailbox").val(result.receivingMailbox);
 
+                 if(result.returnState=="OK"){
+                   $("#addr").val(result.data.addr);
+                   $("#port").val(result.data.port);
+                   $("#timeOut").val(result.data.timeOut);
+                   $("#sendMailbox").val(result.data.sendMailbox);
+                   $("#password").val(result.data.password);
+                   $("#receivingMailbox").val(result.data.receivingMailbox);
+               }
             }
 
         });
@@ -37,8 +39,10 @@ var mailConfig = function () {
 
 
             }).done(function (data) {
-                if (flat.ajaxCallback(data)) {
-                    //成功后逻辑
+              if(data.returnState=="ERROR"){
+                  toast.error($.i18n.prop('mail.send.error'));
+              }if(data.returnState=="OK"){
+                    toast.success($.i18n.prop('mail.send.success'));
                 }
             });
 

@@ -33,7 +33,7 @@ public class ConfigServiceImpl implements ConfigService {
     @Autowired
     ConfigDao configDao;
     private static Logger logger = LoggerFactory.getLogger(ConfigServiceImpl.class);
-
+    private JavaMailSenderImpl mailSender;
     @Autowired
     private LogDao logDao;
 
@@ -201,30 +201,36 @@ public class ConfigServiceImpl implements ConfigService {
     }
 
     @Override
-    public void sendMail(Mail mail) {
+    public boolean sendMail(Mail mail) {
         boolean result = true;
         try{
-        JavaMailSender mailSender = new JavaMailSenderImpl();
-        ((JavaMailSenderImpl) mailSender).setHost(mail.getAddr());
-        ((JavaMailSenderImpl) mailSender).setPort(mail.getPort());
-        ((JavaMailSenderImpl) mailSender).setUsername(mail.getSendMailbox());
-        ((JavaMailSenderImpl) mailSender).setPassword(mail.getPassword());
-        Properties javaMailProperties = new Properties();
-        javaMailProperties.put("mail.smtp.auth", true);
-        javaMailProperties.put("mail.smtp.starttls.enable", true);
-        javaMailProperties.put("mail.smtp.timeout", mail.getTimeOut());
-        ((JavaMailSenderImpl) mailSender).setJavaMailProperties(javaMailProperties);
-        SimpleMailMessage simpleMailMessage = new SimpleMailMessage();
-        simpleMailMessage.setFrom(mail.getSendMailbox());
-        simpleMailMessage.setTo(mail.getReceivingMailbox());
-        simpleMailMessage.setSubject("it is a test for spring boot");
-        simpleMailMessage.setText("mialSender");
-        mailSender.send(simpleMailMessage);}catch (Exception e){
+            mailSender = new JavaMailSenderImpl();
+            mailSender.setHost(mail.getAddr());
+            mailSender.setPort(mail.getPort());
+            mailSender.setUsername(mail.getReceivingMailbox());
+            mailSender.setPassword(mail.getPassword());
+            //加认证机制
+            new Properties();
+            Properties javaMailProperties = new Properties();
+            javaMailProperties.put("mail.smtp.auth", true);
+            javaMailProperties.put("mail.smtp.starttls.enable", true);
+            javaMailProperties.put("mail.smtp.timeout", 5000);
+            mailSender.setJavaMailProperties(javaMailProperties);
+            SimpleMailMessage message=new SimpleMailMessage();
+            message.setFrom(mail.getReceivingMailbox());
+            message.setTo(mail.getSendMailbox());
+            message.setSubject("KMS系统邮件<请勿回复>");
+            message.setText("邮件测试");
+            //发送邮件
+            mailSender.send(message);
+
+        }catch (Exception e){
             result = false;
             logger.error("sendMail error", e);
         } finally {
             logDao.addLog(LoggerBuilder.builder(OperateType.mailConfig, result, "Send mail exception"));
         }
+        return result;
     }
 
     @Override

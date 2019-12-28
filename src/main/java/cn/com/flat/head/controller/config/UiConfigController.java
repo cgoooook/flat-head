@@ -44,8 +44,15 @@ public class UiConfigController {
 
     @GetMapping("/info")
     @ResponseBody
-    public SysLogo getUiInfo(){
+    public AjaxResponse getUiInfo(){
+        AjaxResponse ajaxResponse = new AjaxResponse();
         SysLogo  logo = configService.getUiInfo();
-        return   logo;
+        if(logo!=null){
+            ajaxResponse.setData(logo);
+            ajaxResponse.setReturnState(ReturnState.OK);
+        }else {
+            ajaxResponse.setReturnState(ReturnState.ERROR);
+        }
+        return   ajaxResponse;
     }
 }

@@ -22,7 +22,7 @@ public interface ConfigService {
     SysLogo getUiInfo();
 
 
-    void sendMail(Mail mail);
+    boolean sendMail(Mail mail);
 
     void saveMail(Mail mail);
     Mail getMail();

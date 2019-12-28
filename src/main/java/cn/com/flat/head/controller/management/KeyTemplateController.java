@@ -60,8 +60,13 @@ public class KeyTemplateController {
     @DeleteMapping("/{templateId}")
     @ResponseBody
     public AjaxResponse delete(@PathVariable("templateId") String templateId, HttpSession session) {
-        boolean b = keyTemplateService.deleteTemplate(templateId);
-        return AjaxResponse.getInstanceByResult(b, session);
+        AjaxResponse ajaxResponse = new AjaxResponse();
+        BooleanCarrier b = keyTemplateService.deleteTemplate(templateId);
+        if (!b.getResult()) {
+            ajaxResponse.setReturnState(ReturnState.ERROR);
+            ajaxResponse.setMsg(b.getMessage());
+        }
+        return ajaxResponse;
     }
 
     @GetMapping("/{templateId}")

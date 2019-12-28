@@ -71,7 +71,7 @@ public class TokenServiceImpl implements TokenService {
             if (StringUtils.isBlank(token)) {
                 return key;
             } else {
-            	token = token.toLowerCase();
+                token = token.toLowerCase();
                 AccessToken accessToken = tokenMap.get(token);
                 byte[] plainKey = getPlainKey(Hex.decode(key));
                 String sessionKey = accessToken.getKey();

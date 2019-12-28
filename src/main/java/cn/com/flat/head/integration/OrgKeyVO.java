@@ -16,7 +16,7 @@ public class OrgKeyVO {
 
     private String value;
 
-    private String version;
+    private int version;
 
 
 

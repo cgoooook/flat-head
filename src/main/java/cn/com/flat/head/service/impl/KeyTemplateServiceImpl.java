@@ -1,5 +1,6 @@
 package cn.com.flat.head.service.impl;
 
+import cn.com.flat.head.dal.KeyDao;
 import cn.com.flat.head.dal.KeyTemplateDao;
 import cn.com.flat.head.dal.LogDao;
 import cn.com.flat.head.exception.KMSException;
@@ -9,6 +10,7 @@ import cn.com.flat.head.mybatis.interceptor.PageableInterceptor;
 import cn.com.flat.head.mybatis.model.Pageable;
 import cn.com.flat.head.pojo.BooleanCarrier;
 import cn.com.flat.head.pojo.KeyTemplate;
+import cn.com.flat.head.service.KeyService;
 import cn.com.flat.head.service.KeyTemplateService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -30,6 +32,9 @@ public class KeyTemplateServiceImpl implements KeyTemplateService {
 
     @Autowired
     private LogDao logDao;
+
+    @Autowired
+    private KeyDao keyDao;
 
     @Override
     public List<KeyTemplate> getTemplateListPage(KeyTemplate template, Pageable pageable) throws KMSException {
@@ -83,12 +88,20 @@ public class KeyTemplateServiceImpl implements KeyTemplateService {
     }
 
     @Override
-    public boolean deleteTemplate(String templateId) throws KMSException {
+    public BooleanCarrier deleteTemplate(String templateId) throws KMSException {
+        BooleanCarrier booleanCarrier = new BooleanCarrier();
         boolean result = false;
         KeyTemplate templateById = keyTemplateDao.getTemplateById(templateId);
         try {
-            int ret = keyTemplateDao.deleteTemplate(templateId);
-            result = ret == 1;
+            int keyCountByTemplateId = keyDao.geyKeyCountByTemplateId(templateId);
+            if (keyCountByTemplateId <= 0) {
+                int ret = keyTemplateDao.deleteTemplate(templateId);
+                result = ret == 1;
+            } else {
+               booleanCarrier.setMessage("template.usage");
+            }
+
+            booleanCarrier.setResult(result);
         } catch (Exception e) {
             logger.error("delete template error,", e);
         } finally {
@@ -96,7 +109,7 @@ public class KeyTemplateServiceImpl implements KeyTemplateService {
                 logDao.addLog(LoggerBuilder.builder(OperateType.deleteTemplate, result, "delete template name is " + templateById.getTemplateName()));
             }
         }
-        return result;
+        return booleanCarrier;
     }
 
     @Override

@@ -13,10 +13,10 @@ public class Properties
     {
         try
         {
-            return "true".equals(AccessController.doPrivileged(new PrivilegedAction()
+            return "true".equals(AccessController.doPrivileged(new PrivilegedAction<String>()
             {
                 // JDK 1.4 compatibility
-                public Object run()
+                public String run()
                 {
                     String value = System.getProperty(propertyName);
                     if (value == null)

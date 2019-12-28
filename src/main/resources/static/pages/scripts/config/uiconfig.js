@@ -6,12 +6,13 @@ var uiConfig = function () {
             type: "GET",
             url: "/ui/config/info",
             dataType: "json",
-            success: function(result){
-                console.log(result)
-            $("#ide").val(result.copyright);
-            $("#picImg").attr("src","data:image/png;base64,"+result.logo)
-            }
+            success: function(result) {
 
+                if (result.returnState == "OK") {
+                    $("#ide").val(result.data.copyright);
+                    $("#picImg").attr("src", "data:image/png;base64," + result.data.logo);
+                }
+            }
         });
 
 

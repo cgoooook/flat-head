@@ -32,7 +32,7 @@ public class Functions {
 
 	public static String getErrorConeName(int errorCode) {
 		if (errorCodeNames_ == null) {
-			Hashtable<Integer, String> errorCodeNames = new Hashtable();
+			Hashtable<Integer, String> errorCodeNames = new Hashtable<Integer, String>();
 			errorCodeNames.put(new Integer(SDFConstants.SDR_OK), SDFConstants.NAME_SDR_OK);
 			errorCodeNames.put(new Integer(SDFConstants.SDR_UNKNOWERR), SDFConstants.NAME_SDR_UNKNOWERR);
 			errorCodeNames.put(new Integer(SDFConstants.SDR_NOTSUPPORT), SDFConstants.NAME_SDR_NOTSUPPORT);
@@ -72,7 +72,7 @@ public class Functions {
 	public static String mechanismCodeToString(int mechansimCode) {
 
 		if (mechansimNames_ == null) {
-			Hashtable mechansimNames = new Hashtable();
+			Hashtable<Integer, String> mechansimNames = new Hashtable<Integer, String>();
 			mechansimNames.put(new Integer(SMechanism.SKM_SM2_KEY_PAIR_GEN), SMechanism.NAME_SKM_SM2_KEY_PAIR_GEN);
 			mechansimNames.put(new Integer(SMechanism.SKM_SM2_SIGN), SMechanism.NAME_SKM_SM2_SIGN);
 			mechansimNames.put(new Integer(SMechanism.SKM_SM2_ENC), SMechanism.NAME_SKM_SM2_ENC);
@@ -103,7 +103,7 @@ public class Functions {
 	public static String keyCodeToString(int keyCode) {
 
 		if (keyNames_ == null) {
-			Hashtable keyNames = new Hashtable();
+			Hashtable<Integer, String> keyNames = new Hashtable<Integer, String>();
 			keyNames.put(new Integer(SKey.SKK_SM2_PRIV_KEY), SKey.NAME_SKK_SM2_PRIV_KEY);
 			keyNames.put(new Integer(SKey.SKK_SM2_PRIV_KEY_ID), SKey.NAME_SKK_SM2_PRIV_KEY_ID);
 			keyNames.put(new Integer(SKey.SKK_SM2_PUBL_KEY), SKey.NAME_SKK_SM2_PUBL_KEY);
@@ -127,7 +127,7 @@ public class Functions {
 	public static boolean isDigestMechanism(int mechanismCode) {
 		// build the hashtable on demand (=first use)
 		if (digestMechanisms_ == null) {
-			Hashtable digestMechanisms = new Hashtable();
+			Hashtable<Integer, String> digestMechanisms = new Hashtable<Integer, String>();
 			digestMechanisms.put(new Integer(SMechanism.SKM_MD5), SMechanism.NAME_SKM_MD5);
 			digestMechanisms.put(new Integer(SMechanism.SKM_SHA_1), SMechanism.NAME_SKM_SHA_1);
 			digestMechanisms.put(new Integer(SMechanism.SKM_SHA224), SMechanism.NAME_SKM_SHA224);
@@ -142,7 +142,7 @@ public class Functions {
 
 	public static boolean isEncryptDecryptMechanism(int mechanismCode) {
 		if (encryptDecryptMechanisms_ == null) {
-			Hashtable encryptDecryptMechanisms = new Hashtable();
+			Hashtable<Integer, String> encryptDecryptMechanisms = new Hashtable<Integer, String>();
 			encryptDecryptMechanisms.put(new Integer(SMechanism.SKM_SM1_ECB), SMechanism.NAME_SKM_SM1_ECB);
 			encryptDecryptMechanisms.put(new Integer(SMechanism.SKM_SM1_CBC), SMechanism.NAME_SKM_SM1_CBC);
 			encryptDecryptMechanisms.put(new Integer(SMechanism.SKM_SM4_ECB), SMechanism.NAME_SKM_SM4_ECB);
@@ -155,7 +155,7 @@ public class Functions {
 
 	public static boolean isCBCEncryptDecryptMechanism(int mechanismCode) {
 		if (cbcEncryptDecryptMechanisms_ == null) {
-			Hashtable cbcEncryptDecryptMechanisms = new Hashtable();
+			Hashtable<Integer, String> cbcEncryptDecryptMechanisms = new Hashtable<Integer, String>();
 			cbcEncryptDecryptMechanisms.put(new Integer(SMechanism.SKM_SM1_CBC), SMechanism.NAME_SKM_SM1_CBC);
 			cbcEncryptDecryptMechanisms.put(new Integer(SMechanism.SKM_SM4_CBC), SMechanism.NAME_SKM_SM4_CBC);
 			cbcEncryptDecryptMechanisms_ = cbcEncryptDecryptMechanisms;
@@ -166,7 +166,7 @@ public class Functions {
 
 	public static boolean isKeyGenerationMechanism(int mechanismCode) {
 		if (keyGenerationMechanisms_ == null) {
-			Hashtable keyGenerationMechanisms = new Hashtable();
+			Hashtable<Integer, String> keyGenerationMechanisms = new Hashtable<Integer, String>();
 			keyGenerationMechanisms.put(new Integer(SMechanism.SKM_SM1_KEY_GEN), SMechanism.NAME_SKM_SM1_KEY_GEN);
 			keyGenerationMechanisms.put(new Integer(SMechanism.SKM_SM4_KEY_GEN), SMechanism.NAME_SKM_SM4_KEY_GEN);
 			keyGenerationMechanisms_ = keyGenerationMechanisms;
@@ -177,8 +177,8 @@ public class Functions {
 
 	public static boolean isKeyPairGenerationMechanism(int mechanismCode) {
 		if (keyPairGenerationMechanisms_ == null) {
-			Hashtable keyPairGenerationMechanisms = new Hashtable();
-			keyPairGenerationMechanisms.put(new Integer(SMechanism.SKM_SM2_KEY_PAIR_GEN), SMechanism.NAME_SKM_SM2_KEY_PAIR_GEN);			
+			Hashtable<Integer, String> keyPairGenerationMechanisms = new Hashtable<Integer, String>();
+			keyPairGenerationMechanisms.put(new Integer(SMechanism.SKM_SM2_KEY_PAIR_GEN), SMechanism.NAME_SKM_SM2_KEY_PAIR_GEN);
 			keyPairGenerationMechanisms_ = keyPairGenerationMechanisms;
 		}
 

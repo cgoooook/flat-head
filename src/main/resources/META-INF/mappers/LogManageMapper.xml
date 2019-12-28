@@ -46,12 +46,31 @@
 
     </update>
 
+    <delete id="deleteOperatorLog" parameterType="int">
+        delete from kms_operate_log where log_id in
+        <foreach item="item" collection="list" open="(" separator="," close=")">
+            #{item.logId}
+        </foreach>
+    </delete>
 
 
 
-    <insert id="archiving">
-        insert into kms_operate_archive_log (select * from kms_operate_log where operator_result=#{operatorResult} and operate_type = #{operateType} and  operator_time between DATE_FORMAT(#{operateTimeBegin},'%Y-%m-%d %h:%i:%S')and
-            DATE_FORMAT(#{operateTimeEnd},'%Y-%m-%d %h:%i:%S'))
+    <insert id="insertOperateArchiveLogs">
+        insert into kms_operate_archive_log
+            (log_id,operate_type,operate_user,operate_time,operator_result,operate_content,content_hmac,audit_flag)
+        values
+        <foreach collection="list" item="item" index="index" separator=",">
+            (
+            #{item.logId},
+            #{item.operateType},
+            #{item.operateUser},
+            #{item.operateTime},
+            #{item.operatorResult},
+            #{item.operateContent},
+            #{item.contentHmac},
+            #{item.auditFlag}
+            )
+        </foreach>
 
     </insert>
 

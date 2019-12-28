@@ -109,8 +109,8 @@ public class KeyGenServiceImpl implements KeyGenService {
             Key keySpec = new SecretKeySpec(key, alg);
             cipher.init(Cipher.ENCRYPT_MODE, keySpec);
             byte[] bytes = cipher.doFinal(getCheckValueInput(keyLength));
-            byte[] checkValue = new byte[8];
-            System.arraycopy(bytes, 0, checkValue, 0, 8);
+            byte[] checkValue = new byte[4];
+            System.arraycopy(bytes, keyLength-4, checkValue, 0, 4);
             return checkValue;
         } catch (Exception e) {
             logger.error("get key checkValue error", e);

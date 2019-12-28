@@ -38,6 +38,7 @@ public class LogManageServiceImpl implements LogManageService {
     public void archiving(OperateArchiveLog operateArchiveLog) {
 
         List<OperateArchiveLog> archiving = logManageDao.getOperateArchiveLogs(operateArchiveLog);
-     /*   logManageDao.archiving(operateArchiveLog);*/
+        logManageDao.insertOperateArchiveLogs(archiving);
+        logManageDao.deleteOperatorLog(archiving);
     }
 }

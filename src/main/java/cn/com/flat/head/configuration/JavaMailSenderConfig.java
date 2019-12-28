@@ -10,7 +10,6 @@ public class JavaMailSenderConfig {
     @Bean
     public JavaMailSender getJavaMail() {
         return new JavaMailSenderImpl();
-
     }
 
 
