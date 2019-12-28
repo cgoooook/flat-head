@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="cn.com.flat.head.dal.mappers.ApiLogMapper">
+
+    <resultMap id="ApiLogMap" type="cn.com.flat.head.pojo.ApiLog">
+        <id column="log_id" property="logId" />
+        <result column="url" property="url"/>
+        <result column="result" property="result" />
+        <result column="momo" property="momo" />
+        <result column="access_time" property="accessTime" />
+    </resultMap>
+
+    <insert id="addApiLog">
+        insert into kms_api_log (log_id, url, result, momo, access_time) values
+            (#{logId}, #{url}, #{result}, #{momo}, #{accessTime})
+    </insert>
+    <select id="getApiLogCount" resultType="java.lang.Integer">
+        select count(*) from kms_api_log
+    </select>
+    <select id="getApiLogListPage" resultMap="ApiLogMap">
+        select * from kms_api_log
+    </select>
+
+
+</mapper>
