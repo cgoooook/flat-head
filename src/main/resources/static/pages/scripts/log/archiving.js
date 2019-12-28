@@ -4,7 +4,12 @@ var archiving = function () {
 
         $("#archiving").on('click', function () {
             if($("#type option:selected").val()==""||$("#type option:selected").val()==null||$("#type option:selected").val()==undefined){
-                alert("请选择操作类型")
+                toast.warning($.i18n.prop('archiving.type.select'));
+                return;
+            }
+            if($("#result option:selected").val()==""||$("#result option:selected").val()==null||$("#result option:selected").val()==undefined){
+                toast.warning($.i18n.prop('archiving.result.select'));
+                return;
             }
             var operationTime = $("#defaultrange input").val();
             var ationTime = operationTime.split(" - ")[0];
@@ -23,8 +28,13 @@ var archiving = function () {
                 contentType: "application/json; charset=utf-8",
                 data:data
             }).done(function (data) {
-                if (flat.ajaxCallback(data)) {
-                    //成功后逻辑
+                if(data.returnState=="OK"){
+                    if(data.msg=="ok"){
+                        toast.success($.i18n.prop('archiving.archiving.success'));
+                    }else if(data.msg=="null"){
+                        toast.warning($.i18n.prop('archiving.archiving.warning'));
+                    }
+
                 }
             });
 

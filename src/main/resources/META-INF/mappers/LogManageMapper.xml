@@ -17,11 +17,11 @@
 
     select * from kms_operate_log
         <where>
-            <if test="operateType != null  and operateType != ''">
+            <if test="operateType != null and operateType != 'all' and operateType != ''">
                 AND   operate_type=#{operateType}
             </if>
 
-            <if test="operatorResult != 0 and operatorResult != ''">
+            <if test="operatorResult != 0 and operatorResult != 3 and operatorResult != ''">
                 AND operator_result=#{operatorResult}
             </if>
             <if test="operateUser != null  and operateUser != ''">
