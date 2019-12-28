@@ -14,8 +14,17 @@ var ApiLog = function () {
                 },
                 "columns": [
                     {data: 'url', orderable: true},
-                    {data: 'accessTime', orderable: true},
-                    {data: 'result', orderable: true},
+                    {data: 'accessTime', orderable: true,
+                        render: function (data, type, full) {
+                            var unixTimestamp = new Date( data) ;
+                            return unixTimestamp.pattern("yyyy-MM-dd hh:mm:ss");
+                        }
+                    },
+                    {data: 'result', orderable: true,
+                        render: function (data, type, full) {
+                            return flat.i18n("apiLog.result" + data)
+                        }
+                    },
                     {data: 'momo', orderable: true},
                 ]
             }
