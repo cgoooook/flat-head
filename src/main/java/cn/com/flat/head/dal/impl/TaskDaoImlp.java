@@ -40,4 +40,9 @@ public class TaskDaoImlp implements TaskDao {
     public int updateTaskStatus(String id, int status) {
         return   taskMapper.updateTaskStatus(id,status);
     }
+
+    @Override
+    public List<Task> getTaskList() {
+        return taskMapper.getTaskList();
+    }
 }

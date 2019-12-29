@@ -24,6 +24,9 @@
         select * from kms_a_task where id=#{id}
 
     </select>
+    <select id="getTaskList" resultMap="TaskMap">
+        select * from kms_a_task where status=1
+    </select>
 
     <insert id="addTask">
 
