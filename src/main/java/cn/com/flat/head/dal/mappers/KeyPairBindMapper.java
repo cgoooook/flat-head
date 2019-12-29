@@ -16,4 +16,8 @@ public interface KeyPairBindMapper {
 
     int revokeKey(@Param("keyPairId") String keyPairId,@Param("reason") String reason);
 
+    int getUserKeyPair(String alg);
+
+    int getRevokeKeyPair(String alg);
+
 }

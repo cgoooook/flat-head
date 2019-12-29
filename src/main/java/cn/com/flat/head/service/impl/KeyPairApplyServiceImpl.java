@@ -12,6 +12,9 @@ import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.HashMap;
+import java.util.Map;
+
 /**
  * Created by panzhuowen on 2019/12/2.
  */
@@ -72,5 +75,14 @@ public class KeyPairApplyServiceImpl implements KeyPairApplyService {
         keyPairApplyDao.revokeKey(keyPairId, reason);
         booleanCarrier.setResult(true);
         return booleanCarrier;
+    }
+
+    @Override
+    public Map<String, Object> getKeyNumber() {
+        Map<String, Object> ret = new HashMap<>();
+        ret.put("useKey", keyPairApplyDao.getUseKey());
+        ret.put("notUseKey", keyPairApplyDao.getNotUseKey());
+        ret.put("revokeKey", keyPairApplyDao.getRevokeKey());
+        return ret;
     }
 }
