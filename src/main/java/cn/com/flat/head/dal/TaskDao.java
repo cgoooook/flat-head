@@ -16,4 +16,6 @@ public interface TaskDao {
     void editTask(Task task);
 
     int updateTaskStatus(String id, int status);
+
+    List<Task> getTaskList();
 }
