@@ -30,3 +30,14 @@ hs_err_pid*
 kms-application
 /.apt_generated/
 /.apt_generated_tests/
+/.metadata/
+
+# eclipse
+.classpath
+.project
+.settings/
+RemoteSystemsTempFiles/
+
+# nvim and lsp
+.nvimrc
+jdt.ls-java-project/
