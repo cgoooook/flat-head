@@ -2,7 +2,7 @@
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
-    <title>index</title>
+    <title th:text="${menu.menuName}"></title>
     <th:block th:include="includes/header :: styles"/>
     <link type="text/css" rel="stylesheet" th:href="@{/plugins/bootstrap-daterangepicker/daterangepicker.min.css}">
     <style type="text/css">
@@ -36,8 +36,8 @@
                                 <thead>
                                 <tr role="row" class="heading">
                                     <th width="30%" th:text="#{apiLog.url}"></th>
-                                    <th width="10%" th:text="#{apiLog.accessTime}"></th>
-                                    <th width="30%" th:text="#{apiLog.result}"></th>
+                                    <th width="30%" th:text="#{apiLog.accessTime}"></th>
+                                    <th width="10%" th:text="#{apiLog.result}"></th>
                                     <th width="30%" th:text="#{apiLog.momo}"></th>
                                 </tr>
                                 </thead>

@@ -20,4 +20,10 @@ public interface KeyPairApplyDao {
 
     int revokeKey(String keyPairId, String reason);
 
+    int getRevokeKey();
+
+    int getUseKey();
+
+    int getNotUseKey();
+
 }

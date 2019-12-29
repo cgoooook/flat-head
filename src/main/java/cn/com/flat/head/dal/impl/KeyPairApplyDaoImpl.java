@@ -58,4 +58,19 @@ public class KeyPairApplyDaoImpl implements KeyPairApplyDao {
 
         return keyPairBindMapper.revokeKey(keyPairId, reason);
     }
+
+    @Override
+    public int getRevokeKey() {
+        return keyPairBindMapper.getRevokeKeyPair("SM2");
+    }
+
+    @Override
+    public int getUseKey() {
+        return keyPairBindMapper.getUserKeyPair("SM2");
+    }
+
+    @Override
+    public int getNotUseKey() {
+        return keyPairMapper.getKeyPairNum("SM2");
+    }
 }

@@ -1,0 +1,1 @@
+nohup java -jar kms-services-executable.jar >/dev/null 2>&1 &

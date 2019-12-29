@@ -2,7 +2,7 @@
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
-    <title>index</title>
+    <title th:text="${menu.menuName}"></title>
     <th:block th:include="includes/header :: styles"/>
     <link type="text/css" rel="stylesheet" th:href="@{/plugins/bootstrap-daterangepicker/daterangepicker.min.css}">
 </head>
@@ -36,6 +36,7 @@
                                                 <select class="form-control" name="type" id="type" required>
                                                     <option value="" th:text="#{common.pleaseSelect}"></option>
                                                     <option value="all" th:text="#{common.all}"></option>
+                                                    <option value="login" th:text="#{log.login}"></option>
                                                     <option value="addUser" th:text="#{log.addUser}"></option>
                                                     <option value="updateUser" th:text="#{log.updateUser}"></option>
                                                     <option value="deleteUser" th:text="#{log.deleteUser}"></option>

@@ -13,4 +13,10 @@
     <select id="getKeyPairIdByPubKey" resultType="java.lang.String">
         select key_pair_id from kms_device_key_pair where pub_key=#{pubKey}
     </select>
+    <select id="getUserKeyPair" resultType="java.lang.Integer">
+        select count(*) from kms_device_key_pair where alg=#{alg} and status=1
+    </select>
+    <select id="getRevokeKeyPair" resultType="java.lang.Integer">
+        select count(*) from kms_device_key_pair where alg=#{alg} and status=0
+    </select>
 </mapper>

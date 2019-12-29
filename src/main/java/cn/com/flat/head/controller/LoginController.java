@@ -1,5 +1,8 @@
 package cn.com.flat.head.controller;
 
+import cn.com.flat.head.dal.LogDao;
+import cn.com.flat.head.log.LoggerBuilder;
+import cn.com.flat.head.log.OperateType;
 import cn.com.flat.head.pojo.User;
 import cn.com.flat.head.service.UserService;
 import cn.com.flat.head.util.SessionUtil;
@@ -29,6 +32,9 @@ public class LoginController {
     private UserService userService;
 
     @Autowired
+    private LogDao logDao;
+
+    @Autowired
     private MessageSource messageSource;
 
     @GetMapping
@@ -41,19 +47,25 @@ public class LoginController {
     public String loginPost(User user, RedirectAttributes redirectAttributes, HttpServletRequest request, Locale locale) {
         Subject currentUser = SecurityUtils.getSubject();
         UsernamePasswordToken token = new UsernamePasswordToken(user.getUsername(), user.getPassword(), "1".equals(user.getRemember()));
+        boolean res = false;
         try {
-            currentUser.login(token);
-        } catch (AuthenticationException e) {
-            redirectAttributes.addFlashAttribute("message", messageSource.getMessage("login.usernameOrPasswordWrong", null, locale));
-            return "redirect:/login";
-        }
-        if (currentUser.isAuthenticated()) {
-            sessionHandle(request, user);
+            try {
+                currentUser.login(token);
+            } catch (AuthenticationException e) {
+                redirectAttributes.addFlashAttribute("message", messageSource.getMessage("login.usernameOrPasswordWrong", null, locale));
+                return "redirect:/login";
+            }
+            if (currentUser.isAuthenticated()) {
+                sessionHandle(request, user);
 //            addLogInfo(user, request);
-            return "redirect:/";
-        } else {
-            redirectAttributes.addFlashAttribute("message", messageSource.getMessage("login.usernameOrPasswordWrong", null, locale));
-            return "redirect:/login";
+                res = true;
+                return "redirect:/";
+            } else {
+                redirectAttributes.addFlashAttribute("message", messageSource.getMessage("login.usernameOrPasswordWrong", null, locale));
+                return "redirect:/login";
+            }
+        } finally {
+            logDao.addLog(LoggerBuilder.builder(OperateType.login, res, "user login"));
         }
     }
 

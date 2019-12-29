@@ -16,7 +16,7 @@
             <th:block th:include="includes/slider :: slider"/>
             <div class="modal-dialog modal-lg">
                 <div class="modal-header">
-                    <h4 class="modal-title font-green bold" id="modalTitle"><span th:text="#{config.log.config}"></span>
+                    <h4 class="modal-title font-green bold" id="modalTitle"><span th:text="#{symKey.report}"></span>
                     </h4>
                 </div>
                 <div class="modal-body form">
@@ -24,63 +24,63 @@
                         <div class="form-body">
                             <div class="row">
                                 <div class="col-md-12">
-
-                            <div class="row">
-                                <div class="col-md-12">
                                     <div class="col-md-10">
                                         <div class="form-group">
                                             <label class="control-label col-md-4"><span
-                                                    th:text="#{config.log.retention}"></span>
-                                                <span class="required" aria-required="true">* </span>
+                                                    th:text="#{symKey.notUseKey}"></span>
                                             </label>
 
-
-                                            <div class="col-md-6">
-                                                <input type="text" class="form-control" id="retretion"
-                                                       name="username" th:placeholder="#{config.log.input}"
-                                                       required
-                                                       value=""/>
+                                            <div class="col-sm-6">
+                                                <input type="text" class="form-control"
+                                                       id="notUseKey" name="notUseKey" required
+                                                       maxlength="16" 
+                                                       th:value="${model.notUseKey}" readonly/>
                                             </div>
                                         </div>
                                     </div>
-
                                 </div>
                             </div>
+                            <div class="row">
+                                <div class="col-md-12">
+                                    <div class="col-md-10">
+                                        <div class="form-group">
+                                            <label class="control-label col-md-4"><span
+                                                    th:text="#{symKey.useKey}"></span>
+                                            </label>
 
-
+                                            <div class="col-sm-6">
+                                                <input type="text" class="form-control"
+                                                       id="useKey" name="useKey" required
+                                                       maxlength="16"
+                                                       th:value="${model.useKey}" readonly/>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
 
                             <div class="row">
                                 <div class="col-md-12">
                                     <div class="col-md-10">
                                         <div class="form-group">
                                             <label class="control-label col-md-4"><span
-                                                    th:text="#{config.log.level}"></span>
-                                                <span class="required" aria-required="true">* </span>
+                                                    th:text="#{symKey.revokeKeyNum}"></span>
                                             </label>
-                                              <div class="col-md-6">
-                                                   <select class="form-control" id="level">
-                                                       <option value="INFO">INFO</option>
-                                                       <option value="DEBUG">DEBUG</option>
-                                                       <option value="ERROR">ERROR</option>
 
-                                                   </select>
-                                               </div>
-
-
-
+                                            <div class="col-sm-6">
+                                                <input type="text" class="form-control"
+                                                       id="revokeKeyNum" name="revokeKeyNum" required
+                                                       maxlength="16"
+                                                       th:value="${model.revokeKey}" readonly/>
+                                            </div>
                                         </div>
                                     </div>
-
                                 </div>
                             </div>
 
-
                         </div>
+
                     </form>
-                </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-outline blue" id="save"><span
-                            th:text="#{common.save}"></span></button>
                 </div>
 
             </div>
@@ -92,11 +92,5 @@
 </div>
 <th:block th:include="includes/footer :: footer"/>
 <th:block th:include="includes/scripts :: scripts"/>
-<script th:src="@{/pages/scripts/config/logconfig.js}" type="text/javascript"></script>
-<script type="text/javascript">
-    $(function () {
-        logConfig.init();
-    })
-</script>
 </body>
 </html>

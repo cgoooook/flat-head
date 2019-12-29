@@ -31,10 +31,10 @@
                 AND   audit_flag=#{auditFlag}
             </if>
             <if test="operateTimeBegin != null and operateTimeBegin != ''">
-                AND operate_time  <![CDATA[ >= ]]> DATE_FORMAT(#{operateTimeBegin},'%Y-%m-%d %h:%i:%S')
+                AND operate_time  <![CDATA[ >= ]]> #{operateTimeBegin}
             </if>
             <if test="operateTimeEnd != null and operateTimeEnd != ''">
-                AND operate_time <![CDATA[ <= ]]> DATE_FORMAT(#{operateTimeEnd},'%Y-%m-%d %h:%i:%S')
+                AND operate_time <![CDATA[ <= ]]> #{operateTimeEnd}
             </if>
 
         </where>

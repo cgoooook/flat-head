@@ -2,7 +2,7 @@
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
-    <title>index</title>
+    <title th:text="${menu.menuName}"></title>
     <th:block th:include="includes/header :: styles"/>
     <link rel="stylesheet" th:href="@{/plugins/ztree/css/zTreeStyle/zTreeStyle.css}" type="text/css">
     <link rel="stylesheet" th:href="@{/global/css/ztree_custom.css}" type="text/css">
