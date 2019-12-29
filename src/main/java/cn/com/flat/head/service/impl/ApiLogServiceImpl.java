@@ -29,4 +29,9 @@ public class ApiLogServiceImpl implements ApiLogService {
     public void addApiLog(ApiLog apiLog) {
         apiLogDao.addApiLog(apiLog);
     }
+
+    @Override
+    public int getApiLogCount() {
+        return apiLogDao.getApiLogCount();
+    }
 }

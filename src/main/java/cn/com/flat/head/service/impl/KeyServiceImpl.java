@@ -215,4 +215,9 @@ public class KeyServiceImpl implements KeyService {
     public List<Key> getKeyListByOrgIdForRest(String orgId, String collectionId) {
         return keyDao.getKeyByOrgIdAndCollectionId(orgId, collectionId);
     }
+
+    @Override
+    public int geyKeyCountByTemplateId(String templateId) {
+        return keyDao.geyKeyCountByTemplateId(templateId);
+    }
 }

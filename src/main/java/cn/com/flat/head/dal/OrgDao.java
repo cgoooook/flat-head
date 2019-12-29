@@ -30,4 +30,5 @@ public interface OrgDao {
     List<Organization> orgChildList();
 
 
+    int getOrgNum();
 }

@@ -16,4 +16,5 @@ public interface LogManageMapper {
     void insertOperateArchiveLogs(List<OperateArchiveLog> archiving);
 
     void deleteOperatorLog(List<OperateArchiveLog> archiving);
+    int allLog();
 }

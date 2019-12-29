@@ -65,7 +65,9 @@
     <select id="getDeviceListByOrgId" resultMap="devMap">
         select * from kms_device where org_id=#{orgId}
     </select>
-
+    <select id="getDeviceNum" resultType="int">
+        select count(*) from kms_device
+    </select>
 
     <update id="editDev">
         update kms_device set device_name =#{deviceName},device_code=#{deviceCode},device_ip=#{deviceIp},collection_id=#{collectionId}

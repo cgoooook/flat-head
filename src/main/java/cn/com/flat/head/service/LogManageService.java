@@ -14,4 +14,6 @@ public interface LogManageService {
     boolean auditLog(String logId);
 
     int archiving(OperateArchiveLog operateArchiveLog);
+
+    int allLog();
 }

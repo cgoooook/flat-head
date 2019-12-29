@@ -158,5 +158,10 @@ public class OrgServiceImpl implements OrgService {
         return orgDao.orgChildList();
     }
 
+    @Override
+    public int getOrgNum() {
+        return orgDao.getOrgNum();
+    }
+
 
 }

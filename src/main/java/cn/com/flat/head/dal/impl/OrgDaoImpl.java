@@ -68,5 +68,10 @@ public class OrgDaoImpl implements OrgDao {
         return orgMapper.orgChildList();
     }
 
+    @Override
+    public int getOrgNum() {
+        return orgMapper.getOrgNum();
+    }
+
 
 }

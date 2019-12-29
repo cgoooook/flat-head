@@ -18,4 +18,5 @@ public class DeviceKeyPair {
 
     private String priKey;
 
+    private Integer status;
 }

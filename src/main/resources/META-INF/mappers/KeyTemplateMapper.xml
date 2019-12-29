@@ -51,5 +51,4 @@
         select * from kms_template where status=1
     </select>
 
-
 </mapper>

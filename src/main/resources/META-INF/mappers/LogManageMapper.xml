@@ -74,7 +74,9 @@
 
     </insert>
 
-
+<select id="allLog" resultType="int">
+    select count(*) from kms_operate_log
+</select>
 
 
 </mapper>

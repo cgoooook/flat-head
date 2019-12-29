@@ -27,4 +27,9 @@ public class ApiLogDaoImpl implements ApiLogDao {
     public void addApiLog(ApiLog apiLog) {
         apiLogMapper.addApiLog(apiLog);
     }
+
+    @Override
+    public int getApiLogCount() {
+        return apiLogMapper.getApiLogCount();
+    }
 }

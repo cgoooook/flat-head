@@ -94,6 +94,11 @@ public class DevServiceImpl implements DevService {
     }
 
     @Override
+    public int getDeviceNum() {
+        return devServiceDao.getDeviceNum();
+    }
+
+    @Override
     public boolean deleteDevById(String id) {
         boolean result = true;
         try {

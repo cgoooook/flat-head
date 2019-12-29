@@ -25,4 +25,6 @@ public interface DevMapper {
     void editDev(Device dev);
 
     List<Device> getDeviceListByOrgId(String orgId);
+
+    int getDeviceNum();
 }

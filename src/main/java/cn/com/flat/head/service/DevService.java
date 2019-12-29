@@ -20,4 +20,6 @@ public interface DevService {
     Device getDevByDevId(String deviceId);
 
     BooleanCarrier editDev(Device dev);
+
+    int getDeviceNum();
 }

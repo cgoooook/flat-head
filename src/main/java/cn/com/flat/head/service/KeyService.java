@@ -38,4 +38,5 @@ public interface KeyService {
 
     List<Key> getKeyListByOrgIdForRest(String orgId, String collectionId);
 
+    int geyKeyCountByTemplateId(String templateId);
 }

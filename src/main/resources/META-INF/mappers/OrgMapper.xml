@@ -43,6 +43,10 @@
 
     </select>
 
+    <select id="getOrgNum" resultType="int">
+       select count(*) from  kms_org
+    </select>
+
 
     <insert id="addOrg"  >
         INSERT INTO kms_org (

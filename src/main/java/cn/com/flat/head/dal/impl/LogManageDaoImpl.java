@@ -33,5 +33,10 @@ public class LogManageDaoImpl implements LogManageDao {
         logManageMapper.deleteOperatorLog(archiving);
     }
 
+    @Override
+    public int allLog() {
+        return logManageMapper.allLog();
+    }
+
 
 }

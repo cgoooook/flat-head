@@ -29,5 +29,6 @@ public interface OrgMapper {
 
     List<Organization> orgChildList();
 
-    List<Organization> orgList();
+
+    int getOrgNum();
 }

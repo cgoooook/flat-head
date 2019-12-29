@@ -14,4 +14,5 @@ public interface ApiLogService {
 
     void  addApiLog(ApiLog apiLog);
 
+    int getApiLogCount();
 }

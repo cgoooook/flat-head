@@ -47,4 +47,9 @@ public class LogManageServiceImpl implements LogManageService {
         }
 
     }
+
+    @Override
+    public int allLog() {
+        return logManageDao.allLog();
+    }
 }

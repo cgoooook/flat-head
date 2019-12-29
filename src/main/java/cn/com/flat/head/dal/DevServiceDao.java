@@ -24,4 +24,6 @@ public interface DevServiceDao {
     void editOrg(Device dev);
 
     List<Device> getDeviceListByOrgId(String orgId);
+
+    int getDeviceNum();
 }
