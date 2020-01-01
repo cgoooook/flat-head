@@ -67,4 +67,9 @@ public class UserDaoImpl implements UserDao {
     public int updateUser(User user) {
         return userMapper.updateUser(user);
     }
+
+    @Override
+    public int updateUserLastLoginTime(String username) {
+        return userMapper.updateUserLoginTime(username);
+    }
 }

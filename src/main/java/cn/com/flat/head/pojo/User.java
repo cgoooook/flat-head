@@ -2,6 +2,8 @@ package cn.com.flat.head.pojo;
 
 import lombok.Data;
 
+import java.util.Date;
+
 /**
  * Created by poney on 2019-10-01.
  */
@@ -25,6 +27,8 @@ public class User {
     private String remember;
 
     private String roleId;
+
+    private Date lastLoginTime;
 
 
 

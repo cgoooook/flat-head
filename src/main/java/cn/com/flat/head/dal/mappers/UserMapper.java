@@ -33,4 +33,6 @@ public interface UserMapper {
     int updateUserRole(@Param("userId") String userId, @Param("roleId") String roleId);
 
     int updateUser(User user);
+
+    int updateUserLoginTime(String username);
 }

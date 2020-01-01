@@ -5,13 +5,24 @@ import java.util.Map;
 
 //密钥模板&数量
 public class HomeTemplateInfo {
-    private HashMap<String,Integer> map;
 
-    public HashMap<String, Integer> getMap() {
-        return map;
+    private String name;
+
+    private String num;
+
+    public String getName() {
+        return name;
     }
 
-    public void setMap(HashMap<String, Integer> map) {
-        this.map = map;
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public String getNum() {
+        return num;
+    }
+
+    public void setNum(String num) {
+        this.num = num;
     }
 }

@@ -10,6 +10,7 @@
         <result column="pub_key" property="pubKey" />
         <result column="account_type" property="accountType" />
         <result column="role_id" property="roleId" />
+        <result column="last_login_time" property="lastLoginTime" />
     </resultMap>
     <insert id="addUser">
         insert into sys_acl_user(user_id,nick_name, username, password, pub_key, account_type) values
@@ -27,6 +28,9 @@
             ,password=#{password}
         </if>
         where user_id=#{userId}
+    </update>
+    <update id="updateUserLoginTime">
+        update sys_acl_user set last_login_time=now() where username=#{username}
     </update>
 
     <delete id="deleteUserById">

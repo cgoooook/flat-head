@@ -39,7 +39,6 @@ public class LoginController {
 
     @GetMapping
     public String login() {
-
         return "login";
     }
 
@@ -57,7 +56,7 @@ public class LoginController {
             }
             if (currentUser.isAuthenticated()) {
                 sessionHandle(request, user);
-//            addLogInfo(user, request);
+                addLogInfo(user, request);
                 res = true;
                 return "redirect:/";
             } else {
@@ -72,6 +71,13 @@ public class LoginController {
     private void sessionHandle(HttpServletRequest request, User user) {
         User userByUsername = userService.getUserByUsername(user.getUsername());
         SessionUtil.setUserToSession(request, userByUsername);
+    }
+
+
+    private void addLogInfo(User user, HttpServletRequest request) {
+        User userByUsername = userService.getUserByUsername(user.getUsername());
+        request.getSession().setAttribute("user", userByUsername);
+        userService.updateUserLastLoginTime(userByUsername.getUsername());
     }
 
 }

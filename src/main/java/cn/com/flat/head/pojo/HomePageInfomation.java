@@ -1,5 +1,7 @@
 package cn.com.flat.head.pojo;
 
+import java.util.List;
+
 public class HomePageInfomation {
     //sm2备用密钥数量，sm2在用密钥数量
     private HomeSm2Info homeSm2Info;
@@ -11,6 +13,8 @@ public class HomePageInfomation {
     private HomeTemplateInfo homeTemplateInfo;
     //管理日志记录数&服务日志记录数
     private HomeLogInfo homeLogInfo;
+
+    private List<HomeTemplateInfo> templateInfoList;
 
     public HomeSm2Info getHomeSm2Info() {
         return homeSm2Info;
@@ -50,5 +54,13 @@ public class HomePageInfomation {
 
     public void setHomeLogInfo(HomeLogInfo homeLogInfo) {
         this.homeLogInfo = homeLogInfo;
+    }
+
+    public List<HomeTemplateInfo> getTemplateInfoList() {
+        return templateInfoList;
+    }
+
+    public void setTemplateInfoList(List<HomeTemplateInfo> templateInfoList) {
+        this.templateInfoList = templateInfoList;
     }
 }

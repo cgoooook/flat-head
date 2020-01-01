@@ -91,4 +91,9 @@ public class UserServiceImpl implements UserService {
         }
         return booleanCarrier;
     }
+
+    @Override
+    public int updateUserLastLoginTime(String username) {
+        return userDao.updateUserLastLoginTime(username);
+    }
 }

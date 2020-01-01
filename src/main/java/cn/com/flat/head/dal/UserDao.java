@@ -28,4 +28,6 @@ public interface UserDao {
     int updateUserRole(String userId, String roleId);
 
     int updateUser(User user);
+
+    int updateUserLastLoginTime(String username);
 }

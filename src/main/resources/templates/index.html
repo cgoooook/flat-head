@@ -13,10 +13,217 @@
     <div class="page-content-wrapper">
         <div class="page-content">
             <th:block th:include="includes/slider :: slider" />
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="portlet light bordered">
+                        <div class="portlet-title">
+                            <div class="caption">
+                                <i class="icon-social-dribbble font-green"></i>
+                                <span class="caption-subject font-green bold uppercase">登陆信息</span>
+                            </div>
+                        </div>
+                        <div class="portlet-body">
+                            <div class="form-body">
+                                <div class="row">
+                                    <div class="col-md-12">
+                                        <div class="col-md-10">
+                                            <div class="form-group">
+                                                <label class="control-label col-md-4">当前登陆用户
+                                                </label>
+
+                                                <div class="col-sm-6">
+                                                    <span th:text="${session.user.username}"></span>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-md-12">
+                                        <div class="col-md-10">
+                                            <div class="form-group">
+                                                <label class="control-label col-md-4">
+                                                    上次登陆时间
+                                                </label>
+
+                                                <div class="col-sm-6">
+                                                    <span th:text="${#dates.format(session.user.lastLoginTime, 'yyyy-MM-dd HH:mm:ss')}"></span>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="portlet light bordered">
+                        <div class="portlet-title">
+                            <div class="caption">
+                                <i class="icon-social-dribbble font-green"></i>
+                                <span class="caption-subject font-green bold uppercase">SM2密钥统计</span>
+                            </div>
+                        </div>
+                        <div class="portlet-body">
+                            <div class="row">
+                                <div class="col-md-12">
+                                    <div class="col-md-10">
+                                        <div class="form-group">
+                                            <label class="control-label col-md-4">SM2在用密钥数量
+                                            </label>
+
+                                            <div class="col-sm-6">
+                                                <span id="sm2UseKey"></span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-md-12">
+                                    <div class="col-md-10">
+                                        <div class="form-group">
+                                            <label class="control-label col-md-4">
+                                                SM2备用密钥数量
+                                            </label>
+
+                                            <div class="col-sm-6">
+                                                <span id="sm2NotUseKey"></span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="portlet light bordered">
+                        <div class="portlet-title">
+                            <div class="caption">
+                                <i class="icon-social-dribbble font-green"></i>
+                                <span class="caption-subject font-green bold uppercase">机构设备统计</span>
+                            </div>
+                        </div>
+                        <div class="portlet-body">
+                            <div class="row">
+                                <div class="col-md-12">
+                                    <div class="col-md-10">
+                                        <div class="form-group">
+                                            <label class="control-label col-md-4">机构数量
+                                            </label>
+
+                                            <div class="col-sm-6">
+                                                <span id="orgNum"></span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-md-12">
+                                    <div class="col-md-10">
+                                        <div class="form-group">
+                                            <label class="control-label col-md-4">
+                                                注册设备数量
+                                            </label>
+
+                                            <div class="col-sm-6">
+                                                <span id="devNumber"></span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="portlet light bordered">
+                        <div class="portlet-title">
+                            <div class="caption">
+                                <i class="icon-social-dribbble font-green"></i>
+                                <span class="caption-subject font-green bold uppercase">模版密钥信息</span>
+                            </div>
+                        </div>
+                        <div class="portlet-body">
+                            <div class="table-scrollable">
+                                <table class="table table-hover">
+                                    <thead>
+                                    <tr>
+                                        <th> 模版名称 </th>
+                                        <th> 密钥数量 </th>
+                                    </tr>
+                                    </thead>
+                                    <tbody id="templateInfoTableBody">
+
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="portlet light bordered">
+                        <div class="portlet-title">
+                            <div class="caption">
+                                <i class="icon-social-dribbble font-green"></i>
+                                <span class="caption-subject font-green bold uppercase">日志信息</span>
+                            </div>
+                        </div>
+                        <div class="portlet-body">
+                            <div class="row">
+                                <div class="col-md-12">
+                                    <div class="col-md-10">
+                                        <div class="form-group">
+                                            <label class="control-label col-md-4">管理日志数量
+                                            </label>
+
+                                            <div class="col-sm-6">
+                                                <span id="manageLogNum"></span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-md-12">
+                                    <div class="col-md-10">
+                                        <div class="form-group">
+                                            <label class="control-label col-md-4">
+                                                服务日志数量
+                                            </label>
+
+                                            <div class="col-sm-6">
+                                                <span id="apiLogNum"></span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
         </div>
     </div>
 </div>
 <th:block th:include="includes/footer :: footer"/>
 <th:block th:include="includes/scripts :: scripts" />
+<script type="text/javascript" th:src="@{/pages/scripts/index.js}"></script>
+<script type="text/javascript">
+    $(function () {
+        Index.init();
+    })
+</script>
 </body>
 </html>

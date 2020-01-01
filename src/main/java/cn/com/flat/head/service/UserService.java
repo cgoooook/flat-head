@@ -27,4 +27,6 @@ public interface UserService {
 
     BooleanCarrier updateUser(User user);
 
+    int updateUserLastLoginTime(String username);
+
 }

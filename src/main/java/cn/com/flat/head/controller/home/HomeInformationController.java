@@ -2,12 +2,14 @@ package cn.com.flat.head.controller.home;
 
 import cn.com.flat.head.pojo.*;
 import cn.com.flat.head.service.*;
+import cn.com.flat.head.web.AjaxResponse;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -29,7 +31,8 @@ public class HomeInformationController {
     ApiLogService apiLogService;
     @GetMapping("/info")
     @ResponseBody
-    public HomePageInfomation getHomePageInfomation(){
+    public AjaxResponse getHomePageInfomation(){
+        AjaxResponse ajaxResponse = new AjaxResponse();
         DeviceKeyPair deviceKeyPair = new DeviceKeyPair();
         deviceKeyPair.setAlg("SM2");
         deviceKeyPair.setStatus(1);
@@ -47,23 +50,26 @@ public class HomeInformationController {
         int deviceNum = devService.getDeviceNum();
         homeOrganizationAndDeviceInfo.setDeviceNum(deviceNum);
         homePageInfomation.setHomeOrganizationAndDeviceInfo(homeOrganizationAndDeviceInfo);
-        HomeTemplateInfo homeTemplateInfo=new HomeTemplateInfo();
         HashMap<String,Integer> map =new HashMap<>();
         //获取模板列表
+        List<HomeTemplateInfo> homeTemplateInfos = new ArrayList<>();
         List<KeyTemplate> keyGenTemplate = keyService.getKeyGenTemplate();
         for (KeyTemplate temp:keyGenTemplate) {
+            HomeTemplateInfo homeTemplateInfo = new HomeTemplateInfo();
             String templateId = temp.getTemplateId();
             int num = keyService.geyKeyCountByTemplateId(templateId);
-            map.put(temp.getTemplateName(),num);
+            homeTemplateInfo.setName(temp.getTemplateName());
+            homeTemplateInfo.setNum(num + "");
+            homeTemplateInfos.add(homeTemplateInfo);
         }
-        homeTemplateInfo.setMap(map);
-        homePageInfomation.setHomeTemplateInfo(homeTemplateInfo);
+        homePageInfomation.setTemplateInfoList(homeTemplateInfos);
         HomeLogInfo homeLogInfo = new HomeLogInfo();
         int operatorLogNum = logManageService.allLog();
         int apiLog = apiLogService.getApiLogCount();
         homeLogInfo.setManagerLogNum(operatorLogNum);
         homeLogInfo.setServiceLogNum(apiLog);
         homePageInfomation.setHomeLogInfo(homeLogInfo);
-        return homePageInfomation;
+        ajaxResponse.setData(homePageInfomation);
+        return ajaxResponse;
     }
 }
