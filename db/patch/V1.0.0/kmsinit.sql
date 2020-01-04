@@ -566,7 +566,7 @@ CREATE TABLE `sys_acl_user` (
 
 LOCK TABLES `sys_acl_user` WRITE;
 /*!40000 ALTER TABLE `sys_acl_user` DISABLE KEYS */;
-INSERT INTO `sys_acl_user` VALUES ('1','pony','admin','c3284d0f94606de1fd2af172aba15bf3',NULL,0,'2020-01-01 17:46:33'),('7ec7672e-1ad0-4523-9056-33e39dc5a4f8','1','1','c4ca4238a0b923820dcc509a6f75849b',NULL,0,'2020-01-01 17:01:01');
+INSERT INTO `sys_acl_user` VALUES ('1','管理员','admin','c3284d0f94606de1fd2af172aba15bf3',NULL,0,'2020-01-01 17:46:33');
 /*!40000 ALTER TABLE `sys_acl_user` ENABLE KEYS */;
 UNLOCK TABLES;
 
