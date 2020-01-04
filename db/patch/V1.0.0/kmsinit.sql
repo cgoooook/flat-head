@@ -43,12 +43,6 @@ CREATE TABLE `kms_a_key` (
 -- Dumping data for table `kms_a_key`
 --
 
-LOCK TABLES `kms_a_key` WRITE;
-/*!40000 ALTER TABLE `kms_a_key` DISABLE KEYS */;
-INSERT INTO `kms_a_key` VALUES ('29b6372e-7864-4143-a7d1-ef11d887d3f3','root','SM4',128,1,'ad07f966','a8380cf9496eca153d1198e062d29faa','admin','1','orgRoot',2,'random');
-/*!40000 ALTER TABLE `kms_a_key` ENABLE KEYS */;
-UNLOCK TABLES;
-
 --
 -- Table structure for table `kms_a_key_history`
 --
@@ -376,7 +370,7 @@ CREATE TABLE `kms_org` (
 
 LOCK TABLES `kms_org` WRITE;
 /*!40000 ALTER TABLE `kms_org` DISABLE KEYS */;
-INSERT INTO `kms_org` VALUES ('64002750-3e0f-4473-a9e2-7761ffeba332','123','123','orgRoot',1,'123'),('orgRoot','根机构','orgroot','-1',0,'');
+INSERT INTO `kms_org` VALUES ('orgRoot','根机构','orgroot','-1',0,'');
 /*!40000 ALTER TABLE `kms_org` ENABLE KEYS */;
 UNLOCK TABLES;
 
