@@ -75,18 +75,6 @@ var Login = function () {
         init: function () {
 
             handleLogin();
-
-            // init background slide images
-            $.backstretch([
-                    "/pages/media/1.jpg",
-                    "/pages/media/2.jpg",
-                    "/pages/media/3.jpg",
-                    "/pages/media/4.jpg"
-                ], {
-                    fade: 1000,
-                    duration: 8000
-                }
-            );
         }
     };
 
