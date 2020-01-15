@@ -1,6 +1,11 @@
 kind: pipeline
 name: default
 
+trigger:
+  branch:
+    include:
+    - develope
+
 steps:
 - name: build
   image: maven:3-jdk-10
