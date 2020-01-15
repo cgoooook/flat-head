@@ -1,0 +1,10 @@
+kind: pipeline
+name: default
+
+steps:
+- name: build
+  image: maven:3-jdk-10
+  pull: true
+  commands:
+    - mvn package
+
