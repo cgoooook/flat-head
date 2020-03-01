@@ -35,8 +35,7 @@ public class KeyDaoImpl implements KeyDao {
 
     @Override
     public int addKey(Key key) {
-        key.setKeyId(UUID.randomUUID().toString());
-        key.setStatus(2);
+
         return keyMapper.addKey(key);
     }
 

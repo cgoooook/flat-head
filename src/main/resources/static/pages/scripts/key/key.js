@@ -23,7 +23,8 @@ var Key = function () {
                     {data: 'checkValue', orderable: true},
                     {data: 'templateName', orderable: true},
                     {data: 'version', orderable: true},
-                    {data: 'status', orderable: true,
+                    {
+                        data: 'status', orderable: true,
                         render: function (data, type, full) {
                             return flat.i18n("key.status" + data);
                         }
@@ -141,7 +142,10 @@ var Key = function () {
                 if (data.ok) {
                     var key = data.data.key;
                     var historyList = data.data.historyList;
-                    var htmlTemplate = flat.remoteTemplate("/template/key/keyDetail.html",{key: key, historyList: historyList});
+                    var htmlTemplate = flat.remoteTemplate("/template/key/keyDetail.html", {
+                        key: key,
+                        historyList: historyList
+                    });
                     $("#modalDialog").html(htmlTemplate).modal('show');
                 } else {
                     flat.ajaxCallback(data);
@@ -162,7 +166,7 @@ var Key = function () {
             $.get("/key/key/detail/" + keyId, function (data) {
                 if (data.ok) {
                     var key = data.data.key;
-                    var htmlTemplate = flat.remoteTemplate("/template/key/updateKey.html",{key: key});
+                    var htmlTemplate = flat.remoteTemplate("/template/key/updateKey.html", {key: key});
                     $("#modalDialog").html(htmlTemplate).modal('show');
                     if (key.mode === "compose") {
                         composeSelectInit();
@@ -181,9 +185,9 @@ var Key = function () {
                 var validation = {};
                 var genMode = $("#genMode").val();
                 var data = {};
-                if (genMode === "derive"){
+                if (genMode === "derive") {
                     data = {
-                        keyId:$("#keyId").val(),
+                        keyId: $("#keyId").val(),
                         mode: genMode,
                         deriveParam: $("#deriveParams").val()
                     }
@@ -192,7 +196,7 @@ var Key = function () {
                     var comNums = $("#genModeComposeNum").val();
                     var rules = {};
                     for (var i = 1; i <= comNums; i++) {
-                        rules['confirmCompose' + i] = {equalTo: "#compose" + i }
+                        rules['confirmCompose' + i] = {equalTo: "#compose" + i}
                         composes.push($("#compose" + i).val())
                     }
                     validation = {
@@ -200,15 +204,15 @@ var Key = function () {
                     };
 
                     data = {
-                        keyId:$("#keyId").val(),
+                        keyId: $("#keyId").val(),
                         mode: genMode,
-                        orgId :$("#orgIdSelect").val(),
+                        orgId: $("#orgIdSelect").val(),
                         composes: composes
                     };
 
                 } else {
                     data = {
-                        keyId:$("#keyId").val(),
+                        keyId: $("#keyId").val(),
                         mode: genMode
                     }
 
@@ -245,6 +249,38 @@ var Key = function () {
                     flat.ajaxCallback(data);
                 }
             })
+        });
+
+        $("#importKey").on('click', function () {
+            var htmlTemplate = flat.remoteTemplate("/template/key/importKey.html", {});
+            $("#modalDialog").html(htmlTemplate).modal('show');
+            $("#keyBackData").on("change", function () {
+                var obj = document.getElementById("keyBackData");
+                $("#fileName").html(obj.files[0].name);
+            });
+            $("#importBtn").on("click", function () {
+                var obj = document.getElementById("keyBackData");
+                var len = obj.files.length;
+                if (len === 0) {
+                    toast.error("请选择文件");
+                    return;
+                }
+                var formData = new FormData();
+                formData.append("keyBackFile",obj.files[0]);
+                $.ajax({
+                    url: '/key/key/importKey',
+                    type: 'POST',
+                    processData: false,
+                    contentType: false,
+                    data: formData
+                }).done(function (data) {
+                    if (flat.ajaxCallback(data)) {
+                        $("#modalDialog").modal("hide");
+                        grid.reload();
+                    }
+                });
+            })
+
         });
 
         function initGenMode() {
@@ -311,14 +347,14 @@ var Key = function () {
                 var validation = {};
                 var genMode = $("#genMode").val();
                 var data = {};
-                if (genMode === "derive"){
+                if (genMode === "derive") {
                     data = {
                         keyName: $('#keyName').val(),
                         keyAlg: $("#keyAlg").val(),
                         length: $("#length").val(),
                         templateId: $("#templateId").val(),
                         mode: genMode,
-                        orgId :$("#orgIdSelect").val(),
+                        orgId: $("#orgIdSelect").val(),
                         deriveParam: $("#deriveParams").val()
                     }
                 } else if (genMode === 'compose') {
@@ -326,7 +362,7 @@ var Key = function () {
                     var comNums = $("#genModeComposeNum").val();
                     var rules = {};
                     for (var i = 1; i <= comNums; i++) {
-                        rules['confirmCompose' + i] = {equalTo: "#compose" + i }
+                        rules['confirmCompose' + i] = {equalTo: "#compose" + i}
                         composes.push($("#compose" + i).val())
                     }
                     validation = {
@@ -339,7 +375,7 @@ var Key = function () {
                         length: $("#length").val(),
                         templateId: $("#templateId").val(),
                         mode: genMode,
-                        orgId :$("#orgIdSelect").val(),
+                        orgId: $("#orgIdSelect").val(),
                         composes: composes
                     };
 
@@ -350,7 +386,7 @@ var Key = function () {
                         length: $("#length").val(),
                         templateId: $("#templateId").val(),
                         mode: genMode,
-                        orgId :$("#orgIdSelect").val()
+                        orgId: $("#orgIdSelect").val()
                     }
 
                 }

@@ -18,6 +18,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.UUID;
 
 /**
  * Created by panzhuowen on 2019/10/27.
@@ -65,9 +66,9 @@ public class KeyTemplateServiceImpl implements KeyTemplateService {
     @Override
     public BooleanCarrier addTemplate(KeyTemplate template) throws KMSException {
         BooleanCarrier booleanCarrier = new BooleanCarrier();
+        template.setTemplateId(UUID.randomUUID().toString());
         boolean result = false;
         try {
-            //todo check time
             int count = keyTemplateDao.getTemplateCountByName(template.getTemplateName());
             if (count > 0) {
                 booleanCarrier.setResult(false);

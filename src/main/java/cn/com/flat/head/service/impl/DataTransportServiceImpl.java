@@ -71,7 +71,7 @@ public class DataTransportServiceImpl implements DataTransportService {
             List<Key> keyList = dataTransport.getKeyList();
             importKeyList(keyList);
         } catch (IOException e) {
-            e.printStackTrace();
+            throw new IllegalArgumentException();
         }
 
     }

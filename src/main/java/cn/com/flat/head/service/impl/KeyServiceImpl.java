@@ -21,6 +21,7 @@ import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.UUID;
 
 /**
  * Created by panzhuowen on 2019/11/6.
@@ -105,6 +106,8 @@ public class KeyServiceImpl implements KeyService {
                 booleanCarrier.setMessage("key.nameExist");
                 return booleanCarrier;
             }
+            key.setKeyId(UUID.randomUUID().toString());
+            key.setStatus(2);
             int i = keyDao.addKey(key);
             booleanCarrier.setResult(i >= 1);
             return booleanCarrier;

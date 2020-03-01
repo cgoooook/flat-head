@@ -31,7 +31,6 @@ public class KeyTemplateDaoImpl implements KeyTemplateDao {
 
     @Override
     public int addTemplate(KeyTemplate template) {
-        template.setTemplateId(UUID.randomUUID().toString());
         return keyTemplateMapper.addTemplate(template);
     }
 
