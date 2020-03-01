@@ -39,4 +39,6 @@ public interface KeyMapper {
     List<Key> getKeyListByOrgIdAndCollectionId(@Param("orgId") String orgId, @Param("collectionId")String collectionId);
 
     int getKeyCountByTemplateId(String templateId);
+
+    int deleteKeyById(String id);
 }

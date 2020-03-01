@@ -3,9 +3,14 @@ package cn.com.flat.head.service.impl;
 import cn.com.flat.head.dal.*;
 import cn.com.flat.head.pojo.*;
 import cn.com.flat.head.service.DataTransportService;
+import com.fasterxml.jackson.databind.ObjectMapper;
+import lombok.val;
+import org.apache.commons.io.IOUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.io.IOException;
+import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
@@ -44,6 +49,71 @@ public class DataTransportServiceImpl implements DataTransportService {
         dataTransport.setDeviceList(getDeviceList(orgId));
         dataTransport.setCollectionList(getKeyCollectionListByOrgId(orgId));
         return dataTransport;
+    }
+
+    @Override
+    public void importDat(InputStream inData) {
+        try {
+            int available = inData.available();
+            byte[] data = new byte[available];
+            IOUtils.readFully(inData, data);
+            String dataJson = new String(data);
+            ObjectMapper objectMapper = new ObjectMapper();
+            DataTransport dataTransport = objectMapper.readValue(dataJson, DataTransport.class);
+            List<Organization> organizationList = dataTransport.getOrganizationList();
+            importOrg(organizationList);
+            List<KeyTemplate> templateList = dataTransport.getTemplateList();
+            importKetTemplate(templateList);
+            List<KeyCollection> collectionList = dataTransport.getCollectionList();
+            importCollection(collectionList);
+            List<Device> deviceList = dataTransport.getDeviceList();
+            importDevList(deviceList);
+            List<Key> keyList = dataTransport.getKeyList();
+            importKeyList(keyList);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+    }
+
+    private void importKeyList(List<Key> keyList) {
+        keyList.forEach(key -> {
+            keyDao.deleteKeyById(key.getKeyId());
+            keyDao.deleteKeyHistoryById(key.getKeyId());
+            keyDao.addKey(key);
+            List<KeyHistory> keyHistories = key.getKeyHistories();
+            keyHistories.forEach(keyHistory -> {
+                keyDao.addKeyHistorey(keyHistory);
+            });
+        });
+    }
+
+    private void importDevList(List<Device> deviceList) {
+        deviceList.forEach(device -> {
+            devServiceDao.deleteDevgById(device.getDeviceId());
+            devServiceDao.addDev(device);
+        });
+    }
+
+    private void importCollection(List<KeyCollection> collectionList) {
+        collectionList.forEach(keyCollection -> {
+            keyCollectionDao.deleteCollection(keyCollection.getCollectionId());
+            keyCollectionDao.addCollection(keyCollection);
+        });
+    }
+
+    private void importKetTemplate(List<KeyTemplate> keyTemplateList) {
+        keyTemplateList.forEach(keyTemplate -> {
+            keyTemplateDao.deleteTemplate(keyTemplate.getTemplateId());
+            keyTemplateDao.addTemplate(keyTemplate);
+        });
+    }
+
+    private void importOrg(List<Organization> organizations) {
+        organizations.forEach(organization -> {
+            orgDao.deleteOrgById(organization.getOrgId());
+            orgDao.addOrg(organization);
+        });
     }
 
     private List<Organization> getOrgList(String orgId) {

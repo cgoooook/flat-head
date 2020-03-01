@@ -110,6 +110,21 @@ public class KeyDaoImpl implements KeyDao {
         return keyMapper.getKeyCountByTemplateId(templateId);
     }
 
+    @Override
+    public void deleteKeyById(String id) {
+        keyMapper.deleteKeyById(id);
+    }
+
+    @Override
+    public void deleteKeyHistoryById(String id) {
+        keyHistoryMapper.delKeyHistoryByKeyId(id);
+    }
+
+    @Override
+    public void addKeyHistorey(KeyHistory keyHistory) {
+        keyHistoryMapper.adHistoryKey(keyHistory);
+    }
+
     private KeyHistory convertKeyToHistory(Key key) {
         KeyHistory keyHistory = new KeyHistory();
         keyHistory.setKeyHistoryId(UUID.randomUUID().toString());

@@ -42,8 +42,6 @@ public class KeyTemplateDaoImpl implements KeyTemplateDao {
 
     @Override
     public int deleteTemplate(String templateId) {
-        //todo check usage
-
         return keyTemplateMapper.deleteTemplate(templateId);
     }
 

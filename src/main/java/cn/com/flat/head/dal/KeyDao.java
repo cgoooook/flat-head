@@ -41,4 +41,10 @@ public interface KeyDao {
     List<Key> getKeyByOrgIdAndCollectionId(String orgId, String collectionId);
 
     int geyKeyCountByTemplateId(String templateId);
+
+    void deleteKeyById(String id);
+
+    void deleteKeyHistoryById(String id);
+
+    void addKeyHistorey(KeyHistory keyHistory);
 }

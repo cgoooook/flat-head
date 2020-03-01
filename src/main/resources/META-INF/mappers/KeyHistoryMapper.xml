@@ -17,6 +17,9 @@
         insert into kms_a_key_history (key_history_id,key_id, key_name, key_alg, length, check_value, key_value, create_by, template_id, org_id, status, version) VALUES
             (#{keyHistoryId},#{keyId}, #{keyName}, #{keyAlg}, #{length}, #{checkValue},#{keyValue}, #{createBy}, #{templateId}, #{orgId}, #{status}, #{version})
     </update>
+    <delete id="delKeyHistoryByKeyId">
+        delete from kms_a_key_history where key_id=#{keyId}
+    </delete>
 
     <select id="getKeyHistory" resultType="cn.com.flat.head.pojo.KeyHistory">
         select *

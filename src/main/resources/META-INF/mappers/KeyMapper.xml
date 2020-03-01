@@ -31,6 +31,9 @@
     <update id="updateKeyStatus">
         update kms_a_key set status=${status} where key_id=#{keyId}
     </update>
+    <delete id="deleteKeyById">
+        delete from kms_a_key where key_id=#{id}
+    </delete>
 
     <select id="getKeyListPage" resultMap="KeyMap">
         select kak.*, ko.org_name, kt.template_name from kms_a_key kak, kms_org ko, kms_template kt where kt.template_id=kak.template_id and kak.org_id=ko.org_id

@@ -18,4 +18,6 @@ public interface KeyHistoryMapper {
 
     KeyHistory getHisoryKeyByVersion(@Param("keyId") String keyId, @Param("version") String version);
 
+    int delKeyHistoryByKeyId(String keyId);
+
 }
