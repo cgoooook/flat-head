@@ -98,6 +98,13 @@ public class KeyServiceImpl implements KeyService {
             }
             key.setCheckValue(new String(Hex.encode(fSecretKey.getCheckValue())));
             key.setKeyValue(new String(Hex.encode(fSecretKey.getKey())));
+            Key keyByName = keyDao.getKeyByName(key.getKeyName(), key.getOrgId());
+            if (keyByName != null) {
+                result = false;
+                booleanCarrier.setResult(false);
+                booleanCarrier.setMessage("key.nameExist");
+                return booleanCarrier;
+            }
             int i = keyDao.addKey(key);
             booleanCarrier.setResult(i >= 1);
             return booleanCarrier;

@@ -28,6 +28,8 @@ public interface KeyDao {
 
     Key getKeyByName(String name);
 
+    Key getKeyByName(String name, String orgId);
+
     KeyHistory getKeyHistoryVersion(String keyId, String version);
 
     List<Key> getKeyListByOrgId(String orgId, String collectionId);

@@ -79,6 +79,9 @@
     <select id="getKeyCountByTemplateId" resultType="java.lang.Integer">
         select count(*) from kms_a_key where template_id=#{templateId}
     </select>
+    <select id="getKeyByNameAndOrgId" resultType="cn.com.flat.head.pojo.Key">
+        select * from kms_a_key where key_name = #{name} and org_id=#{orgId}
+    </select>
 
 
 </mapper>

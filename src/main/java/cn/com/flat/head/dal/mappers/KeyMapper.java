@@ -28,6 +28,8 @@ public interface KeyMapper {
 
     Key getKeyByName(String name);
 
+    Key getKeyByNameAndOrgId(@Param("name") String name, @Param("orgId") String orgId);
+
     List<Key> getKeyListByOrgId(@Param("orgId") String orgId, @Param("collectionId")String collectionId);
 
     List<Key> getKeyListByOrgIdNotEmpty(@Param("orgId") String orgId, @Param("collectionId")String collectionId);
