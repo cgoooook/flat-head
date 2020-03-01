@@ -13,8 +13,12 @@
         </ul>
         <ul th:if="${menu != null}"class="page-breadcrumb">
             <li >
-                <a th:href="@{/}" th:text="${menu.menuName}"></a>
+                <a th:href="@{/}">Home</a>
                 <i class="fa fa-circle"></i>
+            </li>
+            <li >
+                <a href="#" th:text="${menu.menuName}"></a>
+
             </li>
         </ul>
     </div>
