@@ -40,7 +40,7 @@ public class KeyCollectionDaoImpl implements KeyCollectionDao {
 
     @Override
     public int addCollection(KeyCollection collection) {
-        collection.setCollectionId(UUID.randomUUID().toString());
+
         return keyCollectionMapper.addCollection(collection);
     }
 

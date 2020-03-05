@@ -16,6 +16,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.UUID;
 
 /**
  * Created by panzhuowen on 2019/11/3.
@@ -51,6 +52,7 @@ public class KeyCollectionServiceImpl implements KeyCollectionService {
                 booleanCarrier.setMessage("keyCollection.nameExits");
                 return booleanCarrier;
             } else {
+                collection.setCollectionId(UUID.randomUUID().toString());
                 booleanCarrier.setResult(keyCollectionDao.addCollection(collection) == 1);
             }
         } catch (Exception e) {
