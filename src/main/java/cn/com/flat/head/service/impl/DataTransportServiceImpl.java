@@ -99,6 +99,8 @@ public class DataTransportServiceImpl implements DataTransportService {
         collectionList.forEach(keyCollection -> {
             keyCollectionDao.deleteCollection(keyCollection.getCollectionId());
             keyCollectionDao.addCollection(keyCollection);
+            keyCollectionDao.deleteCollectionKeys(keyCollection.getCollectionId());
+            keyCollectionDao.addSubKeys(keyCollection.getKeyIds(), keyCollection.getCollectionId());
         });
     }
 
