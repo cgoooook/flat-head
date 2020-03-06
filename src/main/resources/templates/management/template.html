@@ -24,7 +24,7 @@
                                 <span class="caption-subject font-dark sbold uppercase" th:text="${menu.menuName}"></span>
                             </div>
                             <div class="actions">
-                                <a href="javascript:;" class="btn btn-success btn-circle" id="addTemplate"><i class="fa fa-plus faa-shake animated-hover"></i><span th:text="#{template.addTemplate}"></span> </a>
+                                <a th:if="${session.rootKMS}" href="javascript:;" class="btn btn-success btn-circle" id="addTemplate"><i class="fa fa-plus faa-shake animated-hover"></i><span th:text="#{template.addTemplate}"></span> </a>
                             </div>
                         </div>
                         <div class="portlet-body">
@@ -54,7 +54,7 @@
                                     <td></td>
                                     <td>
                                         <button class="btn btn-sm green btn-outline filter-submit margin-bottom" >
-                                            <i class="fa fa-search"></i> Search
+                                            <i class="fa fa-search"></i> 查询
                                         </button>
                                     </td>
                                 </tr>
@@ -75,7 +75,7 @@
 <th:block th:include="includes/scripts :: scripts"/>
 <script type="text/javascript" th:src="@{/plugins/bootstrap-datetimepicker/js/bootstrap-datetimepicker.min.js}"></script>
 <script type="text/javascript" th:src="@{'/plugins/bootstrap-datetimepicker/js/locales/bootstrap-datetimepicker.' + ${#locale.language + '-' + #locale.country} + '.js'}"></script>
-<script id="actionBtn" type="text/html">
+<script th:if="${session.rootKMS}" id="actionBtn" type="text/html">
     <a class="edit btn btn-outline default btn-xs purple" templateId="{{full.templateId}}"><i class="fa fa-edit"></i>{{i18n('common.edit')}}</a>
     {{if full.isBuiltIn == 1}}
     <a class="copy btn btn-outline default btn-xs yellow-gold"><i class="fa fa-copy"></i>{{i18n('template.copy')}}</a>
@@ -88,6 +88,9 @@
     {{else}}
     <a class="disable btn btn-outline default btn-xs yellow"><i class="fa fa-eye-slash"></i>{{i18n('template.status0')}}</a>
     {{/if}}
+</script>
+<script th:if="${!session.rootKMS}" id="actionBtn" type="text/html">
+
 </script>
 <script th:src="@{/pages/scripts/template/template.js}" type="text/javascript"></script>
 <script type="text/javascript">

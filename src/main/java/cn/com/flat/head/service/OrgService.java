@@ -10,7 +10,7 @@ import java.util.List;
 public interface OrgService {
     List<Organization> getOrgListPage(Organization org, Pageable pageable);
 
-    boolean deleteOrgById(String id);
+    BooleanCarrier deleteOrgById(String id);
 
     BooleanCarrier addOrg(Organization org);
 

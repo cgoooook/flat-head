@@ -1,14 +1,11 @@
 package cn.com.flat.head.service.impl;
 
-import cn.com.flat.head.dal.LogDao;
-import cn.com.flat.head.dal.OrgDao;
+import cn.com.flat.head.dal.*;
 import cn.com.flat.head.log.LoggerBuilder;
 import cn.com.flat.head.log.OperateType;
 import cn.com.flat.head.mybatis.interceptor.PageableInterceptor;
 import cn.com.flat.head.mybatis.model.Pageable;
-import cn.com.flat.head.pojo.BooleanCarrier;
-import cn.com.flat.head.pojo.OrgTreeBo;
-import cn.com.flat.head.pojo.Organization;
+import cn.com.flat.head.pojo.*;
 import cn.com.flat.head.service.OrgService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -29,6 +26,15 @@ public class OrgServiceImpl implements OrgService {
     @Autowired
     private OrgDao orgDao;
 
+    @Autowired
+    private KeyDao keyDao;
+
+    @Autowired
+    private DevServiceDao devServiceDao;
+
+    @Autowired
+    private KeyCollectionDao keyCollectionDao;
+
     @Override
     public List<Organization> getOrgListPage(Organization org, Pageable pageable) {
         PageableInterceptor.startPage(pageable);
@@ -36,10 +42,33 @@ public class OrgServiceImpl implements OrgService {
     }
 
     @Override
-    public boolean deleteOrgById(String id) {
+    public BooleanCarrier deleteOrgById(String id) {
+        BooleanCarrier booleanCarrier = new BooleanCarrier();
         boolean result = true;
         try {
+            List<Key> keyByOrgId = keyDao.getKeyByOrgId(id);
+            if (keyByOrgId != null && !keyByOrgId.isEmpty()) {
+                booleanCarrier.setResult(false);
+                booleanCarrier.setMessage("org.useages");
+                return booleanCarrier;
+
+            }
+            List<Device> deviceListByOrgId = devServiceDao.getDeviceListByOrgId(id);
+            if (deviceListByOrgId != null && !deviceListByOrgId.isEmpty()) {
+                booleanCarrier.setResult(false);
+                booleanCarrier.setMessage("org.useages");
+                return booleanCarrier;
+
+            }
+            List<KeyCollection> collectionByOrgId = keyCollectionDao.getCollectionByOrgId(id);
+            if (collectionByOrgId != null && !collectionByOrgId.isEmpty()) {
+                booleanCarrier.setResult(false);
+                booleanCarrier.setMessage("org.useages");
+                return booleanCarrier;
+
+            }
             result = orgDao.deleteOrgById(id);
+            booleanCarrier.setResult(result);
         } catch (Exception e) {
             result = false;
             logger.error("delete org error", e);
@@ -47,7 +76,7 @@ public class OrgServiceImpl implements OrgService {
             logDao.addLog(LoggerBuilder.builder(OperateType.deleteOrg, result, "delete org"));
         }
 
-        return result;
+        return booleanCarrier;
 
     }
 

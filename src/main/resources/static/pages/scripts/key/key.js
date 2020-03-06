@@ -287,13 +287,16 @@ var Key = function () {
             $("#genMode").on('change', function () {
                 $("#genModeComposeNum").removeAttr("required");
                 $("#genModeCompose").css("display", "none");
+                $('#innerDom').css("display", "none");
                 var $this = $(this);
                 if ($this.val() === 'random') {
                     $("#genModeCompose").css("display", "none");
+                    $('#innerDom').css("display", "none");
                     return;
                 }
                 if ($this.val() === 'derive') {
                     $('#innerDom').html("");
+                    $('#innerDom').css("display", "block");
                     var htmlTemplate = flat.remoteTemplate("/template/key/derive.html", {});
                     $('#innerDom').html(htmlTemplate);
                     if ($("#orgIdSelect").val() !== '') {
@@ -325,6 +328,7 @@ var Key = function () {
                 }
                 var htmlTemplate = flat.remoteTemplate("/template/key/compose.html", {composes: composeArray});
                 $('#innerDom').html(htmlTemplate);
+                $('#innerDom').css("display", "block");
             })
         }
 

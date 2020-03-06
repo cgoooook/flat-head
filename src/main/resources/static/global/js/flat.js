@@ -138,6 +138,25 @@ var flat = function () {
         }
         return fmt;
     };
+
+    function _initLogo() {
+        $.ajax({
+            url: "/ui/config/info",
+            dataType: "json",
+            type: "get"
+        }).done(function (data) {
+            var logoContainer = $("div.page-logo");
+            var footerContainer = $("div.page-footer");
+            if (data.ok) {
+                logoContainer.html('<a th:href="/"><img width="100%" height="46px" src="data:image/jpeg;base64,' + data.data.logo + '" alt="logo"/> </a>')
+                footerContainer.html(data.data.copyright)
+            } else {
+                logoContainer.html('<a th:href="/"><img width="100%" height="46px" src="../pages/img/logo.png" alt="logo"/> </a>')
+                footerContainer.html('Copyright&nbsp;2019&nbsp; 北京安软天地科技有限公司.')
+            }
+        });
+    }
+
     return {
         init: function () {
             template.defaults.imports.i18n = function (key) {
@@ -150,7 +169,7 @@ var flat = function () {
             _initJqueryAjax();
             _initJqueryValidation();
             _i18nInit();
-
+                _initLogo();
 
         },
 

@@ -47,8 +47,9 @@
                                 <span class="caption-subject font-dark sbold uppercase" th:text="${menu.menuName}"></span>
                             </div>
                             <div class="actions">
-                                <a href="javascript:;" class="btn btn-success btn-circle" id="importKey"><i class="fa fa-plus faa-shake animated-hover"></i><span th:text="#{key.importKey}"></span> </a>
-                                <a href="javascript:;" class="btn btn-success btn-circle" id="addKey"><i class="fa fa-plus faa-shake animated-hover"></i><span th:text="#{key.addKey}"></span> </a>
+                                <a th:if="${!session.rootKMS}" href="javascript:;" class="btn btn-success btn-circle" id="importKey"><i class="fa fa-plus faa-shake animated-hover"></i><span th:text="#{key.importKey}"></span> </a>
+
+                                <a th:if="${session.rootKMS}" href="javascript:;" class="btn btn-success btn-circle" id="addKey"><i class="fa fa-plus faa-shake animated-hover"></i><span th:text="#{key.addKey}"></span> </a>
                             </div>
                         </div>
                         <div class="portlet-body">
@@ -84,7 +85,7 @@
 <script type="text/javascript" th:src="@{/plugins/ztree/js/jquery.ztree.all.min.js}"></script>
 <script type="text/javascript" th:src="@{/global/js/orgTree.js}"></script>
 <script th:src="@{/plugins/jquery-file-upload/jquery.fileupload.js}" type="text/javascript"></script>
-<script id="actionBtn" type="text/html">
+<script th:if="${session.rootKMS}" id="actionBtn" type="text/html">
     {{if full.orgId==orgRoot}}
         <a class="update btn btn-outline default btn-xs purple"><i class="fa fa-edit"></i>{{i18n('key.update')}}</a>
     {{else}}
@@ -100,6 +101,9 @@
         <a class="delete btn btn-outline default btn-xs purple"><i class="fa fa-edit"></i>{{i18n('common.delete')}}</a>
         {{/if}}
     {{/if}}
+    <a class="detail btn btn-outline default btn-xs green"><i class="fa fa-eye"></i>{{i18n('key.detail')}}</a>
+</script>
+<script th:if="${!session.rootKMS}" id="actionBtn" type="text/html">
     <a class="detail btn btn-outline default btn-xs green"><i class="fa fa-eye"></i>{{i18n('key.detail')}}</a>
 </script>
 <script th:src="@{/pages/scripts/key/key.js}" type="text/javascript"></script>
