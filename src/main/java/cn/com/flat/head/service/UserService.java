@@ -1,6 +1,7 @@
 package cn.com.flat.head.service;
 
 import cn.com.flat.head.mybatis.model.Pageable;
+import cn.com.flat.head.pojo.BooleanCarrier;
 import cn.com.flat.head.pojo.User;
 
 import java.util.List;
@@ -20,8 +21,12 @@ public interface UserService {
 
     boolean deleteUserById(String userId);
 
-    boolean addUser(User user);
+    BooleanCarrier addUser(User user);
 
     User getUserById(String id);
+
+    BooleanCarrier updateUser(User user);
+
+    int updateUserLastLoginTime(String username);
 
 }

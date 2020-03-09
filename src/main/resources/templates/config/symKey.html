@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title th:text="${menu.menuName}"></title>
+    <th:block th:include="includes/header :: styles"/>
+</head>
+<body class="page-header-fixed page-sidebar-closed-hide-logo page-content-white">
+<th:block th:include="includes/top :: top"/>
+
+<!-- END HEADER & CONTENT DIVIDER -->
+<div class="page-container">
+    <th:block th:include="includes/menu :: menus"/>
+    <div class="page-content-wrapper">
+        <div class="page-content">
+            <th:block th:include="includes/slider :: slider"/>
+            <div class="modal-dialog modal-lg">
+                <div class="modal-header">
+                    <h4 class="modal-title font-green bold" id="modalTitle"><span th:text="#{symKey.report}"></span>
+                    </h4>
+                </div>
+                <div class="modal-body form">
+                    <form class="form-horizontal" id="dialogForm">
+                        <div class="form-body">
+                            <div class="row">
+                                <div class="col-md-12">
+                                    <div class="col-md-10">
+                                        <div class="form-group">
+                                            <label class="control-label col-md-4"><span
+                                                    th:text="#{symKey.notUseKey}"></span>
+                                            </label>
+
+                                            <div class="col-sm-6">
+                                                <input type="text" class="form-control"
+                                                       id="notUseKey" name="notUseKey" required
+                                                       maxlength="16" 
+                                                       th:value="${model.notUseKey}" readonly/>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-md-12">
+                                    <div class="col-md-10">
+                                        <div class="form-group">
+                                            <label class="control-label col-md-4"><span
+                                                    th:text="#{symKey.useKey}"></span>
+                                            </label>
+
+                                            <div class="col-sm-6">
+                                                <input type="text" class="form-control"
+                                                       id="useKey" name="useKey" required
+                                                       maxlength="16"
+                                                       th:value="${model.useKey}" readonly/>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="row">
+                                <div class="col-md-12">
+                                    <div class="col-md-10">
+                                        <div class="form-group">
+                                            <label class="control-label col-md-4"><span
+                                                    th:text="#{symKey.revokeKeyNum}"></span>
+                                            </label>
+
+                                            <div class="col-sm-6">
+                                                <input type="text" class="form-control"
+                                                       id="revokeKeyNum" name="revokeKeyNum" required
+                                                       maxlength="16"
+                                                       th:value="${model.revokeKey}" readonly/>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                        </div>
+
+                    </form>
+                </div>
+
+            </div>
+        </div>
+    </div>
+</div>
+<div class="modal fade bs-modal-lg" id="modalDialog" tabindex="-1" data-keyboard="false" aria-hidden="true"
+     data-backdrop="static">
+</div>
+<th:block th:include="includes/footer :: footer"/>
+<th:block th:include="includes/scripts :: scripts"/>
+</body>
+</html>

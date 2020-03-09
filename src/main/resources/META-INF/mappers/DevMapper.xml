@@ -1,0 +1,79 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="cn.com.flat.head.dal.mappers.DevMapper">
+
+    <resultMap id="devMap" type="cn.com.flat.head.pojo.Device">
+        <id column="device_id" property="deviceId" />
+        <result column="device_name" property="deviceName" />
+        <result column="device_code" property="deviceCode" />
+        <result column="device_ip" property="deviceIp" />
+        <result column="org_id" property="orgId" />
+        <result column="collection_id" property="collectionId" />
+        <result column="collection_name" property="collectionName" />
+    </resultMap>
+
+
+    <select id="getDevListPage" resultMap="devMap">
+        select d.device_id,d.device_name,d.device_code,d.device_ip,o.org_name,d.org_id,d.collection_id from kms_device d, kms_org o where o.org_id=d.org_id
+        <if test="orgId != null and orgId != ''">
+            and d.org_id=#{orgId}
+        </if>
+    </select>
+
+    <delete id="deleteDevgById">
+
+        delete from  kms_device where device_id =#{deviceId}
+    </delete>
+
+   <select id="getDevById" resultMap="devMap">
+       select * from kms_device where device_id =#{deviceId}
+   </select>
+
+    <select id="getDevByName" resultMap="devMap">
+        select * from kms_device where device_name =#{deviceName}
+    </select>
+    <select id="getCollectionCountByCollectionId" resultType="java.lang.Integer">
+        select count(*) from kms_device where collection_id=#{collectionId}
+    </select>
+
+    <insert id="addDev"  >
+        INSERT INTO kms_device (
+            device_id,
+            device_name,
+            device_code,
+            device_ip,
+            org_id,
+            collection_id
+        ) value (#{deviceId},#{deviceName},#{deviceCode},#{deviceIp},#{orgId},#{collectionId})
+    </insert>
+    <select id="getDevByDevCode" resultMap="devMap">
+        SELECT
+            d.device_id,
+            d.device_name,
+            d.device_code,
+            d.device_ip,
+            o.org_id,
+            o.org_name,
+            d.collection_id
+        FROM
+            kms_device d
+                LEFT JOIN kms_org o ON d.org_id = o.org_id
+        where d.device_code =#{deviceCode}
+
+
+    </select>
+    <select id="getDeviceListByOrgId" resultMap="devMap">
+        select * from kms_device where org_id=#{orgId}
+    </select>
+    <select id="getDeviceNum" resultType="int">
+        select count(*) from kms_device
+    </select>
+
+    <update id="editDev">
+        update kms_device set device_name =#{deviceName},device_code=#{deviceCode},device_ip=#{deviceIp},collection_id=#{collectionId}
+        where device_id =#{deviceId}
+    </update>
+
+
+
+</mapper>

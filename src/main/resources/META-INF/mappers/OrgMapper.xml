@@ -1,0 +1,96 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="cn.com.flat.head.dal.mappers.OrgMapper">
+
+    <resultMap id="OrgMap" type="cn.com.flat.head.pojo.Organization">
+        <id column="org_id" property="orgId" />
+        <result column="org_name" property="orgName" />
+        <result column="org_code" property="orgCode" />
+        <result column="parent_id" property="parentId" />
+        <result column="parent_name" property="parentName" />
+        <result column="leaf" property="leaf" />
+        <result column="properties" property="properties" />
+    </resultMap>
+
+    <resultMap id="OrgTreeMap" type="cn.com.flat.head.pojo.OrgTreeBo">
+        <id column="org_id" property="id" />
+        <result column="org_name" property="text" />
+        <result column="parent_id" property="parent" />
+    </resultMap>
+
+
+
+    <select id="getOrgListPage" resultMap="OrgMap">
+        SELECT z.org_id,z.org_name,z.org_code,f.org_name as parent_name,z.leaf ,z.parent_id FROM kms_org as z left JOIN kms_org as f
+                                                                                                       on z.parent_id = f.org_id
+    </select>
+
+    <select id="getOrgByOrgName" resultMap="OrgMap">
+
+        select * from kms_org where org_name=#{orgName}
+
+    </select>
+
+    <select id="getOrgByOrcCode" resultMap="OrgMap">
+
+        select * from kms_org where org_code=#{orgId}
+
+    </select>
+
+    <select id="getOrgParentIdEqNegative1"  resultMap="OrgMap">
+
+      select * from kms_org where parent_id='-1';
+
+    </select>
+
+    <select id="getOrgNum" resultType="int">
+       select count(*) from  kms_org
+    </select>
+
+
+    <insert id="addOrg"  >
+        INSERT INTO kms_org (
+            org_id,
+            org_name,
+            org_code,
+            parent_id,
+            leaf,
+            properties
+        ) value (#{orgId},#{orgName},#{orgCode},#{parentId},#{leaf}, #{properties})
+    </insert>
+
+    <update id="editOrg">
+        update kms_org set org_name =#{orgName},org_code=#{orgCode}, properties=#{properties}
+        where org_id =#{orgId}
+    </update>
+
+
+
+    <delete id="deleteOrgById">
+        delete from  kms_org where org_id =#{orgId}
+    </delete>
+
+    <select id="getOrgByOrgId"  resultMap="OrgMap">
+
+        select * from kms_org where org_id=#{orgId};
+
+    </select>
+
+    <select id="devTreeList" resultMap="OrgTreeMap">
+
+    select * from kms_org where parent_id=#{parentId}
+
+    </select>
+
+    <select id="orgChildList" resultMap="OrgMap">
+        SELECT z.org_id,z.org_name,z.org_code,f.org_name as parent_name,z.leaf ,z.parent_id FROM kms_org as z left JOIN kms_org as f
+         on z.parent_id = f.org_id where z.parent_id != '-1' and z.leaf = 1
+    </select>
+    <select id="getTreeList" resultMap="OrgMap">
+        select * from kms_org
+    </select>
+
+
+
+
+</mapper>

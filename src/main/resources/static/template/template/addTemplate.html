@@ -1,0 +1,172 @@
+<div class="modal-dialog modal-lg">
+    <div class="modal-content" id="modalContent">
+        <div class="modal-header">
+            <button type="button" class="close" data-dismiss="modal" aria-hidden="true"></button>
+            <h4 class="modal-title font-green bold" id="modalTitle">{{i18n('template.addTemplate')}}</h4>
+        </div>
+        <div class="modal-body form">
+            <form class="form-horizontal" id="dialogForm">
+                <div class="form-body">
+                    <div class="row">
+                        <div class="col-md-12">
+                            <div class="col-md-8">
+                                <div class="form-group">
+                                    <label class="control-label col-md-4">{{i18n('template.templateName')}}
+                                        <span class="required" aria-required="true">* </span>
+                                    </label>
+
+
+                                    <div class="col-md-8">
+                                        <input type="text" class="form-control input-medium" id="templateName"
+                                               name="templateName"
+                                               placeholder="{{i18n('template.plaeaseInputTemplateName')}}" required
+                                               value=""/>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-12">
+                            <div class="col-md-8">
+                                <div class="form-group">
+                                    <label class="control-label col-md-4">{{i18n('template.node')}}
+                                        <span class="required" aria-required="true">* </span>
+                                    </label>
+
+                                    <div class="col-sm-6">
+                                        <select class="form-control" id="node" required>
+                                            <option value="">{{i18n('common.pleaseSelect')}}</option>
+                                            <option value="1">{{i18n('template.node1')}}</option>
+                                            <option value="2">{{i18n('template.node2')}}</option>
+                                            <option value="3">{{i18n('template.node3')}}</option>
+                                        </select>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-12">
+                            <div class="col-md-8">
+                                <div class="form-group">
+                                    <label class="control-label col-md-4">{{i18n('template.keyStartDate')}}
+                                        <span class="required" aria-required="true">* </span>
+                                    </label>
+
+
+                                    <div class="col-md-8">
+                                        <input type="text" class="datepicker form-control input-medium" id="startDate"
+                                               readonly
+                                               name="startDate" placeholder="{{i18n('common.pleaseSelect')}}" required
+                                               value=""/>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-12">
+                            <div class="col-md-8">
+                                <div class="form-group">
+                                    <label class="control-label col-md-4">{{i18n('template.keyEndDate')}}
+                                        <span class="required" aria-required="true">* </span>
+                                    </label>
+
+
+                                    <div class="col-md-8">
+                                        <input type="text" class="datepicker form-control input-medium" id="endDate"
+                                               readonly
+                                               name="endDate" placeholder="{{i18n('common.pleaseSelect')}}" required
+                                               value=""/>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-12">
+                            <div class="col-md-8">
+                                <div class="form-group">
+                                    <label class="control-label col-md-4">{{i18n('template.keyUsage')}}
+                                        <span class="required" aria-required="true">* </span>
+                                    </label>
+
+
+                                    <div class="col-md-8">
+                                        <div id="keyUsage" style="margin-left: 15px;">
+                                            <div class="checkbox-list">
+                                                <label class="checkbox-inline">
+                                                   <span
+                                                           class=""><input type="checkbox" name="keyUsages"
+                                                                           value="Derive"></span>
+                                                    Derive</label>
+                                                <label class="checkbox-inline">
+                                                   <span
+                                                           class=""><input type="checkbox" name="keyUsages"
+                                                                           value="Wrap"></span>
+                                                    Wrap</label>
+                                                <label class="checkbox-inline">
+                                                        <span><input type="checkbox" name="keyUsages"
+                                                                     value="Unwrap"></span>
+                                                    Unwrap </label>
+                                                <label class="checkbox-inline">
+                                                    <span
+                                                            class=""><input type="checkbox" name="keyUsages"
+                                                                            value="MAC"></span>
+                                                    MAC</label>
+                                            </div>
+                                            <div class="checkbox-list">
+                                                <label class="checkbox-inline">
+                                                    <span
+                                                            class=""><input type="checkbox" name="keyUsages"
+                                                                            value="Encrypt"></span>
+                                                    Encrypt</label>
+                                                <label class="checkbox-inline">
+                                                    <span
+                                                            class=""><input type="checkbox" name="keyUsages"
+                                                                            value="Decrypt"></span>
+                                                    Decrypt </label>
+                                                <label class="checkbox-inline">
+
+                                                        <span><input type="checkbox" name="keyUsages"
+                                                                     value="Sign"></span>
+                                                    Sign </label>
+                                                <label class="checkbox-inline">
+
+                                                        <span><input type="checkbox" name="keyUsages"
+                                                                     value="Verify"></span>
+                                                    Verify </label>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-12">
+                            <div class="col-md-8">
+                                <div class="form-group">
+                                    <label class="control-label col-md-4">{{i18n('template.keyExtendUsgaes')}}
+                                    </label>
+
+
+                                    <div class="col-md-8">
+                                        <textarea class="form-control" rows="4" id="extendUsgages"></textarea>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </form>
+        </div>
+        <div class="modal-footer">
+            <button type="button" class="btn btn-outline blue" id="addBtn">{{i18n('common.save')}}</button>
+            <button type="button" class="btn btn-outline grey-gallery" data-dismiss="modal">
+                {{i18n('common.cancelBtn')}}
+            </button>
+        </div>
+    </div>
+</div>

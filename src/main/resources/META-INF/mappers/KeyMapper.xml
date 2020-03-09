@@ -1,0 +1,87 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="cn.com.flat.head.dal.mappers.KeyMapper">
+
+    <resultMap id="KeyMap" type="cn.com.flat.head.pojo.Key">
+        <id column="key_id" property="keyId" />
+        <result column="key_name" property="keyName" />
+        <result column="key_alg" property="keyAlg" />
+        <result column="length" property="length" />
+        <result column="version" property="version" />
+        <result column="create_by" property="createBy" />
+        <result column="template_id" property="templateId" />
+        <result column="template_name" property="templateName" />
+        <result column="org_id" property="orgId" />
+        <result column="org_name" property="orgName" />
+        <result column="status" property="status" />
+        <result column="check_value" property="checkValue" />
+        <result column="org_code" property="orgCode" />
+        <result column="mode" property="mode" />
+    </resultMap>
+
+    <insert id="addKey">
+        insert into kms_a_key (key_id, key_name, key_alg, length, check_value, key_value, create_by, template_id,
+                               org_id, status, mode)
+        values (#{keyId}, #{keyName}, #{keyAlg}, #{length}, #{checkValue}, #{keyValue}, #{createBy}, #{templateId}, #{orgId}, #{status}, #{mode});
+    </insert>
+
+    <update id="updateKey">
+        update kms_a_key set key_value=#{keyValue}, check_value=#{checkValue}, version=${version}, create_by=#{createBy} where key_id=#{keyId}
+    </update>
+    <update id="updateKeyStatus">
+        update kms_a_key set status=${status} where key_id=#{keyId}
+    </update>
+    <delete id="deleteKeyById">
+        delete from kms_a_key where key_id=#{id}
+    </delete>
+
+    <select id="getKeyListPage" resultMap="KeyMap">
+        select kak.*, ko.org_name, kt.template_name from kms_a_key kak, kms_org ko, kms_template kt where kt.template_id=kak.template_id and kak.org_id=ko.org_id
+                                                                                                      and kak.status!=5
+        <if test="orgId != null and orgId != ''">
+            and (kak.org_id=#{orgId} or kak.org_id='orgRoot')
+        </if>
+    </select>
+    <select id="getRootKeyCount" resultType="java.lang.Integer">
+        select count(*) from kms_a_key where org_id='orgRoot'
+    </select>
+    <select id="getKeyById" resultMap="KeyMap">
+        select kak.*, ko.org_name,ko.org_code, kt.template_name from kms_a_key kak, kms_org ko, kms_template kt where kt.template_id=kak.template_id and kak.org_id=ko.org_id
+                                                                                                      and kak.status!=5 and kak.key_id=#{keyId}
+    </select>
+    <select id="getRootKey" resultMap="KeyMap" >
+        select * from kms_a_key where org_id='orgRoot'
+    </select>
+
+    <select id="getKeyListByOrgId" resultMap="KeyMap">
+        select kak.* from kms_a_key kak left join kms_collection_key kck on kak.org_id=#{orgId}  and kak.status=2
+            and kak.key_id!=kck.key_id and kck.collection_id=#{collectionId}
+    </select>
+    <select id="getKeyListByCollectionId" resultMap="KeyMap">
+        select kak.* from kms_a_key kak, kms_key_collection kkc, kms_collection_key kck where kak.key_id=kck.key_id and kck.collection_id=kkc.collection_id and
+                                                                                          kkc.collection_id=#{collectionId}
+    </select>
+    <select id="getKeyListByOrgIdNotEmpty" resultMap="KeyMap">
+        select kak.* from kms_a_key kak  where kak.org_id=#{orgId}  and kak.status=2
+            and kak.key_id not in (select key_id from kms_collection_key where collection_id=#{collectionId})
+    </select>
+    <select id="getKeyListByOrgIdExport" resultMap="KeyMap">
+        select * from kms_a_key where org_id=#{orgId}
+    </select>
+    <select id="getKeyByName" resultMap="KeyMap">
+        select * from kms_a_key where key_name = #{name}
+    </select>
+    <select id="getKeyListByOrgIdAndCollectionId" resultMap="KeyMap">
+        select kak.* from kms_a_key kak , kms_collection_key kck where kak.org_id=#{orgId}  and kak.status=2
+        and kak.key_id = kck.key_id and kck.collection_id=#{collectionId}
+        order by key_name;
+    </select>
+    <select id="getKeyCountByTemplateId" resultType="java.lang.Integer">
+        select count(*) from kms_a_key where template_id=#{templateId}
+    </select>
+    <select id="getKeyByNameAndOrgId" resultType="cn.com.flat.head.pojo.Key">
+        select * from kms_a_key where key_name = #{name} and org_id=#{orgId}
+    </select>
+
+
+</mapper>

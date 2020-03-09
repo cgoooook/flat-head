@@ -1,0 +1,50 @@
+<div class="modal-dialog modal-lg">
+    <div class="modal-content" id="modalContent">
+        <div class="modal-header">
+            <button type="button" class="close" data-dismiss="modal" aria-hidden="true"></button>
+            <h4 class="modal-title font-green bold" id="modalTitle">{{i18n('key.detailTitle')}}</h4>
+        </div>
+        <div class="modal-body form">
+            <form class="form-horizontal" id="dialogForm">
+                <div class="form-body">
+                    <div class="row">
+                        <input type="hidden" id="subOrgId" value="{{orgId}}">
+                        <input type="hidden" id="collectionIdSub" value="{{collectionId}}">
+                        <a href="javascript:;" class="btn btn-success btn-sm" style="margin: 15px;" id="addKey"><i class="fa fa-plus faa-shake animated-hover"></i>
+                        {{i18n('key.addKey')}}</a>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-12">
+                            <table class="table table-bordered table-hover">
+                                <thead>
+                                <tr>
+                                    <th>{{i18n('key.version')}}</th>
+                                    <th>{{i18n('key.label')}}</th>
+                                    <th>{{i18n('key.checkValue')}}</th>
+                                    <th>{{i18n('common.operation')}}</th>
+                                </tr>
+                                </thead>
+                                <tbody>
+                                {{each keys as key}}
+                                <tr>
+                                    <td>{{key.version}}</td>
+                                    <td>{{key.keyName}}</td>
+                                    <td>{{key.checkValue}}</td>
+                                    <td><a class="deleteSubKey btn btn-outline default btn-xs red" attr-keyId="{{key.keyId}}"><i class="fa fa-times"></i>{{i18n('common.delete')}}</a></td>
+                                </tr>
+                                {{/each}}
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+
+            </form>
+        </div>
+        <div class="modal-footer">
+            <button type="button" class="btn btn-outline grey-gallery" data-dismiss="modal">
+                {{i18n('common.cancelBtn')}}
+            </button>
+        </div>
+    </div>
+</div>

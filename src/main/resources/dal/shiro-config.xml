@@ -28,6 +28,7 @@
                 /layouts/** = anon
                 /plugins/** = anon
                 /template/** = anon
+                /ui/config/info = anon
                 /login = anon
                 /logout = logout
                 /** = user

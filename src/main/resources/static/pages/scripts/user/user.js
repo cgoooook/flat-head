@@ -73,9 +73,10 @@ var User = function () {
                         type: "POST",
                         dataType: "json",
                         data: {
+                            userId: $("#userId").val(),
                             nickName: $("#nickName").val(),
                             username: $("#username").val(),
-                            password: $("#password").val(),
+                            password: $("#password").val() !== '' ? md5($("#password").val()) : "",
                             roleId: $("#roleId").val()
                         }
                     }).done(function (data) {
@@ -122,7 +123,7 @@ var User = function () {
                         data: JSON.stringify({
                             nickName: $("#nickName").val(),
                             username: $("#username").val(),
-                            password: $("#password").val(),
+                            password: md5($("#password").val()),
                             roleId: $("#roleId").val()
                         })
                     }).done(function (data) {

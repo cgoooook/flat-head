@@ -10,11 +10,28 @@
         <result column="pub_key" property="pubKey" />
         <result column="account_type" property="accountType" />
         <result column="role_id" property="roleId" />
+        <result column="last_login_time" property="lastLoginTime" />
     </resultMap>
     <insert id="addUser">
-        insert into sys_acl_user(nick_name, username, password, pub_key, account_type) values
-            (#{nickName}, #{username}, #{password}, #{pub_key}, #{account_type})
+        insert into sys_acl_user(user_id,nick_name, username, password, pub_key, account_type) values
+            (#{userId},#{nickName}, #{username}, #{password}, #{pubKey}, #{accountType})
     </insert>
+    <insert id="addUserRole">
+        insert into sys_acl_user_role(user_id, role_id) values (#{userId}, #{roleId})
+    </insert>
+    <update id="updateUserRole">
+        update sys_acl_user_role set role_id=#{roleId} where user_id=#{userId}
+    </update>
+    <update id="updateUser">
+        update sys_acl_user set nick_name=#{nickName}
+        <if test="password != '' and password != null">
+            ,password=#{password}
+        </if>
+        where user_id=#{userId}
+    </update>
+    <update id="updateUserLoginTime">
+        update sys_acl_user set last_login_time=now() where username=#{username}
+    </update>
 
     <delete id="deleteUserById">
         delete from sys_acl_user where user_id = #{userId}

@@ -45,6 +45,7 @@ var Login = function () {
             },
 
             submitHandler: function (form) {
+                dealPassword();
                 form.submit();
             }
         });
@@ -52,11 +53,16 @@ var Login = function () {
         $('.login-form input').keypress(function (e) {
             if (e.which === 13) {
                 if ($('.login-form').validate().form()) {
+                    // dealPassword();
                     $('.login-form').submit();
                 }
                 return false;
             }
         });
+
+        function dealPassword() {
+            $("#password").val(md5($("#password").val()))
+        }
 
         $("#language").on('change', function () {
 			var lang = $(this).val();
@@ -69,20 +75,6 @@ var Login = function () {
         init: function () {
 
             handleLogin();
-
-            // init background slide images
-            $.backstretch([
-                    "/pages/media/1.jpg",
-                    "/pages/media/2.jpg",
-                    "/pages/media/3.jpg",
-                    "/pages/media/4.jpg"
-                ], {
-                    fade: 1000,
-                    duration: 8000
-                }
-            );
-
-            console.log(flat.i18n("login.title"))
         }
     };
 

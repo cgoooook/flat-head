@@ -1,0 +1,154 @@
+<div class="modal-dialog modal-lg">
+    <div class="modal-content" id="modalContent">
+        <div class="modal-header">
+            <button type="button" class="close" data-dismiss="modal" aria-hidden="true"></button>
+            <h4 class="modal-title font-green bold" id="modalTitle">{{i18n('key.detailTitle')}}</h4>
+        </div>
+        <div class="modal-body form">
+            <form class="form-horizontal" id="dialogForm">
+                <div class="form-body">
+                    <div class="row">
+                        <div class="col-md-6">
+                            <div class="col-md-8">
+                                <div class="form-group">
+                                    <label class="control-label col-md-4">{{i18n('key.label')}}
+                                    </label>
+                                    <div class="col-md-8">
+                                        <span class="form-control">{{key.keyName}}</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="col-md-8">
+                                <div class="form-group">
+                                    <label class="control-label col-md-4">{{i18n('common.orgTitle')}}
+                                    </label>
+                                    <div class="col-md-8">
+                                        <span class="form-control">{{key.orgName}}</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-6">
+                            <div class="col-md-8">
+                                <div class="form-group">
+                                    <label class="control-label col-md-4">{{i18n('key.alg')}}
+                                    </label>
+
+                                    <div class="col-sm-6">
+                                        <span class="form-control">{{key.keyAlg}}</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="col-md-8">
+                                <div class="form-group">
+                                    <label class="control-label col-md-4">{{i18n('key.length')}}
+                                    </label>
+
+                                    <div class="col-sm-6">
+                                        <span class="form-control">{{key.length}}</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-6">
+                            <div class="col-md-8">
+                                <div class="form-group">
+                                    <label class="control-label col-md-4">{{i18n('key.templateName')}}
+                                    </label>
+
+                                    <div class="col-sm-6">
+                                        <span class="form-control">{{key.templateName}}</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="col-md-8">
+                                <div class="form-group">
+                                    <label class="control-label col-md-4">{{i18n('key.createBy')}}
+                                    </label>
+
+                                    <div class="col-sm-6">
+                                        <span class="form-control">{{key.createBy}}</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-6">
+                            <div class="col-md-8">
+                                <div class="form-group">
+                                    <label class="control-label col-md-4">{{i18n('key.keyValue')}}
+                                    </label>
+
+                                    <div class="col-sm-6">
+                                        <span class="form-control">{{key.keyValue}}</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="col-md-8">
+                                <div class="form-group">
+                                    <label class="control-label col-md-4">{{i18n('key.checkValue')}}
+                                    </label>
+
+                                    <div class="col-sm-6">
+                                        <span class="form-control">{{key.checkValue}}</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-6">
+                            <div class="col-md-8">
+                                <div class="form-group">
+                                    <label class="control-label col-md-4">{{i18n('key.history')}}
+                                    </label>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-12">
+                            <table class="table table-bordered table-hover">
+                                <thead>
+                                <tr>
+                                    <th>{{i18n('key.version')}}</th>
+                                    <th>{{i18n('key.keyValue')}}</th>
+                                    <th>{{i18n('key.checkValue')}}</th>
+                                </tr>
+                                </thead>
+                                <tbody>
+                                {{each historyList as history}}
+                                <tr>
+                                    <td>{{history.version}}</td>
+                                    <td>{{history.keyValue}}</td>
+                                    <td>{{history.checkValue}}</td>
+                                </tr>
+                                {{/each}}
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+
+            </form>
+        </div>
+        <div class="modal-footer">
+            <button type="button" class="btn btn-outline grey-gallery" data-dismiss="modal">
+                {{i18n('common.cancelBtn')}}
+            </button>
+        </div>
+    </div>
+</div>

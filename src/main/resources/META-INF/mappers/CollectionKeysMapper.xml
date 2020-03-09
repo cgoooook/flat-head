@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="cn.com.flat.head.dal.mappers.CollectionKeysMapper">
+
+    <insert id="addCollectionKeys">
+        insert into kms_collection_key (key_id, collection_id) values
+        <foreach collection="keyIds" item="keyId" separator=",">
+            (#{collectionId},#{keyId})
+        </foreach>
+    </insert>
+    <delete id="deleteByCollectionId">
+        delete from kms_collection_key where collection_id=#{collectionId}
+    </delete>
+    <select id="getCollectionKeyIds" resultType="java.lang.String">
+        select key_id from kms_collection_key where collection_id=#{collectionId}
+    </select>
+
+
+</mapper>

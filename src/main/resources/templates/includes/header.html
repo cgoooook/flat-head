@@ -9,9 +9,10 @@
     <link rel="stylesheet" th:href="@{/global/css/components.min.css}">
     <link rel="stylesheet" th:href="@{/global/css/plugins.css}">
     <link rel="stylesheet" th:href="@{/layouts/css/layout.min.css}">
-    <link rel="stylesheet" th:href="@{/layouts/css/themes/darkblue.min.css}">
+    <link rel="stylesheet" th:href="@{/layouts/css/themes/light2.min.css}">
     <link rel="stylesheet" th:href="@{/layouts/css/custom.css}">
     <script th:inline="javascript">
         var LANG_COUNTRY = [[${#locale.language+'_'+#locale.country}]];
+        var DATETIME_PICKER = [[${#locale.language+'-'+#locale.country}]];
     </script>
 </th:block>

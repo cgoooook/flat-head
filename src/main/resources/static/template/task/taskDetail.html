@@ -1,0 +1,123 @@
+<div class="modal-dialog modal-lg">
+    <div class="modal-content" id="modalContent">
+        <div class="modal-header">
+            <button type="button" class="close" data-dismiss="modal" aria-hidden="true"></button>
+            <h4 class="modal-title font-green bold" id="modalTitle">{{i18n('task.addTask')}}</h4>
+        </div>
+        <div class="modal-body form">
+            <form class="form-horizontal" id="dialogForm">
+                <input type="hidden" id="taskId" value="{{reqData.id}}">
+                <div class="form-body">
+                    <div class="row">
+                        <div class="col-md-12">
+                            <div class="col-md-8">
+                                <div class="form-group">
+                                    <label class="control-label col-md-4">{{i18n('task.name')}}
+                                        <span class="required" aria-required="true">* </span>
+                                    </label>
+                                    <div class="col-md-8">
+                                        <input type="text" class="form-control input-medium" id="taskName"
+                                               name="keyName"
+                                               placeholder="{{i18n('task.name.input')}}" required
+                                               value="{{reqData.taskName}}" readonly/>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-12">
+                            <div class="col-md-8">
+                                <div class="form-group">
+                                    <label class="control-label col-md-4">{{i18n('task.alg')}}
+                                        <span class="required" aria-required="true">* </span>
+                                    </label>
+
+                                    <div class="col-sm-6">
+                                        <select class="form-control" id="alg" required disabled="disabled">
+                                            {{if reqData.algorithm == ECC}}
+                                            <option value="ECC" selected>ECC</option>
+                                            {{else}}
+                                            <option value="ECC" >ECC</option>
+                                            {{/if}}
+                                            {{if reqData.algorithm == RSA}}
+                                            <option value="RSA" selected>RSA</option>
+                                            {{else}}
+                                            <option value="RSA" >RSA</option>
+                                            {{/if}}
+                                            {{if reqData.algorithm == RSA}}
+                                            <option value="SM2" selected>SM2</option>
+                                            {{else}}
+                                            <option value="SM2" >SM2</option>
+                                            {{/if}}
+                                        </select>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <div class="col-md-12">
+                            <div class="col-md-8">
+                                <div class="form-group">
+                                    <label class="control-label col-md-4">{{i18n('task.curve.len')}}
+                                        <span class="required" aria-required="true">* </span>
+                                    </label>
+
+                                    <div class="col-sm-6">
+                                        <select class="form-control" id="length" required disabled="disabled">
+                                            {{if reqData.length == 1024}}
+                                            <option value="1024"   selected>1024</option>
+                                            {{else}}
+                                            <option value="1024" >1024</option>
+                                            {{/if}}
+                                            {{if reqData.length == 2048}}
+                                            <option value="2048"   selected>2048</option>
+                                            {{else}}
+                                            <option value="2048" >2048</option>
+                                            {{/if}}
+                                            {{if reqData.length == 3072}}
+                                            <option value="3072"   selected>3072</option>
+                                            {{else}}
+                                            <option value="3072" >3072</option>
+                                            {{/if}}
+                                            {{if reqData.length == 4096}}
+                                            <option value="4096"   selected>4096</option>
+                                            {{else}}
+                                            <option value="4096" >4096</option>
+                                            {{/if}}
+                                        </select>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-12">
+                            <div class="col-md-8">
+                                <div class="form-group">
+                                    <label class="control-label col-md-4">{{i18n('task.num')}}
+                                        <span class="required" aria-required="true">* </span>
+                                    </label>
+                                    <div class="col-md-8">
+                                        <input type="text" class="form-control input-medium" id="num"
+                                               name="keyName"
+                                               placeholder="{{i18n('task.num.input')}}" required
+                                               value="{{reqData.plannedQuantity}}"/>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </form>
+        </div>
+        <div class="modal-footer">
+            <button type="button" class="btn btn-outline blue" id="editBtn">{{i18n('common.save')}}</button>
+            <button type="button" class="btn btn-outline grey-gallery" data-dismiss="modal">
+                {{i18n('common.cancelBtn')}}
+            </button>
+        </div>
+    </div>
+</div>

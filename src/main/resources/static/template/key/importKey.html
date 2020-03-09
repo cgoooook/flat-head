@@ -1,0 +1,55 @@
+<div class="modal-dialog modal-lg">
+    <div class="modal-content" id="modalContent">
+        <div class="modal-header">
+            <button type="button" class="close" data-dismiss="modal" aria-hidden="true"></button>
+            <h4 class="modal-title font-green bold" id="modalTitle">导入</h4>
+        </div>
+        <div class="modal-body form">
+            <form class="form-horizontal" id="dialogForm">
+                <div class="form-body">
+                    <div class="row">
+                        <div class="col-md-12">
+                            <div class="col-md-8">
+                                <div class="form-group">
+                                    <label class="control-label col-md-4">备份文件
+                                        <span class="required" aria-required="true">* </span>
+                                    </label>
+                                    <div class="col-md-8">
+                                        <div class="row fileupload-buttonbar">
+
+                                            <span class="btn green fileinput-button">
+                                            <i class="fa fa-plus"></i>
+                                            <span> 选择文件 </span>
+                                            <input type="file" name="file" id="keyBackData"> </span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-12">
+                            <div class="col-md-8">
+                                <div class="form-group">
+                                    <label class="control-label col-md-4">文件名称
+                                        <span class="required" aria-required="true"> </span>
+                                    </label>
+                                    <div class="col-md-8">
+                                        <span id="fileName" class="form-control"></span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+            </form>
+        </div>
+        <div class="modal-footer">
+            <button type="button" class="btn btn-outline blue" id="importBtn">{{i18n('common.save')}}</button>
+            <button type="button" class="btn btn-outline grey-gallery" data-dismiss="modal">
+                {{i18n('common.cancelBtn')}}
+            </button>
+        </div>
+    </div>
+</div>

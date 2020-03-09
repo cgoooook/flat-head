@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="cn.com.flat.head.dal.mappers.KeyPairMapper">
+
+    <resultMap id="DeviceKeyMap" type="cn.com.flat.head.pojo.DeviceKeyPair">
+        <id column="id" property="id" />
+        <result column="alg" property="alg" />
+        <result column="attr" property="attr" />
+        <result column="pub_key" property="pubKey" />
+        <result column="pri_key" property="priKey" />
+    </resultMap>
+
+    <insert id="addKeyPair">
+        insert into kms_key_pair (id, alg, attr, pub_key, pri_key) VALUES
+                                (#{id}, #{alg}, #{attr}, #{pubKey}, #{priKey})
+    </insert>
+
+    <delete id="deleteKeyPair">
+        delete from kms_key_pair where id=#{id}
+    </delete>
+
+    <select id="getDeviceKeyPair" resultType="cn.com.flat.head.pojo.DeviceKeyPair">
+        select * from kms_key_pair where alg=#{alg} limit 1
+    </select>
+
+    <select id="getKeyPairNum" resultType="java.lang.Integer">
+        select count(*) from kms_key_pair where alg=#{alg}
+    </select>
+    <select id="getKeyPairNumAndLength" resultType="java.lang.Integer">
+        select count(*) from kms_key_pair where alg=#{alg} and attr=#{length}
+    </select>
+</mapper>

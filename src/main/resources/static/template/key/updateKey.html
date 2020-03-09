@@ -1,0 +1,121 @@
+<div class="modal-dialog modal-lg">
+    <div class="modal-content" id="modalContent">
+        <div class="modal-header">
+            <button type="button" class="close" data-dismiss="modal" aria-hidden="true"></button>
+            <h4 class="modal-title font-green bold" id="modalTitle">{{i18n('key.addKey')}}</h4>
+        </div>
+        <div class="modal-body form">
+            <form class="form-horizontal" id="dialogForm">
+                <div class="form-body">
+                    <input type="hidden" value="{{key.keyId}}" id="keyId">
+                    {{if key.mode == "random"}}
+                    <div class="row">
+                        <div class="col-md-12">
+                            <div class="col-md-8">
+                                <div class="form-group">
+                                    <label class="control-label col-md-4">{{i18n('key.genMode')}}
+                                        <span class="required" aria-required="true">* </span>
+                                    </label>
+
+                                    <div class="col-sm-6">
+                                        <select class="form-control" name="genMode" id="genMode" required>
+                                            <option value="random" selected>{{i18n('key.genRandom')}}</option>
+                                        </select>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    {{/if}}
+                    {{if key.mode == 'derive'}}
+                    <div class="row">
+                        <div class="col-md-12">
+                            <div class="col-md-8">
+                                <div class="form-group">
+                                    <label class="control-label col-md-4">{{i18n('key.genMode')}}
+                                        <span class="required" aria-required="true">* </span>
+                                    </label>
+
+                                    <div class="col-sm-6">
+                                        <select class="form-control" name="genMode" id="genMode" required>
+                                            <option value="derive">{{i18n('key.genDerive')}}</option>
+                                        </select>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-12">
+                            <div class="col-md-8">
+                                <div class="form-group">
+                                    <label class="control-label col-md-4">{{i18n('key.deriveParam')}}
+                                        <span class="required" aria-required="true">* </span>
+                                    </label>
+                                    <div class="col-md-8">
+                                        <input type="text" class="form-control input-medium" id="deriveParams"
+                                               name="deriveParams"
+                                               placeholder="{{i18n('key.deriveParam')}}" required
+                                               value="{{key.orgCode}}"/>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    {{/if}}
+                    {{if key.mode == "compose"}}
+                    <div class="row">
+                        <div class="col-md-12">
+                            <div class="col-md-8">
+                                <div class="form-group">
+                                    <label class="control-label col-md-4">{{i18n('key.genMode')}}
+                                        <span class="required" aria-required="true">* </span>
+                                    </label>
+
+                                    <div class="col-sm-6">
+                                        <select class="form-control" name="genMode" id="genMode" required>
+                                            <option value="compose">{{i18n('key.composition')}}</option>
+                                        </select>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-12">
+                            <div class="col-md-8">
+                                <div class="form-group">
+                                    <label class="control-label col-md-4">{{i18n('key.componseNums')}}
+                                        <span class="required" aria-required="true">* </span>
+                                    </label>
+
+                                    <div class="col-sm-6">
+                                        <select class="form-control" id="genModeComposeNum" name="genModeComposeNum">
+                                            <option value="">{{i18n('common.pleaseSelect')}}</option>
+                                            <option value="2">2</option>
+                                            <option value="3">3</option>
+                                            <option value="4">4</option>
+                                            <option value="5">5</option>
+                                        </select>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div id="innerDom">
+
+                    </div>
+                    {{/if}}
+
+                </div>
+
+            </form>
+        </div>
+        <div class="modal-footer">
+            <button type="button" class="btn btn-outline blue" id="addBtn">{{i18n('common.save')}}</button>
+            <button type="button" class="btn btn-outline grey-gallery" data-dismiss="modal">
+                {{i18n('common.cancelBtn')}}
+            </button>
+        </div>
+    </div>
+</div>

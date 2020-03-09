@@ -2,6 +2,7 @@ package cn.com.flat.head.dal.mappers;
 
 import cn.com.flat.head.pojo.User;
 import cn.com.flat.head.mybatis.RepositoryImpl;
+import org.apache.ibatis.annotations.Param;
 
 import java.util.List;
 
@@ -19,11 +20,19 @@ public interface UserMapper {
 
     List<User> getUserListPage(User user);
 
-    int deleteUserById(int userId);
+    int deleteUserById(String userId);
 
-    int deleteUserRole(int userId);
+    int deleteUserRole(String userId);
 
-    User addUser(User user);
+    int addUser(User user);
 
     User getUserById(String userId);
+
+    int addUserRole(User user);
+
+    int updateUserRole(@Param("userId") String userId, @Param("roleId") String roleId);
+
+    int updateUser(User user);
+
+    int updateUserLoginTime(String username);
 }

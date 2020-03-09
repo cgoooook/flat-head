@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="cn.com.flat.head.dal.mappers.KmsDeviceKeyPairMapper">
+    <resultMap id="devKeyPair" type="cn.com.flat.head.pojo.DeviceKeyPair">
+        <id column="key_pair_id" property="id" />
+        <result column="alg" property="alg" />
+        <result column="attr" property="attr" />
+        <result column="pub_key" property="pubKey" />
+        <result column="pri_key" property="priKey" />
+        <result column="status" property="status" />
+
+    </resultMap>
+
+
+    <select id="getKeyPair"  parameterType="cn.com.flat.head.pojo.DeviceKeyPair" resultType="java.lang.Integer">
+        select count(*) from kms_device_key_pair
+        <where>
+
+            <if test="id != null  and id != ''">
+                AND key_pair_id=#{id}
+            </if>
+            <if test="alg != null  and alg != ''">
+                AND   alg=#{alg}
+            </if>
+            <if test="pubKey != null and pubKey != ''">
+                AND   pub_key=#{pubKey}
+            </if>
+            <if test="priKey != null and priKey != ''">
+                AND   pri_key=#{priKey}
+            </if>
+            <if test="status != null and status != ''">
+                AND   status=#{status}
+            </if>
+        </where>
+
+
+
+    </select>
+    <select id="getSpareNumByType" resultType="java.lang.Integer">
+    select count(*) from kms_key_pair where alg=  #{type}
+
+    </select>
+</mapper>

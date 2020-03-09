@@ -1,0 +1,65 @@
+<div class="modal-dialog modal-lg">
+    <div class="modal-content" id="modalContent">
+        <div class="modal-header">
+            <button type="button" class="close" data-dismiss="modal" aria-hidden="true"></button>
+            <h4 class="modal-title font-green bold" id="modalTitle">编辑角色</h4>
+        </div>
+        <div class="modal-body form">
+            <form class="form-horizontal" id="dialogForm">
+                <div class="form-body">
+                    <div class="row">
+                        <input type="hidden" name="roleId" id="roleId" value="{{role.roleId}}"/>
+
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label class="control-label col-md-4">角色名称
+                                    <span class="required" aria-required="true">* </span>
+                                </label>
+
+                                <div class="col-md-8">
+                                    <input id="checkId" name="checkId" type="hidden"
+                                           value=""/>
+                                    <input type="text" class="form-control input-medium" id="roleName"
+                                           name="roleName" placeholder="请输入角色名称"
+                                           value="{{role.roleName}}"/>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label class="control-label col-md-4">角色描述
+                                </label>
+
+                                <div class="col-md-8">
+                                    <input type="text" class="form-control input-medium"
+                                           id="description" placeholder="请输入角色描述"
+                                           name="description"
+                                           value="{{role.roleDescription}}"/>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label class="control-label col-md-4">权限选择<span class="required"
+                                                                                aria-required="true">* </span>
+                                </label>
+
+                                <div class="col-md-8">
+                                    <div>
+                                        <ul id="treeDemo" class="ztree"></ul>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </form>
+        </div>
+        <div class="modal-footer">
+            <button type="button" class="btn blue" id="updateBtn">保存</button>
+            <button type="button" class="btn default" data-dismiss="modal">关闭</button>
+        </div>
+    </div>
+</div>

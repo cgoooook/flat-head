@@ -30,4 +30,6 @@ public class Menu {
 
     private String permToken;
 
+    private boolean checked;
+
 }

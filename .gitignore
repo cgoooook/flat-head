@@ -21,7 +21,23 @@
 
 # virtual machine crash logs, see http://www.java.com/en/download/help/error_hotspot.xml
 hs_err_pid*
-
+.DS_Store
 .idea
 *.iml
 /target
+*.log.*
+
+kms-application
+/.apt_generated/
+/.apt_generated_tests/
+/.metadata/
+
+# eclipse
+.classpath
+.project
+.settings/
+RemoteSystemsTempFiles/
+
+# nvim and lsp
+.nvimrc
+jdt.ls-java-project/
