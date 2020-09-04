@@ -50,10 +50,11 @@ var zTreeOrg = function () {
     }
 
     function beforeClick(treeId, treeNode, clickFlag) {
-        if (options.rootClick) {
-            return true;
-        }
-        return treeNode.orgId !== "orgRoot";
+        // if (options.rootClick) {
+        //     return true;
+        // }
+        // return treeNode.orgId !== "orgRoot";
+        return true;
     }
 
     function menuTreeInit(data) {

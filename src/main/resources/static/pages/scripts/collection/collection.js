@@ -279,8 +279,11 @@ var Collection = function () {
         zTreeOrg.init(option);
 
         function clickCall(event, treeId, treeNode, clickFlag) {
-            if (treeNode.orgId) {
+            if (treeNode.orgId && treeNode.orgId !== "orgRoot") {
                 $("#orgId").val(treeNode.orgId);
+                grid.reload();
+            } else {
+                $("#orgId").val("");
                 grid.reload();
             }
         }
