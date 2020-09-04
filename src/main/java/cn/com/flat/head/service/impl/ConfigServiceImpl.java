@@ -149,22 +149,25 @@ public class ConfigServiceImpl implements ConfigService {
     public void editUiConfig(MultipartFile file, String copyright) {
         boolean result = true;
         try {
-            InputStream ins = file.getInputStream();
-            byte[] buffer = new byte[1024];
-            int len = 0;
-            ByteArrayOutputStream bos = new ByteArrayOutputStream();
-            while ((len = ins.read(buffer)) != -1) {
-                bos.write(buffer, 0, len);
-            }
-            bos.flush();
-            byte data[] = bos.toByteArray();
-            configDao.updateCopyright(copyright);
-            SysLogo sysLogo = new SysLogo();
-            sysLogo.setLogo(data);
-            sysLogo.setStatus(1);
-            configDao.updateLogo();
-            configDao.insertLogo(sysLogo);
-
+			if(file!=null){
+				 InputStream ins = file.getInputStream();
+		         byte[] buffer = new byte[1024];
+		         int len = 0;
+		         ByteArrayOutputStream bos = new ByteArrayOutputStream();
+		         while ((len = ins.read(buffer)) != -1) {
+		             bos.write(buffer, 0, len);
+		         }
+		         bos.flush();
+		         byte data[] = bos.toByteArray();
+		         SysLogo sysLogo = new SysLogo();
+		         sysLogo.setLogo(data);
+		         sysLogo.setStatus(1);
+		         configDao.updateLogo();
+		         configDao.insertLogo(sysLogo);
+			}
+			if(!"".equals(copyright)||copyright!=null){
+				configDao.updateCopyright(copyright);
+			}			
         } catch (Exception e) {
             result = false;
             logger.error("editUiConfig", e);

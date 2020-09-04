@@ -40,9 +40,13 @@ public class LoginController {
 
     @Value("${kms.root}")
     private boolean rootKMS;
+    
+    @Value("${system.name}")
+    private String systemName;
 
     @GetMapping
-    public String login() {
+    public String login(HttpServletRequest request) {
+    	request.setAttribute("systemName", systemName);
         return "login";
     }
 
@@ -61,6 +65,7 @@ public class LoginController {
             if (currentUser.isAuthenticated()) {
                 sessionHandle(request, user);
                 addLogInfo(user, request);
+                request.getSession().setAttribute("systemName", systemName);
                 request.getSession().setAttribute("rootKMS", rootKMS);
                 res = true;
                 return "redirect:/";

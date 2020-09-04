@@ -98,8 +98,8 @@ canvas{
 	}
 }
 
-.name{position:absolute;top: 15%;left: 25%;transition: all 1s;-moz-transition: all 1s;font-size: 72px;font-family:Microsoft YaHei;color: white; }
-.login{position:absolute;top: 40%;left: 40%;transition: all 1s;-moz-transition: all 1s;	Firefox 4-webkit-transition: all 1s;	Safari 和 Chrome-o-transition: all 1s;	Opera}
+.name{text-align:center;line-height: 300px;-moz-transition: all 1s;font-size: 72px;font-family:Microsoft YaHei;color: white; }
+.login{position:absolute;top: 40%;left: 35%;transition: all 1s;-moz-transition: all 1s;	Firefox 4-webkit-transition: all 1s;	Safari 和 Chrome-o-transition: all 1s;	Opera}
 
 /*.login{position:absolute;width: 350px;border-radius: 5px;height: 500px;top: 50%;left: 50%;margin-top: -250px;margin-left: -175px;transition: all 1s;-moz-transition: all 1s;	Firefox 4-webkit-transition: all 1s;	Safari 和 Chrome-o-transition: all 1s;	Opera}
 .login-top{font-size: 24px;margin-top: 100px;padding-left: 40px;box-sizing: border-box;color: #333333;margin-bottom: 50px;}
