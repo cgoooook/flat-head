@@ -36,7 +36,7 @@ public class UiConfigController {
 
         configService.editUiConfig(logo,copyright);
 
-        logo.getOriginalFilename();
+//        logo.getOriginalFilename();
         AjaxResponse ajaxResponse = new AjaxResponse();
         ajaxResponse.setReturnState(ReturnState.OK);
         return ajaxResponse;
