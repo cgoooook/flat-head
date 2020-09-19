@@ -37,11 +37,124 @@ TOKEN 分为两部分组成，及数据部分||验证部分。
 {
   "success": true,
   "message": "成功时为32字节的 hexadecimal 字符串, 失败时则为提示的错误信息",
-  "retcode": 0,  // 0 表示成功，其它表示返回的错误码
+  "retcode": 0
+}
+```
+_注_: retcode 0 表示成功，其它表示返回的错误码
+
+### 对称密钥管理接口
+
+天地项目使用
+
+#### 1. 申请新对称密钥的接口
+
+* URL: http://hosts:port/api/skey/apply
+* METHOD: POST
+* 参数: bits={128}&type={sm4}&token={安全令牌}
+* 返回: 
+*
+```json
+{
+  "success": true,
+  "message": "操作结果说明,失败时可以提示错误信息",
+  "retcode": 0,
+  "type": "SM4",
+  "keys": [
+    {
+      "id": 1, 
+      "val": "密钥值, 被预值保护密钥加密, 最后进行hexdicial编码显示",
+      "checkcode": "校验码,hexdicial编码显示,8字节长度",
+      "version": "1"
+    },
+    {}
+  ]
+}
+```
+
+密钥值的保护密钥为从TOKEN中还原的Data(32字节，前16字节作为密钥，后16字节作为IV)，SM4_CBC加密的密文.
+checkcode, 密钥校验码为密钥原文加密8字节全0数据得到的密文的最后四个字节
+
+#### 2. 恢复指定ID的对称密钥的接口
+
+* URL: http://hosts:port/api/skey/recovery
+* METHOD: POST
+* 参数: startid={id}&limit={连续个数}&version={版本}&token={安全令牌}
+* 返回: 
+
+```json
+{
+  "success": true,
+  "message": "操作结果说明,失败时可以提示错误信息",
+  "retcode": 0,
+  "type": "SM4",
+  "keys": [
+    {
+      "id": 1, 
+      "val": "密钥值, 被预值保护密钥加密, 最后进行hexdicial编码显示",
+      "checkcode": "校验码,hexdicial编码显示,8字节长度",
+      "version": "1"
+    },
+    {}
+  ]
+}
+```
+
+_注_: version 仅在 limit 为 1 时生效，表示提取指定 id 的特定版本的密钥值.
+
+#### 3. 销毁指定ID的对称密钥的接口
+
+* URL: http://hosts:port/api/skey/destroy
+* METHOD: POST
+* 参数: startid={id}&limit={连续个数}&version={版本}&token={安全令牌}
+* 返回: 
+
+```json
+{
+  "success": true,
+  "message": "操作结果说明,失败时可以提示错误信息",
+  "retcode": 0,
+  "type": "SM4",
+  "keys": [
+    {
+      "id": 1,
+      "status": 0,
+      "version": "1"
+    },
+    {}
+  ]
+}
+```
+
+_注_: version 仅在 limit 为 1 时生效，表示提取指定 id 的特定版本的密钥值.
+
+#### 4. 更新指定ID的对称密钥的接口
+
+* URL: http://hosts:port/api/skey/recovery
+* METHOD: POST
+* 参数: startid={id}&limit={连续个数}&token={安全令牌}
+* 返回: 
+
+```json
+{
+  "success": true,
+  "message": "操作结果说明,失败时可以提示错误信息",
+  "retcode": 0,
+  "type": "SM4",
+  "keys": [
+    {
+      "id": 1, 
+      "val": "密钥值, 被预值保护密钥加密, 最后进行hexdicial编码显示",
+      "checkcode": "校验码,hexdicial编码显示,8字节长度",
+      "version": "2"
+    },
+    {}
+  ]
 }
 ```
 
 ### 扩展的对称非对称密钥管理接口
+
+国核项目使用
 
 #### 1. 申请新的非对称密钥的接口
 
