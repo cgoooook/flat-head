@@ -50,7 +50,7 @@ _注_: retcode 0 表示成功，其它表示返回的错误码
 
 * URL: http://hosts:port/api/skey/apply
 * METHOD: POST
-* 参数: bits={128}&type={sm4}&token={安全令牌}
+* 参数: bits={128}&type={sm4}&count={个数}&token={安全令牌}
 * 返回: 
 *
 ```json
@@ -103,9 +103,9 @@ _注_: version 仅在 limit 为 1 时生效，表示提取指定 id 的特定版
 
 #### 3. 销毁指定ID的对称密钥的接口
 
-* URL: http://hosts:port/api/skey/destroy
+* URL: http://hosts:port/api/skey/revoke
 * METHOD: POST
-* 参数: startid={id}&limit={连续个数}&version={版本}&token={安全令牌}
+* 参数: startid={id}&limit={连续个数}&token={安全令牌}&reason={原因说明}
 * 返回: 
 
 ```json
@@ -117,8 +117,7 @@ _注_: version 仅在 limit 为 1 时生效，表示提取指定 id 的特定版
   "keys": [
     {
       "id": 1,
-      "status": 0,
-      "version": "1"
+      "status": 0
     },
     {}
   ]

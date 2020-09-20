@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="cn.com.flat.head.dal.mappers.SymKeyMapper">
+
+    <resultMap id="SymKeyMap" type="cn.com.flat.head.pojo.SymKey">
+        <id column="key_id" property="keyId" />
+        <result column="key_alg" property="keyAlg" />
+        <result column="length" property="length" />
+        <result column="version" property="version" />
+
+        <result column="check_value" property="checkValue" />
+        <result column="key_value" property="keyValue" />
+        <result column="create_by" property="createBy" />
+
+        <result column="status" property="status" />
+
+    </resultMap>
+
+    <insert id="addKey">
+        insert into kms_s_key (key_id, key_alg, length, check_value, key_value, create_by, status)
+        values (#{keyId}, #{keyAlg}, #{length}, #{checkValue}, #{keyValue}, #{createBy}, #{status});
+    </insert>
+
+    <update id="updateKey">
+        update kms_s_key set key_value=#{keyValue}, check_value=#{checkValue}, version=${version}, create_by=#{createBy}
+        where key_id=#{keyId}
+    </update>
+    <update id="updateKeyStatus">
+        update kms_s_key set status=${status} where key_id=#{keyId}
+    </update>
+    <delete id="deleteKeyById">
+        delete from kms_s_key where key_id=#{id}
+    </delete>
+    <select id="getKeyById" resultMap="SymKeyMap">
+        select * from kms_s_key where key_id=#{keyId}
+    </select>
+    <select id="getKeyCount" resultType="java.lang.Integer">
+        select count(*) from kms_s_key
+    </select>
+
+    <select id="getKeyListPage" resultMap="SymKeyMap">
+        select * from kms_s_key
+    </select>
+
+</mapper>
