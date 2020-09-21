@@ -4,6 +4,7 @@ public class BooleanCarrier {
 
     private boolean result;
     private String message;
+    private int code;
 
     public boolean getResult() {
         return result;
@@ -19,5 +20,13 @@ public class BooleanCarrier {
 
     public void setMessage(String message) {
         this.message = message;
+    }
+
+    public int getCode() {
+        return code;
+    }
+
+    public void setCode(int code) {
+        this.code = code;
     }
 }

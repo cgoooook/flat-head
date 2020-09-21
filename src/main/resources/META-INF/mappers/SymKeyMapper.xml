@@ -17,8 +17,11 @@
     </resultMap>
 
     <insert id="addKey">
-        insert into kms_s_key (key_id, key_alg, length, check_value, key_value, create_by, status)
-        values (#{keyId}, #{keyAlg}, #{length}, #{checkValue}, #{keyValue}, #{createBy}, #{status});
+        insert into kms_s_key (key_alg, length, check_value, key_value, create_by, status)
+        values (#{keyAlg}, #{length}, #{checkValue}, #{keyValue}, #{createBy}, #{status});
+        <selectKey resultType="java.lang.Long" keyProperty="keyId" order="AFTER" >
+            SELECT LAST_INSERT_ID() as keyId
+        </selectKey>
     </insert>
 
     <update id="updateKey">

@@ -21,7 +21,8 @@ public class SymKeyDaoImpl implements SymKeyDao {
 
     @Override
     public boolean updateKey(SymKey key) {
-        SymKey keyById = getKeyById(key.getKeyId());
+
+        SymKey keyById = getKeyById(Long.toString(key.getKeyId()));
         key.setVersion(keyById.getVersion() + 1);
         int updateKeyNum = keyMapper.updateKey(key);
         /*

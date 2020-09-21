@@ -10,9 +10,9 @@ public interface SymKeyService {
 
     List<SymKey> getKeyListPage(Pageable pageable, SymKey key);
 
-    SymKey apply(String alg, int bits);
+    SymKey apply(String alg, int bits) throws Exception;
     SymKey fetch(String keyId);
-    SymKey update(SymKey key);
+    SymKey update(SymKey key) throws Exception;
     BooleanCarrier revoke(String keyId, String reason);
 
     long count(String alg, int bits);

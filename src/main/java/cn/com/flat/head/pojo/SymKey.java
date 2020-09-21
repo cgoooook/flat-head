@@ -7,7 +7,7 @@ import java.util.List;
 @Data
 public class SymKey {
 
-    private String keyId;
+    private long keyId;
 
     private String keyAlg;
 

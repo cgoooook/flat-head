@@ -35,13 +35,11 @@ public class SymKeyRest {
         for(SymKey key: keys)
         {
             Map node = new HashMap();
-            //node.put("id", key);
-            //    "id": 1,
-            //    "val": "密钥值, 被预值保护密钥加密, 最后进行hexdicial编码显示",
-            //    "checkcode": "校验码,hexdicial编码显示,8字节长度",
-            //    "version": "1"
-
-
+            node.put("id", key.getKeyId());
+            node.put("val", key.getKeyValue());
+            node.put("ccd", key.getCheckValue());
+            node.put("ver", key.getVersion());
+            results.add(node);
         }
         return results;
     }
@@ -132,6 +130,7 @@ public class SymKeyRest {
 
             result.put("success", true);
             result.put("retcode", 0);
+            result.put("type", "SM4");
             ret = true;
         } catch (Exception e) {
             result.put("success", false);
@@ -176,6 +175,7 @@ public class SymKeyRest {
             result.put("keys", convert(lists));
             result.put("success", true);
             result.put("retcode", 0);
+            result.put("type", "SM4");
             ret = true;
         } catch (Exception e) {
             result.put("success", false);
@@ -216,8 +216,8 @@ public class SymKeyRest {
                 String keyId = Integer.toString(iStart+i);
                 BooleanCarrier booleanCarrier = symKeyService.revoke(keyId, reason);
                 Map status = new HashMap();
-                status.put("id", keyId);
-                status.put("message", booleanCarrier.getMessage());
+                status.put("id", iStart+i);
+                status.put("status", 0);
                 status.put("success",booleanCarrier.getResult());
 
                 lists.add(status);
@@ -227,6 +227,7 @@ public class SymKeyRest {
 
             result.put("success", true);
             result.put("retcode", 0);
+            result.put("type", "SM4");
 
         } catch (Exception e) {
             result.put("success", false);

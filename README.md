@@ -63,7 +63,7 @@ _注_: retcode 0 表示成功，其它表示返回的错误码
     {
       "id": 1, 
       "val": "密钥值, 被预值保护密钥加密, 最后进行hexdicial编码显示",
-      "checkcode": "校验码,hexdicial编码显示,8字节长度",
+      "ccd": "校验码,hexdicial编码显示,6字节长度",
       "version": "1"
     },
     {}
@@ -91,7 +91,7 @@ checkcode, 密钥校验码为密钥原文加密8字节全0数据得到的密文�
     {
       "id": 1, 
       "val": "密钥值, 被预值保护密钥加密, 最后进行hexdicial编码显示",
-      "checkcode": "校验码,hexdicial编码显示,8字节长度",
+      "ccd": "校验码,hexdicial编码显示,8字节长度",
       "version": "1"
     },
     {}
@@ -128,7 +128,7 @@ _注_: version 仅在 limit 为 1 时生效，表示提取指定 id 的特定版
 
 #### 4. 更新指定ID的对称密钥的接口
 
-* URL: http://hosts:port/api/skey/recovery
+* URL: http://hosts:port/api/skey/update
 * METHOD: POST
 * 参数: startid={id}&limit={连续个数}&token={安全令牌}
 * 返回: 
@@ -141,9 +141,9 @@ _注_: version 仅在 limit 为 1 时生效，表示提取指定 id 的特定版
   "type": "SM4",
   "keys": [
     {
-      "id": 1, 
+      "id": 1,
       "val": "密钥值, 被预值保护密钥加密, 最后进行hexdicial编码显示",
-      "checkcode": "校验码,hexdicial编码显示,8字节长度",
+      "ccd": "校验码,hexdicial编码显示,6字节长度",
       "version": "2"
     },
     {}

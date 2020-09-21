@@ -2,7 +2,8 @@
 SQLyog Professional v12.09 (64 bit)
 MySQL - 5.5.57 : Database - kms
 *********************************************************************
-*/
+*/
+
 
 /*!40101 SET NAMES utf8 */;
 
@@ -15,6 +16,24 @@ MySQL - 5.5.57 : Database - kms
 CREATE DATABASE /*!32312 IF NOT EXISTS*/`kms` /*!40100 DEFAULT CHARACTER SET utf8 */;
 
 USE `kms`;
+
+/*Table structure for table `kms_s_key` */
+
+DROP TABLE IF EXISTS `kms_s_key`;
+
+CREATE TABLE `kms_s_key` (
+  `key_id`  bigint(20) NOT NULL auto_increment,
+  `key_alg` varchar(15) DEFAULT NULL,
+  `length` int(11) DEFAULT NULL,
+  `version` int(11) DEFAULT '0',
+  `check_value` varchar(20) DEFAULT NULL,
+  `key_value` varchar(200) DEFAULT NULL,
+  `create_by` varchar(20) DEFAULT NULL,
+  `status` int(11) DEFAULT NULL COMMENT '0 create 1 generate 2 active 3 inactive 4 archive 5 delete',
+  PRIMARY KEY (`key_id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+/*Data for the table `kms_s_key` */
 
 /*Table structure for table `kms_a_key` */
 
